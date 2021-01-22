@@ -1,0 +1,64 @@
+﻿@model ExpeditionProject.Models.Expedition
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Expedition</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Season" class="control-label"></label>
+                <input asp-for="Season" class="form-control" />
+                <span asp-validation-for="Season" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TerminationReason" class="control-label"></label>
+                <input asp-for="TerminationReason" class="form-control" />
+                <span asp-validation-for="TerminationReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OxygenUsed" class="control-label"></label>
+                <input asp-for="OxygenUsed" class="form-control" />
+                <span asp-validation-for="OxygenUsed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeakId" class="control-label"></label>
+                <select asp-for="PeakId" class="form-control" asp-items="ViewBag.PeakId"></select>
+                <span asp-validation-for="PeakId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrekkingAgencyId" class="control-label"></label>
+                <select asp-for="TrekkingAgencyId" class="form-control" asp-items="ViewBag.TrekkingAgencyId"></select>
+                <span asp-validation-for="TrekkingAgencyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
