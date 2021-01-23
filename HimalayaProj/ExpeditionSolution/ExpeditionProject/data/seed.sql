@@ -11662,12 +11662,12 @@ INSERT INTO [Expedition](Season,Year,StartDate,TerminationReason,OxygenUsed,Peak
 INSERT INTO [Expedition](Season,Year,StartDate,TerminationReason,OxygenUsed,PeakID,TrekkingAgencyID) VALUES('Spring',2019,'2019-04-05','Success (main peak)',0,464,748);
 
 INSERT INTO [Climber](FirstName,LastName,BirthDate,Age,ExpeditionID) VALUES('Bob', 'Ross', '1990-05-01', 31, 72);
-INSERT INTO [UserTypeID](Role, Privilage) VALUES('Employee', 1);
-INSERT INTO [UserTypeID](Role, Privilage) VALUES('Expedition Provider', 1);
-INSERT INTO [UserTypeID](Role, Privilage) VALUES('Basic', 0);
+INSERT INTO [UserType](Role, Privilage) VALUES('Employee', 1);
+INSERT INTO [UserType](Role, Privilage) VALUES('Expedition Provider', 1);
+INSERT INTO [UserType](Role, Privilage) VALUES('Basic', 0);
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Nick', '123456','Nick', '1995-01-01',1);
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Tyler', '123456','Tyler', '1995-01-01',1);
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Armani', '123456','Armani', '1995-01-01',1);
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Reggie', '123456','Reggie', '1995-01-01',1);
 INSERT INTO [BlogPost](Post, UserID) VALUES('This is a sample post to be added to the DB', 2);
-INSERT INTO [Form](Description,ExpeditionID,UserID) VALUES('Please update the year on this expedition to have occurred one month after the entered date.',100,1);
+INSERT INTO [Form](Description,ExpeditionID,UserID) VALUES('Please update the year on this expedition',100,1);
