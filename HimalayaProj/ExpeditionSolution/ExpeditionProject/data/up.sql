@@ -63,7 +63,7 @@ GO
 
 CREATE TABLE [Form] (
   [ID]          INT PRIMARY KEY IDENTITY(1, 1),
-  [Description] NVARCHAR(50),
+  [Description] NVARCHAR(500),
   [ExpeditionID] INT,
   [UserID]      INT
 )
