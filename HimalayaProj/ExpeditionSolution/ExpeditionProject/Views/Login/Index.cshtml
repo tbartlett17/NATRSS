@@ -1,1 +1,37 @@
-<h1>Login</h1>
+@model User
+
+
+@if (Model == null) //Login
+{
+    ViewData["Title"] = "Login";
+
+
+<div class="container">
+    <div class="text-center">
+        <h2>Please Sign in</h2>
+        
+        <form asp-action="Index" style="max-width: 450px; margin: auto">
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            <div class="form-group">
+                <label asp-for="UserName" class="sr-only">Username</label>
+                <input asp-for="UserName" type="text" class="form-control" placeholder="Username" autofocus>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="sr-only">Password</label>
+                <input asp-for="Password" type="password" id="psswrd" class="form-control" placeholder="Password">
+            </div>
+
+
+            <input type="submit" class="btn btn-primary btn-block" value="Login" />
+            <div class="col-sm" spacing>
+                <p style="margin-top: 20px; margin-bottom: 0px">Don't have an account yet?</p>
+                <a href="/Login/Register" style="margin: 0px">Create an account</a>
+            </div>
+        </form>
+    </div>
+</div>
+}
+else // display user page
+{
+    ViewData["Title"] = "Account";
+}
