@@ -26,7 +26,7 @@ namespace ExpeditionProject.Controllers
             expeditionsDbContext.Reverse();
             var sort = new PeakSort()
             {
-                expeditions = await expeditionsDbContext.Take(50).ToListAsync(),
+                expeditions = await expeditionsDbContext.ToListAsync(),
                 peaks = await _context.Peaks.ToListAsync(),
                 
             };
@@ -66,7 +66,7 @@ namespace ExpeditionProject.Controllers
 
             var sort = new PeakSort()
             {
-                expeditions = trek.Take(50),
+                expeditions = trek,
                 peaks =  _context.Peaks.ToList()
             };
             return View("Index", sort);
@@ -77,13 +77,14 @@ namespace ExpeditionProject.Controllers
             ViewData["PeakId"] = new SelectList(_context.Peaks, "Id", "Name");
 
             var trek = _context.Expeditions
+                .OrderByDescending(d => d.StartDate)
                 .Include(p => p.Peak)
                 .Include(t => t.TrekkingAgency)
                 .Where(p => p.Peak.Id == mtn.mtnPeak.Id).ToList();
 
             var sort = new PeakSort()
             {
-                expeditions = trek.Take(50),
+                expeditions = trek,
                 peaks = _context.Peaks.ToList()
             };
             return View("Index", sort);
