@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ExpeditionProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpeditionProject.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HimalayasDbContext _context;
+        public HomeController(ILogger<HomeController> logger, HimalayasDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -35,7 +37,39 @@ namespace ExpeditionProject.Controllers
 
         public IActionResult Stats()
         {
-            return View();
+
+            List<string> mostPopularPeaksCopy = new List<string>();
+            var mostPopularPeakID = _context.Expeditions.Include(p => p.Peak)
+                                    .GroupBy(q => q.PeakId)
+                                    .OrderByDescending(gp => gp.Count())
+                                    .Select(a => a.Key)
+                                    .Take(5)
+                                    .ToArray();
+
+            foreach (int element in mostPopularPeakID)           
+            {
+                mostPopularPeaksCopy.Add(_context.Peaks.Where(p => p.Id == element).FirstOrDefault().Name);
+            }
+
+
+            statsVM theStats = new statsVM()
+            {
+
+                currentNumberOfExpeditions = _context.Expeditions.Count(),
+                currentNumberOfPeaks = _context.Peaks.Count(),
+                numberOfUnClimbedPeaks = _context.Peaks.Where(e => e.FirstAscentYear == null).Count(),
+
+                mostPopularPeaks = mostPopularPeaksCopy,
+                peaksHigherThan7000 = _context.Peaks.Where(a=>a.Height > 7000).Select(g => g.Name).ToList(),
+                peaksHigherThan6000 = _context.Peaks.Where(a => a.Height > 6000 && a.Height < 7000 ).Select(g => g.Name).ToList(),
+
+            };
+        
+
+       
+
+            return View(theStats);
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
