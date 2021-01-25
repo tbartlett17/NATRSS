@@ -93,8 +93,15 @@ body {
 }
 
 
-#expeditionStats {
-    
-    
+.floatyCloud {
+    position: absolute;
+    top: 300px;
+    right: 50px;
+}
+
+.floatyCloud2 {
+    position: absolute;
+    top: 350px;
+    right: 150px;
 }
 

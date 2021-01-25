@@ -14,7 +14,7 @@ function execute() {
         success: updateStats,
         error: errorOnAjax
     });
-}
+}        
 
 function errorOnAjax() {
     console.log("ERROR in ajax request");
@@ -24,6 +24,6 @@ function errorOnAjax() {
 function updateStats(stats) {
 
     console.log(stats);
-
+     
     $("#stats").text(stats);
 }
