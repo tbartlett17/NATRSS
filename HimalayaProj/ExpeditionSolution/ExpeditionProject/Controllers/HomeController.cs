@@ -77,5 +77,18 @@ namespace ExpeditionProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult FetchStats()
+        {
+            // need to return total # of expeditons, total number of peaks, number of climbed peaks
+
+            int totalNumExps = _context.Expeditions.Count();
+            int totalNumPeaks = _context.Peaks.Count();
+            int numPeaksClimbed = _context.Peaks.Where(p => p.ClimbingStatus == true).Count();
+
+            string stats = "{ \"numExpeditions\": " + totalNumExps + ", \"numPeaks\": " + totalNumPeaks + ", \"numClimbs\": " + numPeaksClimbed + "}";
+
+            return Json(stats);
+        }
     }
 }

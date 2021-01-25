@@ -27,7 +27,9 @@ namespace ExpeditionProject
             services.AddControllersWithViews();
             services.AddDbContext<HimalayasDbContext>(opts =>
             {
-                opts.UseSqlServer(Configuration["ConnectionStrings:ConnectionofDb"]);
+                //opts.UseSqlServer(Configuration["ConnectionStrings:ConnectionofDb"]);
+                opts.UseSqlServer(Configuration.GetConnectionString("Milestone3AzureDb"));
+
             });
         }
 
