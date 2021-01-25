@@ -1,0 +1,58 @@
+@model ExpeditionProject.Models.statsVM
+<div id="statsDiv">
+
+
+
+
+    <img class="floatyCloud" src="~/images/cloud.png" />
+    <img class="floatyCloud2" src="~/images/cloud.png" />
+
+    <div id="peakStats">
+        <h4> Number of Peaks : @Model.currentNumberOfPeaks </h4>
+        <br>
+        <h4> Number of Unclimbed Peaks : @Model.numberOfUnClimbedPeaks</h4>
+        <br>
+        <h4> Number of Expeditions : @Model.currentNumberOfExpeditions</h4>
+        <br />
+
+
+
+        <h4>
+            Top 5 most popular Peaks : @foreach (var product in Model.mostPopularPeaks)
+            {
+                @(string.Format("{0}, ", product))
+
+            }
+        </h4>
+
+        <div class="container mt-5">
+            <button type="button" class="btn btn-lg btn-outline-light" data-toggle="collapse" data-target="#peaks1"><strong>Peaks above 7000ft</strong></button>
+            <div id="peaks1" class="collapse">
+                @foreach (var product in Model.peaksHigherThan7000)
+                {
+                    @(string.Format("{0}, ", product))
+
+                }
+            </div>
+            <br>
+            <button type="button" class="btn btn-lg btn-outline-light" data-toggle="collapse" data-target="#peaks2"><strong>Peaks above 6000ft</strong></button>
+            <div id="peaks2" class="collapse">
+                @foreach (var product in Model.peaksHigherThan6000)
+                {
+                    @(string.Format("{0}, ", product))
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/main.js"></script>
+}
