@@ -86,7 +86,7 @@ namespace ExpeditionProject.Controllers
             int totalNumPeaks = _context.Peaks.Count();
             int numPeaksClimbed = _context.Peaks.Where(p => p.ClimbingStatus == true).Count();
 
-            string stats = "{ \"numExpeditions\": " + totalNumExps + ", \"numPeaks\": " + totalNumPeaks + ", \"numClimbs\": " + numPeaksClimbed + "}";
+            string stats = " \"Total Expeditions\": " + totalNumExps + ", \"Number of Peaks\": " + totalNumPeaks + ", \"Number of peaks climbed\": " + numPeaksClimbed ;
 
             return Json(stats);
         }
