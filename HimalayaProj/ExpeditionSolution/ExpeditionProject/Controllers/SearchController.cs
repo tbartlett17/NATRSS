@@ -23,6 +23,19 @@ namespace ExpeditionProject.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult searchPeaks()
+        {
+            return View();
+        }
+
+        /*[HttpPost]
+        public IActionResult searchPeaks() 
+        {
+            return View();
+        }*/
+
     }
     
 
