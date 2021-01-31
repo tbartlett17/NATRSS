@@ -4,4 +4,15 @@
 }
 
 <h1>This is the searchPeaks page!</h1>
+@if (ViewBag.Success == true) 
+{
+<ul class="list-group">
+    @foreach (var item in ViewBag.peakList)
+    {
+        @* I need to somehow link each item to a page that returns their albums, gonna need an href but prolly through a controller *@
+        <li class="list-group-item">@item.Name</li>
+    }
+
+</ul>
+}
 

@@ -27,14 +27,21 @@ namespace ExpeditionProject.Controllers
         [HttpGet]
         public IActionResult searchPeaks()
         {
+            ViewBag.Success = false;
             return View();
         }
 
-        /*[HttpPost]
-        public IActionResult searchPeaks() 
+        [HttpPost]
+        public IActionResult searchPeaks(string inputString)
         {
+            var peakList = _context.Peaks.Where(x => x.Name.Contains(inputString)).ToList();
+
+            //Debug.WriteLine("This was the search of " + inputString);
+
+            ViewBag.Success = true;
+            ViewBag.peakList = peakList;
             return View();
-        }*/
+        }
 
     }
     
