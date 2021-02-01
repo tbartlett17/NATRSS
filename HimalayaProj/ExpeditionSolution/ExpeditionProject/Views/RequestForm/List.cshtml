@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model IQueryable<ExpeditionProject.Models.Form>
+@model ExpeditionProject.Models.userAndFormArrayVM
 
 
 
@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.thisFormArray)
         {
 
 
@@ -56,8 +56,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Completed)
                 </td>
-                <td>
-                    <a href="RequestFormReview/@item.Id">Review</a>
+                <td>                   
+                    <a asp-action="RequestFormReview" asp-route-id= "@item.Id">Review</a> |
                 </td>
 
             </tr>

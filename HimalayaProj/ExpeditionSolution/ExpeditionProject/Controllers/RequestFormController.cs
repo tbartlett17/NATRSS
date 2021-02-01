@@ -17,8 +17,10 @@ namespace ExpeditionProject.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
-        {
+        public IActionResult Index(int? uid, int? eid)
+        {       
+            ViewData["ThisCurrentUser"] = uid;
+            ViewData["ThisCurrentExpedition"] = eid;
             return View();
         }
 
@@ -29,16 +31,37 @@ namespace ExpeditionProject.Controllers
 
             User theUser = _context.Users.Where(i => i.Id == theForm.UserId).FirstOrDefault();
 
+            if (ModelState.IsValid)
+            {
+                _context.Add(theForm);
+                _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-            return RedirectToAction("Index", "Login", theUser);
+            return RedirectToAction("Account", "Login", new { id =theForm.UserId });
         }
-        public IActionResult List()
+        public IActionResult List(int? id)
         {
+            
+            User theUser = _context.Users.Where(i => i.Id == id).FirstOrDefault();
+            IList<Form> FormsDbContext = new List<Form>();
 
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
+            if (theUser.UserTypeId == 2)
+            {
+                FormsDbContext = _context.Forms.Where(i=>i.UserId==id).OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).ToList();
+            }
+            else
+            { 
+               FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).ToList();
+            }
+            userAndFormArrayVM uafavm = new userAndFormArrayVM
+            {
 
+                thisUser = theUser,
+                thisFormArray = FormsDbContext,
+            };
 
-            return View(FormsDbContext);
+            return View(uafavm);
         }
 
         public IActionResult RequestFormReview(int id)
@@ -51,15 +74,6 @@ namespace ExpeditionProject.Controllers
 
         }
 
-        [HttpPost]
-        public IActionResult RequestFormReview([Bind("Id,Description,Status,Completed,ExpedtionId,UserId,SubmissionDateTime")] Form theForm)
-        {
-
-
-
-
-            return View();
-        }
-
+       
     }
 }
