@@ -25,15 +25,18 @@ namespace ExpeditionProject.Controllers
         [HttpPost]
         public IActionResult Index(Form theForm)
         {
-            
-            
-            return RedirectToAction("Index", "Login");
+
+
+            User theUser = _context.Users.Where(i => i.Id == theForm.UserId).FirstOrDefault();
+
+
+            return RedirectToAction("Index", "Login", theUser);
         }
         public IActionResult List()
         {
 
             var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
-            
+
 
             return View(FormsDbContext);
         }
@@ -41,21 +44,21 @@ namespace ExpeditionProject.Controllers
         public IActionResult RequestFormReview(int id)
         {
 
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
+            Form theForm = _context.Forms.Where(x => x.Id == id).Include(e => e.Expedition).Include(e => e.User).FirstOrDefault();
 
 
-            return View(FormsDbContext);
+            return View(theForm);
 
         }
 
         [HttpPost]
-        public IActionResult RequestFormReview(Form theForm)
+        public IActionResult RequestFormReview([Bind("Id,Description,Status,Completed,ExpedtionId,UserId,SubmissionDateTime")] Form theForm)
         {
 
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
 
 
-            return View(FormsDbContext);
+
+            return View();
         }
 
     }
