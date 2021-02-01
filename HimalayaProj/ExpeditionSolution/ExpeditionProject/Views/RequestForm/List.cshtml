@@ -37,30 +37,33 @@
         {
 
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpeditionId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubmissionDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Completed)
-                </td>
-                <td>                   
-                    <a asp-action="RequestFormReview" asp-route-id= "@item.Id">Review</a> |
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpeditionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            
+            <td>
+                <input type="button" id="supportticketbtn" class="btn btn-outline-primary btn-sm btn-block" value="Review" onclick="location.href='@Url.Action("RequestFormReview", "RequestForm", new { id = @item.Id, uid = Model.thisUser.UserTypeId })'" />
+                
+            </td>
+            
 
-            </tr>
+        </tr>
 
         }
     </tbody>
