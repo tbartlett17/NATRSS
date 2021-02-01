@@ -142,7 +142,7 @@
                                     @Html.DisplayFor(modelItem => item.TrekkingAgency.Name)
                                 </td>
                                 <td>
-                                    <input type="button" class="btn btn-primary btn-block" value="Request Update" onclick="location.href='@Url.Action("Index", "RequestForm", new { userId = Model.User.Id, expeditionId = item.Id })'" />
+                                    <input type="button" class="btn btn-primary btn-block" value="Request Update" onclick="location.href='@Url.Action("Index", "RequestForm", new { uid = Model.User.Id, eid = item.Id })'" />
                                 </td>
                             </tr>
                         }
