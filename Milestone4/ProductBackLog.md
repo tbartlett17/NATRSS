@@ -44,7 +44,7 @@
         <tr>
             <td>6</td> <td>Completed</td> <td>E</td> <td>2</td> <td>Tyler</td>
             <td>As a user I would like to see my account information.</td>
-            <td>I will make the login page redirect to an account view that shows the user profile. If the account type is an employee, there will be links to view all the tables and a link to the page to view support tickets for modifying expeditions submitted by the expedition provider (aka trekking agency). If the account type is an expedition provider (aka trekking agency)  there will also be a list of their entered expeditions.</td>
+            <td>I will make the login and register pages redirect to an account view that shows the user profile. If the account type is an employee, there will be a link to the page to view support tickets for modifying expeditions submitted by the expedition provider (aka trekking agency). If the account type is an expedition provider (aka trekking agency)  there will also be a list of their entered expeditions.</td>
             <td><a href="https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UserStory%236_Tyler.md">Link to User Story</a></td>
         </tr>
         <tr>

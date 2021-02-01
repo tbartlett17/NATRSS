@@ -1,20 +1,12 @@
-## As a public user, I would like to be able to browse or search for peaks so that I can easily find them.
+# As a public user, I would like to be able to browse or search for peaks so that I can easily find them.
 
-## ID:
+## ID: 8
 
-8
+## Effort Points: 2
 
-## Effort Points:
+## Owner: Armani
 
-2
-
-## Owner:
-
-Armani
-
-## Feature branch name:
-
-fSearch_Peaks
+## Feature branch name: fSearch_Peaks
 
 ## Assumptions/Preconditions:
 
