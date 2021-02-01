@@ -126,13 +126,12 @@ For scope everything is pretty clear, a user inputs a form or calculates if a sp
 
 
 ## Diagrams - 
-UML Diagram -
 
 [UML Diagram](https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UML%20Diagram.png)  
-![UML Diagram](UMLDiagram_Milestone_2.png "UML Diagrams Rock")
+![UML Diagram](UMLDiagram.png "UML Diagrams Rock")
 
 [Architecture Drawing](https://github.com/NickApa/NATRSS/blob/dev/Milestone4/ArchitectureDrawing.png)  
-![Architecture Drawing](ArchitectureDiagram_Milestone_2.png "Architecture Drawing diagram")
+![Architecture Drawing](ArchitectureDrawing.png "Architecture Drawing diagram")
 
 [DB/ER Diagram](https://github.com/NickApa/NATRSS/blob/dev/Milestone4/SpillTrackerDbDiagram.png)  
 ![DB/ER Diagram](SpillTrackerDbDiagram.png "Database Diagram")
