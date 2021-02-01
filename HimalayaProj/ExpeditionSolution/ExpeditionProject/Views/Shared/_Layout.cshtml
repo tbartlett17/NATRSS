@@ -24,9 +24,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Expeditions" asp-action="Index">Expedition List</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search</a>
-                        </li>
+                        @*<li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search</a>
+                </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Stats">Stats</a>
                         </li>
@@ -35,7 +35,16 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+                @*For now this seems like the most suitable place to put the search bar, might play around with it more.*@
+                <form asp-controller="Search" asp-action="searchPeaks" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" name="inputString" pattern="[a-zA-Z]{2,}" class="form-control" placeholder="Enter A Peak name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit" id="submit-btn">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>            
         </nav>
     </header>
     <div class="container">
