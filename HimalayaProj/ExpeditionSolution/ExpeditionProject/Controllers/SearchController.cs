@@ -46,6 +46,7 @@ namespace ExpeditionProject.Controllers
             //Debug.WriteLine("This was the search of " + inputString);
             ViewBag.Success = true;
             ViewBag.peakList = peakList;
+
             return View();
         }
 
