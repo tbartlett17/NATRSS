@@ -68,8 +68,6 @@ CREATE TABLE [Form] (
   [Completed] BIT,
   [ExpeditionID] INT,
   [UserID]      INT,
-  [Status] NVARCHAR(20),
-  [Completed] BIT,
   [SubmissionDateTime] DATE
 )
 GO
