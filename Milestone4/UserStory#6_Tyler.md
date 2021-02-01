@@ -22,7 +22,7 @@ The [database diagram](https://github.com/NickApa/NATRSS/blob/main/Milestone2/BR
 1. Create an account page
 2. Modify the login controller for register and login functions to redirect to the account page page passing the user object made/retrieved from the db respectively.  
 3. display basic account information for any user (name, birthday, email, username account role [basic, expedition provider, employee])
-4. Add logic statements to check the user role. if employee: display links to all viewable tables and a link to a page to view open support tickets. if Expedition provider display a table of their expeditions with a link on each one to request  
+4. Add logic statements to check the user role. if employee: display a link to a page to view open support tickets. if Expedition provider display a table of their expeditions with a link on each one to request  
 
 ## Dependencies
 This is tied together with user story #7. I will need the table view for employees and the modification request page for expedition providers completed so I can add links to them on my page.
