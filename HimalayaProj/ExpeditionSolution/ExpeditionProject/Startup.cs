@@ -53,6 +53,11 @@ namespace ExpeditionProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "request review",
+                    pattern: "RequestForm/RequestFormReview/",
+                defaults: new { controller = "RequestForm", action = "RequestFormReview" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });

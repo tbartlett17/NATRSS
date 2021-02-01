@@ -26,7 +26,7 @@
                 <div><label asp-for="ExpeditionId" class="control-label ml-4">Enter Expedition Id</label></div>
             </div>
             <div>
-                <input type="number" asp-for="ExpeditionId" id="ExpeditionId">
+                <input type="number" asp-for="ExpeditionId" id="ExpeditionId"  value="@ViewData["ThisCurrentUser"]">
             </div>
             <span asp-validation-for="ExpeditionId"></span>
 
@@ -38,7 +38,7 @@
                 <div><label asp-for="UserId" class="control-label ml-4">Enter Expedition Id</label></div>
             </div>
             <div>
-                <input type="number" asp-for="UserId" id="ExpeditionId">
+                <input type="number" asp-for="UserId" id="UserId" value="@ViewData["ThisCurrentUser"]">
             </div>
             <span asp-validation-for="UserId"></span>
 
