@@ -50,7 +50,7 @@
         <tr>
             <td>7</td> <td>Completed</td> <td>U</td> <td>2</td> <td>Reggie</td>
             <td>As an employee I would like to process request forms, review , see a list of all request forms and have full crud access to the database, to ensure validity of database entries, as well as update expeditions and review previous request forms.</td>
-            <td>I will scaffold crud operation for users who are listed in the user table as an employee. I will create a view that lists all request forms for users that are employees.  Create a view for reviewing requests Expedition providers (aka trekking agency)  will only see their own request forms.</td>            
+            <td>I will create a list, requestformReview and form view. I will create a requestFormContoller. On the requestFormReview view I will create a link to the edit page for that specific expedition, where the employee can make the specified changes in the database, only users whom are employees will be able to click the link. In the list view Expedition providers will only see their own request forms.</td>            
 <td><a href="https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UserStoryReggie.md">Link to User Story</a></td>
         </tr>
         <tr>
