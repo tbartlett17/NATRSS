@@ -22,7 +22,7 @@ namespace ExpeditionProject.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["PeakId"] = new SelectList(_context.Peaks, "Id", "Name");
-            var expeditionsDbContext = _context.Expeditions.OrderByDescending(x => x.StartDate).Include(e => e.Peak).Include(e => e.TrekkingAgency).Take(50);
+            var expeditionsDbContext = _context.Expeditions.OrderByDescending(x => x).Include(e => e.Peak).Include(e => e.TrekkingAgency).Take(50);
             expeditionsDbContext.Reverse();
             var sort = new PeakSort()
             {
