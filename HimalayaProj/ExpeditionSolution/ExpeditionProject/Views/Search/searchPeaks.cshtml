@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "searchPeaks";
+}
+<div style="text-align:center">
+    @if (ViewBag.Success == true)
+    {
+        <h4>Potential Peaks that match your search:</h4>
+        <br>
+        <ul class="list-group" style="">
+            @foreach (var item in ViewBag.peakList)
+            {
+                <li class="list-group-item list-group-item-success">@item.Name</li>
+            }
+        </ul>
+    }
+</div>

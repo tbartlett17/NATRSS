@@ -64,10 +64,20 @@ GO
 CREATE TABLE [Form] (
   [ID]          INT PRIMARY KEY IDENTITY(1, 1),
   [Description] NVARCHAR(500),
+  [Status] NVARCHAR(20),
+  [Completed] BIT,
   [ExpeditionID] INT,
-  [UserID]      INT
+  [UserID]      INT,
+  [SubmissionDateTime] DATE
 )
 GO
+
+CREATE TABLE [ExpeditionProvidertoExpeditions] (
+  [ID]            INT PRIMARY KEY IDENTITY(1, 1),
+  [ExpeditionID]  INT,
+  [UserID]        INT
+)
+
 
 ALTER TABLE [Expedition] ADD CONSTRAINT [Expedition_FK_Peak] FOREIGN KEY ([PeakID]) REFERENCES [Peak] ([ID])
 ALTER TABLE [Expedition] ADD CONSTRAINT [Expedition_FK_TrekkingAgency] FOREIGN KEY ([TrekkingAgencyID]) REFERENCES [TrekkingAgency] ([ID])
@@ -76,4 +86,6 @@ ALTER TABLE [User] ADD CONSTRAINT [User_FK_UserType] FOREIGN KEY ([UserTypeID]) 
 ALTER TABLE [BlogPost] ADD CONSTRAINT [BlogPost_FK_User] FOREIGN KEY ([UserID]) REFERENCES [User] ([ID])
 ALTER TABLE [Form] ADD CONSTRAINT [Form_FK_Expedition] FOREIGN KEY ([ExpeditionID]) REFERENCES [Expedition] ([ID])
 ALTER TABLE [Form] ADD CONSTRAINT [Form_Fk_User] FOREIGN KEY ([UserID]) REFERENCES [User] ([ID])
+ALTER TABLE [ExpeditionProvidertoExpeditions] ADD CONSTRAINT [EP_FK_Expedition] FOREIGN KEY ([ExpeditionID]) REFERENCES [Expedition] ([ID])
+ALTER TABLE [ExpeditionProvidertoExpeditions] ADD CONSTRAINT [EP_Fk_User] FOREIGN KEY ([UserID]) REFERENCES [User] ([ID])
 GO

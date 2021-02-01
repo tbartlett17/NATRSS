@@ -22,7 +22,7 @@ namespace ExpeditionProject.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["PeakId"] = new SelectList(_context.Peaks, "Id", "Name");
-            var expeditionsDbContext = _context.Expeditions.OrderByDescending(x => x.StartDate).Include(e => e.Peak).Include(e => e.TrekkingAgency).Take(50);
+            var expeditionsDbContext = _context.Expeditions.OrderByDescending(x => x).Include(e => e.Peak).Include(e => e.TrekkingAgency).Take(50);
             expeditionsDbContext.Reverse();
             var sort = new PeakSort()
             {
@@ -58,7 +58,7 @@ namespace ExpeditionProject.Controllers
         {
             ViewData["PeakId"] = new SelectList(_context.Peaks, "Id", "Name");
             var trek = _context.Expeditions
-            .OrderByDescending(d => d.StartDate)
+            .OrderByDescending(d => d.Season)
             .Include(p => p.Peak)
             .Include(t => t.TrekkingAgency).ToList();
 
@@ -66,7 +66,7 @@ namespace ExpeditionProject.Controllers
 
             var sort = new PeakSort()
             {
-                expeditions = trek,
+                expeditions = trek.Take(50),
                 peaks =  _context.Peaks.ToList()
             };
             return View("Index", sort);
@@ -84,7 +84,7 @@ namespace ExpeditionProject.Controllers
 
             var sort = new PeakSort()
             {
-                expeditions = trek,
+                expeditions = trek.Take(50),
                 peaks = _context.Peaks.ToList()
             };
             return View("Index", sort);
@@ -116,6 +116,8 @@ namespace ExpeditionProject.Controllers
             .Where(s => s.TerminationReason.Contains("cess"))
             .Include(p => p.Peak)
             .Include(t => t.TrekkingAgency).ToList();
+
+            trek.Reverse();
 
             var sort = new PeakSort()
             {
