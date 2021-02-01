@@ -44,7 +44,7 @@
         <tr>
             <td>6</td> <td>Completed</td> <td>E</td> <td>2</td> <td>Tyler</td>
             <td>As a user I would like to see my account information.</td>
-            <td>I will make the login page redirect to an account view that shows the user profile. If the account type is an employee, there will be links to view all the tables and a link to the page to view support tickets for modifying expeditions submitted by the expedition provider (aka trekking agency). If the account type is an expedition provider (aka trekking agency)  there will also be a list of their entered expeditions.</td>
+            <td>I will make the login and register pages redirect to an account view that shows the user profile. If the account type is an employee, there will be a link to the page to view support tickets for modifying expeditions submitted by the expedition provider (aka trekking agency). If the account type is an expedition provider (aka trekking agency)  there will also be a list of their entered expeditions.</td>
             <td><a href="https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UserStory%236_Tyler.md">Link to User Story</a></td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@
         <tr>
             <td>8</td> <td>Completed</td> <td>U</td> <td>2</td><td>Armani</td>
             <td>As a public user I would like to be able to browse or search for peaks so that I can easily find them.</td>
-            <td>I will create a search bar within the nav bar and return basic information about peaks within the database listed. If the peak is not within the database it will return a form validation message.</td>
+            <td>The stakeholder would like there to be a convential way to search for Peaks. They want to be able to browse for potential peaks within the database. In order for the peaks to be found in a convential manner the search will need to be inside the nav bar.</td>
             <td><a href="https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UserStoryArmani.md">Link to User Story</a></td>
         </tr>
         <tr>

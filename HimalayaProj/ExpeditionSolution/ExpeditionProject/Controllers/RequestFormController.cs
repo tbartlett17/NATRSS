@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,11 +35,13 @@ namespace ExpeditionProject.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(theForm);
-                _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.SaveChanges();
+                
+                return RedirectToAction("Account", "Login", new { id = theForm.UserId });
             }
 
-            return RedirectToAction("Account", "Login", new { id =theForm.UserId });
+            Debug.WriteLine("failed here");
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult List(int? id)
         {

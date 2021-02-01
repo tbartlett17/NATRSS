@@ -21,21 +21,38 @@ namespace ExpeditionProject.Controllers
         }
 
         //get 
-        public IActionResult Index() 
+        public IActionResult Index( ) 
         {
+           
+
             return View();
         }
+
+       
 
         [HttpPost]
         public IActionResult Index(User user)
         {
             if (_context.Users.Any(u => u.UserName == user.UserName)) //is username in db?
             {
-                User thisUser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
-                if (thisUser.Password == user.Password) //does password enter match users password in db?
+                User loggedInUser = _context.Users.Include(ut => ut.UserType).Where(u => u.UserName == user.UserName).FirstOrDefault();
+                if (loggedInUser.Password == user.Password) //does password enter match users password in db?
                 {
                     Debug.WriteLine("\n\nuser login success\n\n");
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    //return RedirectToAction("Index", "Login", loggedInUser);
+
+                    AccountVM account = new AccountVM();
+                    account.User = loggedInUser;
+
+                    if (account.User.UserType.Role == "Expedition Provider")
+                    {
+                        account.UsersExpeditions = _context.Expeditions.Where(e => e.TrekkingAgencyId == 3);
+                    };
+
+
+
+                    //return View(account);
+                    return RedirectToAction("Account", "Login", new { id = account.User.Id });
                 }
                 else //incorrect password
                 {
@@ -52,6 +69,15 @@ namespace ExpeditionProject.Controllers
             }
         }
 
+        public IActionResult Account(int id)
+        {
+            AccountVM thisAccount = new AccountVM();
+            thisAccount.User = _context.Users.Include(ut => ut.UserType).Where(u => u.Id == id).FirstOrDefault();
+            thisAccount.UsersExpeditions = _context.Expeditions.Include(e => e.Peak).Include(e => e.TrekkingAgency).Where(e => e.TrekkingAgencyId == 3);
+
+            return View(thisAccount);
+        }
+
 
         public IActionResult Register()
         {
@@ -59,6 +85,8 @@ namespace ExpeditionProject.Controllers
             
             return View();
         }
+
+
 
         [HttpPost]
         public IActionResult Register(User user)
@@ -75,13 +103,27 @@ namespace ExpeditionProject.Controllers
                 };
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
-                return RedirectToAction("Index", "Home", new { area = "" });
+
+                AccountVM newAccount = new AccountVM();
+                newAccount.User = newUser;
+                newAccount.UsersExpeditions = null;
+
+                return RedirectToAction("Account", "Login", new { id = newAccount.User.Id });
             }
             else
             {
                 return View();
             }
      
+        }
+
+        [HttpPost]
+        public IActionResult RequestModification(int id)
+        {
+
+
+            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "RequestForm", new { id = 3 });
         }
 
     }
