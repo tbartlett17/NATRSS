@@ -46,7 +46,7 @@ namespace ExpeditionProject.Controllers
         public IActionResult List(int? id)
         {
             
-            User theUser = _context.Users.Where(i => i.Id == id).FirstOrDefault();
+            User theUser = _context.Users.Where(i => i.Id == id).Include(u => u.UserType).FirstOrDefault();
             IList<Form> FormsDbContext = new List<Form>();
 
             if (theUser.UserTypeId == 2)
@@ -67,13 +67,20 @@ namespace ExpeditionProject.Controllers
             return View(uafavm);
         }
 
-        public IActionResult RequestFormReview(int id)
+        public IActionResult RequestFormReview(int id, int uid)
         {
 
+            User theUser = _context.Users.Where(i => i.Id == uid).Include(u => u.UserType).FirstOrDefault();
             Form theForm = _context.Forms.Where(x => x.Id == id).Include(e => e.Expedition).Include(e => e.User).FirstOrDefault();
 
+            userAndFormReviewVM uafrvm = new userAndFormReviewVM
+            {
 
-            return View(theForm);
+                thisUser = theUser,
+                thisForm = theForm,
+            };
+
+            return View(uafrvm);
 
         }
 
