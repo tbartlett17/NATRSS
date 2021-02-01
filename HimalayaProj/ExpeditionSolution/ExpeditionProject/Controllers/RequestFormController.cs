@@ -17,46 +17,63 @@ namespace ExpeditionProject.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
-        {
+        public IActionResult Index(int? uid, int? eid)
+        {       
+            ViewData["ThisCurrentUser"] = uid;
+            ViewData["ThisCurrentExpedition"] = eid;
             return View();
         }
 
         [HttpPost]
         public IActionResult Index(Form theForm)
         {
-            
-            
-            return RedirectToAction("Index", "Login");
+
+
+            User theUser = _context.Users.Where(i => i.Id == theForm.UserId).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(theForm);
+                _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction("Account", "Login", new { id =theForm.UserId });
         }
-        public IActionResult List()
+        public IActionResult List(int? id)
         {
-
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
             
+            User theUser = _context.Users.Where(i => i.Id == id).FirstOrDefault();
+            IList<Form> FormsDbContext = new List<Form>();
 
-            return View(FormsDbContext);
+            if (theUser.UserTypeId == 2)
+            {
+                FormsDbContext = _context.Forms.Where(i=>i.UserId==id).OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).ToList();
+            }
+            else
+            { 
+               FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).ToList();
+            }
+            userAndFormArrayVM uafavm = new userAndFormArrayVM
+            {
+
+                thisUser = theUser,
+                thisFormArray = FormsDbContext,
+            };
+
+            return View(uafavm);
         }
 
         public IActionResult RequestFormReview(int id)
         {
 
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
+            Form theForm = _context.Forms.Where(x => x.Id == id).Include(e => e.Expedition).Include(e => e.User).FirstOrDefault();
 
 
-            return View(FormsDbContext);
+            return View(theForm);
 
         }
 
-        [HttpPost]
-        public IActionResult RequestFormReview(Form theForm)
-        {
-
-            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
-
-
-            return View(FormsDbContext);
-        }
-
+       
     }
 }

@@ -3,3 +3,44 @@
 *@
 @{
 }
+@model ExpeditionProject.Models.Form
+<!--the form------------------------------------------------->
+<div>
+    <h4>Request Form # @Model.Id</h4>
+    <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SubmissionDateTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SubmissionDateTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ExpeditionId)
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-controller="Expeditions"
+                   asp-action="Edit"
+                   asp-route-id="@Model.ExpeditionId" target="_blank">@Model.ExpeditionId</a>
+            </dd>
+            
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+        <form action="List" method="get">
+            <button asp-controller="RequestForm" asp-action="List" class="btn btn-sm btn-outline-dark mb-3  col-sm-5" id ="id" name ="id" value="@Model.UserId">Complete</button>
+        </form>
+
+</div>
