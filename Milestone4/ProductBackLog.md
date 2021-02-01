@@ -56,7 +56,7 @@
         <tr>
             <td>8</td> <td>Completed</td> <td>U</td> <td>2</td><td>Armani</td>
             <td>As a public user I would like to be able to browse or search for peaks so that I can easily find them.</td>
-            <td>I will create a search bar within the nav bar and return basic information about peaks within the database listed. If the peak is not within the database it will return a form validation message.</td>
+            <td>The stakeholder would like there to be a convential way to search for Peaks. They want to be able to browse for potential peaks within the database. In order for the peaks to be found in a convential manner the search will need to be inside the nav bar.</td>
             <td><a href="https://github.com/NickApa/NATRSS/blob/dev/Milestone4/UserStoryArmani.md">Link to User Story</a></td>
         </tr>
         <tr>
