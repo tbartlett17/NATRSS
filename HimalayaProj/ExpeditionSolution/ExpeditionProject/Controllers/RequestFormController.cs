@@ -38,7 +38,25 @@ namespace ExpeditionProject.Controllers
             return View(FormsDbContext);
         }
 
+        public IActionResult RequestFormReview(int id)
+        {
 
+            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
+
+
+            return View(FormsDbContext);
+
+        }
+
+        [HttpPost]
+        public IActionResult RequestFormReview(Form theForm)
+        {
+
+            var FormsDbContext = _context.Forms.OrderByDescending(x => x.SubmissionDateTime).Include(e => e.Expedition).Include(e => e.User).Take(50);
+
+
+            return View(FormsDbContext);
+        }
 
     }
 }

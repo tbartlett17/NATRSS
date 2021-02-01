@@ -8,7 +8,7 @@
             <th>
                 UserID
             </th>
-        
+
             <th>
                 ExpeditionID
             </th>
@@ -18,7 +18,13 @@
             <th>
                 Description
             </th>
-           
+            <th>
+                Status
+            </th>
+            <th>
+                Completed
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -26,21 +32,27 @@
         {
 
             
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpeditionId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubmissionDateTime)
-                </td>
-                
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpeditionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+
+        </tr>
             
         }
     </tbody>
