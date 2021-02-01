@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="col-md">
                     <label for="supportticketbtn" class="sr-only">View support tickets</label>
-                    <input type="button" id="supportticketbtn" class="btn btn-primary btn-block" value="Support Tickets Table" onclick="location.href='@Url.Action("Index", "")'" />
+                    <input type="button" id="supportticketbtn" class="btn btn-primary btn-block" value="Support Tickets Table" onclick="location.href='@Url.Action("List", "RequestForm", new { id = Model.User.Id })'" />
                 </div>
                 <div class="col-md">
 
