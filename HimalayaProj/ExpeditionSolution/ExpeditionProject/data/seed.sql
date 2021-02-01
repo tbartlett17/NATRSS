@@ -11670,6 +11670,6 @@ INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Tyler', 
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Armani', '123456','Armani', '1995-01-01',1);
 INSERT INTO [User](UserName,Password,Name,BirthDate,UserTypeID) VALUES('Reggie', '123456','Reggie', '1995-01-01',1);
 INSERT INTO [BlogPost](Post, UserID) VALUES('This is a sample post to be added to the DB', 2);
-INSERT INTO [ExpeditionProvidertoExpeditions](ExpeditionID,UserID) VALUES(1,5);
+INSERT INTO [ExpeditionProvidertoExpeditions](ExpeditionID,UserID) VALUES(1,4);
 INSERT INTO [Form](Description,ExpeditionID,UserID,Status,Completed,SubmissionDateTime) VALUES('Please update the year on this expedition',100,1,'pending',0, GETDATE());
 
