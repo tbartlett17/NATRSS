@@ -15,6 +15,7 @@ namespace ExpeditionProject.Models
         [Column("ID")]
         public int Id { get; set; }
         [StringLength(50)]
+
         public string Description { get; set; }
         [Column("ExpeditionID")]
         public int? ExpeditionId { get; set; }
@@ -27,5 +28,8 @@ namespace ExpeditionProject.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty("Forms")]
         public virtual User User { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? SubmissionDateTime { get; set; }
     }
 }
