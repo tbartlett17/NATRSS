@@ -5,7 +5,7 @@
 >> ![Fun Photo](funPhoto.png "NATR Rocks")
 
 2. What did you learn from the Sprint?  
->Make users stories and tasks more distince and descriptive.     
+>Make users stories and tasks more descriptive and concise.     
 >Breaking down our user stories when needed and constructing epics and tasks more desriptively.   
 >Everyone check eachothers work before implementation to keep everyone on the same track  
 >Pacing ourselves a little better to avoid burn out or last minute cramming.  
