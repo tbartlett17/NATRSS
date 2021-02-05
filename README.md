@@ -90,4 +90,4 @@ Spill-Tracker.azurewebsites.net - Coming Soon!
 # License 
 LGPL-3.0-or-later
 
-For more info see <a href="https://github.com/NickApa/NATRSS/blob/dev/License.md">License.md</a> file
+For more info see <a href="https://github.com/NickApa/NATRSS/blob/dev/COPYING.LESSER.txt">License.md</a> file
