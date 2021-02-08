@@ -8,13 +8,20 @@ For environmental workers who need to report spills or look up information about
 We are creating this project as a continuation of our courses at Western Oregon University for the Computer Science Program. Courses in this program for the Senior Capstone are: CS460 - Software Engineering I, CS461 - Software Engineering II, CS462 - Software Engineering III. As well as prerequisite courses CS361 - Algorithms, CS364 - Information Systems. 
 
 # Table of Contents
-- Background
-- Contributing
-- Credits
-- Access
-- Team Rules
-- Tools
-- License
+- [Background](#background)
+- [Contributing](#contributing)
+    - [Overall](#overall)
+    - [C# Style](#c#-style)
+    - [HTML Style](#html-style)
+    - [CSS Style](#css-style)
+    - [JavaScript Style](#javascript-style)
+    - [SQL Style](#sql-style)
+    - [Git](#git)
+- [Credits](#credits)
+- [Access](#access)
+- [Team Rules](#team-rules)
+- [Tools](#tools)
+- [License](#license)
 
 # Background
 Under Title 40 Chapter I SubChapter J Parts 302 and 355 of the Code of Federal Regulations in the USA, requirements are established for facilites to submit emergency notification of chemical releases for designated chemicals on the [List of Hazardous Substances and Reportable Quantities](https://www.ecfr.gov/cgi-bin/text-idx?node=pt40.28.302&rgn=div5#se40.30.302_14) and [List of Extremely Hazardous Substances and Their Threshold Planning Quantities](https://www.ecfr.gov/cgi-bin/text-idx?SID=5bda0c1c4736b83aaf402bed85944e07&mc=true&node=pt40.30.355&rgn=div5#ap40.30.355_161.a).
@@ -91,3 +98,4 @@ Spill-Tracker.azurewebsites.net - Coming Soon!
 LGPL-3.0-or-later
 
 For more info see <a href="https://github.com/NickApa/NATRSS/blob/dev/COPYING.LESSER.txt">License.md</a> file
+
