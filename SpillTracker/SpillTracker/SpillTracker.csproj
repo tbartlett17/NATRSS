@@ -26,5 +26,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Watch Include="**/*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
+    <Watch Include="**/*.cshtml" />
+    <Watch Include="**/*.css" />
+  </ItemGroup>
 
 </Project>
