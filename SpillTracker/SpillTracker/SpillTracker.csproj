@@ -28,5 +28,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
+  <ItemGroup>
+    <Watch Include="**/*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
+    <Watch Include="**/*.cshtml" />
+    <Watch Include="**/*.css" />
+  </ItemGroup>
 
 </Project>
