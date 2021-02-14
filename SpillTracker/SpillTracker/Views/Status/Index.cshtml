@@ -1,0 +1,9 @@
+﻿@model IEnumerable<SpillTracker.Models.Chemical>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Status</h1>
+<p>There are currently @Model.Count() chemicals stored in our database!</p>
+<p>The EPCRA list of Extremely Hazardous Substances was last scraped on February 14th, 2021</p>
