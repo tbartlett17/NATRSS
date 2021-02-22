@@ -28,15 +28,15 @@ namespace SpillTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            /*services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            /*services.AddDbContext<ApplicationDbContext>(opts =>
+            */services.AddDbContext<ApplicationDbContext>(opts =>
             {
-                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
-                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                //opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
             });
-*/
+
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
