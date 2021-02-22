@@ -1,0 +1,94 @@
+﻿@model SpillTracker.Models.Chemical
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Chemical</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CasNum" class="control-label"></label>
+                <input asp-for="CasNum" class="form-control" />
+                <span asp-validation-for="CasNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PubChemCid" class="control-label"></label>
+                <input asp-for="PubChemCid" class="form-control" />
+                <span asp-validation-for="PubChemCid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReportableQuantity" class="control-label"></label>
+                <input asp-for="ReportableQuantity" class="form-control" />
+                <span asp-validation-for="ReportableQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReportableQuantityUnits" class="control-label"></label>
+                <input asp-for="ReportableQuantityUnits" class="form-control" />
+                <span asp-validation-for="ReportableQuantityUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Density" class="control-label"></label>
+                <input asp-for="Density" class="form-control" />
+                <span asp-validation-for="Density" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DensityUnits" class="control-label"></label>
+                <input asp-for="DensityUnits" class="form-control" />
+                <span asp-validation-for="DensityUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MolecularWeight" class="control-label"></label>
+                <input asp-for="MolecularWeight" class="form-control" />
+                <span asp-validation-for="MolecularWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MolecularWeightUnits" class="control-label"></label>
+                <input asp-for="MolecularWeightUnits" class="form-control" />
+                <span asp-validation-for="MolecularWeightUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VaporPressure" class="control-label"></label>
+                <input asp-for="VaporPressure" class="form-control" />
+                <span asp-validation-for="VaporPressure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VaporPressureUnits" class="control-label"></label>
+                <input asp-for="VaporPressureUnits" class="form-control" />
+                <span asp-validation-for="VaporPressureUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CerclaChem" class="control-label"></label>
+                <input asp-for="CerclaChem" class="form-control" />
+                <span asp-validation-for="CerclaChem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EpcraChem" class="control-label"></label>
+                <input asp-for="EpcraChem" class="form-control" />
+                <span asp-validation-for="EpcraChem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

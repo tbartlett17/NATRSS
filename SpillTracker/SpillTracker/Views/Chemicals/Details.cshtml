@@ -1,0 +1,96 @@
+﻿@model SpillTracker.Models.Chemical
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Chemical</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CasNum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CasNum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PubChemCid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PubChemCid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReportableQuantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReportableQuantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReportableQuantityUnits)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReportableQuantityUnits)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Density)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Density)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DensityUnits)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DensityUnits)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MolecularWeight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MolecularWeight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MolecularWeightUnits)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MolecularWeightUnits)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VaporPressure)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VaporPressure)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VaporPressureUnits)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VaporPressureUnits)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CerclaChem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CerclaChem)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EpcraChem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EpcraChem)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
