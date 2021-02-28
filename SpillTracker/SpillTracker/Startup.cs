@@ -37,16 +37,16 @@ namespace SpillTracker
             {
                 //identity connection local
 
-                //opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
             });
 
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //local host connection
                 
-                //opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
+                opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
