@@ -21,7 +21,8 @@ namespace SpillTracker.Controllers
         // GET: Chemicals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Chemicals.ToListAsync());
+            /*return View(await _context.Chemicals.ToListAsync());*/
+            return View(await _context.Chemicals.OrderBy(x=>x.Name).ToListAsync());        
         }
 
         // GET: Chemicals/Details/5
