@@ -8,6 +8,7 @@ namespace SpillTracker.Models
     [Table("Chemical")]
     public partial class Chemical
     {
+        
         public Chemical()
         {
             FacilityChemicals = new HashSet<FacilityChemical>();
@@ -52,5 +53,6 @@ namespace SpillTracker.Models
         public virtual ICollection<FacilityChemical> FacilityChemicals { get; set; }
         [InverseProperty(nameof(Form.Chemical))]
         public virtual ICollection<Form> Forms { get; set; }
+
     }
 }
