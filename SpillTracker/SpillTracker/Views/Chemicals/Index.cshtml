@@ -3,31 +3,31 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
+<br>
+<h2 style="text-align:center">List of our current Chemicals</h2>
+<br>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+</p>*@
+<table class="table table-striped table-dark">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CasNum)
+                @*@Html.DisplayNameFor(model => model.*@CAS No.
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PubChemCid)
+            </th>*@
+            <th>
+                @*@Html.DisplayNameFor(model => model.ReportableQuantity)*@Reportable Wt.
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReportableQuantity)
+                @*@Html.DisplayNameFor(model => model.ReportableQuantityUnits)*@Units
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReportableQuantityUnits)
-            </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Density)
             </th>
             <th>
@@ -50,8 +50,8 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EpcraChem)
-            </th>
-            <th></th>
+            </th>*@
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -63,16 +63,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CasNum)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PubChemCid)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ReportableQuantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Density)
             </td>
             <td>
@@ -95,12 +95,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EpcraChem)
-            </td>
-            <td>
+            </td>*@
+                      
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>
