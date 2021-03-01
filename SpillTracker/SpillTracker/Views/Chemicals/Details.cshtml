@@ -26,7 +26,7 @@
             @* @Html.DisplayNameFor(model => model.PubChemCid) *@ CID Number
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PubChemCid)
+             <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid">@Html.DisplayFor(model => model.PubChemCid)</a>
         </dd>
         <dt class = "col-sm-2">
             @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight

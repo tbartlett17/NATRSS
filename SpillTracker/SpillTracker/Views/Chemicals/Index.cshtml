@@ -7,24 +7,18 @@
 <h2 style="text-align:center">List of our current Chemicals</h2>
 <br>
 
-@* <div class="row">
+<div class="row">
     <div class="col">
-        <form asp-controller="Chemicals" asp-action="Search" method="GET">
-            <div class="input-group">
-                <input minlength="3" type="text" class="form-control" placeholder="Search by Chemical" required>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit">Search</button>
-                </div>
-            </div>
-        </form>
+            <div class="searchBox" style="text-align: center;">    
+                <input type="text" style="width: 60%;" class="searchTextBox" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
+                <label id="NotExist" style="display:none"></label>    
+            </div> 
     </div>
-    <div class="col">
+</div>
 
-    </div>
-</div> *@
+<br>
 
-
-<table class="table table-striped">
+<table class="table table-striped" id="mainTableid">
     <thead>
         <tr>
             <th style="width: 50%;">
@@ -36,12 +30,12 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.PubChemCid)
             </th>*@
-            <th style="width: 20%; text-align: center">
+            <th style="width: 20%; text-align: left">
                 @*@Html.DisplayNameFor(model => model.ReportableQuantity)*@Reportable Wt.
             </th>
-            <th style="width: 10%;">
-                @*@Html.DisplayNameFor(model => model.ReportableQuantityUnits)*@Units
-            </th>
+            @* <th >
+                @Html.DisplayNameFor(model => model.ReportableQuantityUnits)
+            </th> *@
             @*<th>
                 @Html.DisplayNameFor(model => model.Density)
             </th>
@@ -81,10 +75,8 @@
             @*<td>
                 @Html.DisplayFor(modelItem => item.PubChemCid)
             </td>*@
-            <td style="text-align: center;">
-                @Html.DisplayFor(modelItem => item.ReportableQuantity)
-            </td>
-            <td>
+            <td style="text-align: left;">
+                @Html.DisplayFor(modelItem => item.ReportableQuantity) 
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
             @*<td>
@@ -121,3 +113,8 @@
 }
     </tbody>
 </table>
+
+
+<script src="/js/searchbar.js"></script>
+
+@* search bar info found at  *@

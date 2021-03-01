@@ -42,15 +42,6 @@ namespace SpillTracker.Controllers
 
             return View(chemical);
         }
-        
-        // public IActionResult Search(string searchString) {
-        //     if(ModelState.IsValid) {
-        //         return View(_context.Chemicals.Where(s => s.Name.Contains(searchString)).ToListAsync());
-        //     }
-        //     else {
-        //         return View("Index", null);
-        //     } 
-        // }
 
 
         // GET: Chemicals/Create
