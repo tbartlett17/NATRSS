@@ -65,8 +65,8 @@ GO
 
 CREATE TABLE [Chemical] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(200),
-  [CAS_Num] nvarchar(30),
+  [Name] nvarchar(300),
+  [CAS_Num] nvarchar(150),
   [PubChemCID] int,
   [Reportable_Quantity] float,
   [Reportable_Quantity_Units] nvarchar(30),
