@@ -4,98 +4,73 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Chemical</h4>
+<div style="text-align: center;">
+    <h4><b>@Html.DisplayFor(model => model.Name)</b></h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Aliases)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Aliases)
-        </dd>
-        <dt class = "col-sm-2">
+    <dl style="text-align: center;">
+        
+        <dt  >
             @* @Html.DisplayNameFor(model => model.CasNum) *@ CAS Number
         </dt>
-        <dd class = "col-sm-10">
+        <dd  >
             @Html.DisplayFor(model => model.CasNum)
         </dd>
-        <dt class = "col-sm-2">
+        <dt  >
             @* @Html.DisplayNameFor(model => model.PubChemCid) *@ CID Number
         </dt>
-        <dd class = "col-sm-10">
-             <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid">@Html.DisplayFor(model => model.PubChemCid)</a>
+        <dd  >
+             <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid" target="_blank">@Html.DisplayFor(model => model.PubChemCid)</a>
         </dd>
-        <dt class = "col-sm-2">
+        <dt  >
             @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReportableQuantity)
+        <dd  >
+            @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
         </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.ReportableQuantityUnits) *@ Units
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReportableQuantityUnits)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt  >
             @Html.DisplayNameFor(model => model.Density)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Density)
+        <dd  >
+            @Html.DisplayFor(model => model.Density) @Html.DisplayFor(model => model.DensityUnits)
         </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.DensityUnits) *@ Units
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DensityUnits)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt  >
             @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MolecularWeight)
+        <dd  >
+            @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
         </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.MolecularWeightUnits) *@ Units
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MolecularWeightUnits)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt  >
             @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VaporPressure)
+        <dd  >
+            @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
         </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.VaporPressureUnits) *@ Units
+
+        <dt>
+            Chemical Classification
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VaporPressureUnits)
-        </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.CerclaChem) *@ CERCLA Chemical
+
+        @if (Model.CerclaChem == true)
+        {
+            <dd  >
+                CERCLA Chemical
+            </dd>
+        }
+        @if (Model.EpcraChem == true)
+        {
+            <dd>
+                EPCRA Chemical
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Aliases)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CerclaChem)
+        <dd>
+            @Html.DisplayFor(model => model.Aliases)
         </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.EpcraChem) *@ EPCRA Chemical
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EpcraChem)
-        </dd>
+
     </dl>
 </div>
-<div>
+<div style="text-align: center;">
     <a asp-action="Index">Back to List</a>
 </div>
