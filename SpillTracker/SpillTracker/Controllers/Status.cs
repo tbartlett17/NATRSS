@@ -66,13 +66,13 @@ namespace SpillTracker.Controllers
                 IEnumerable<HtmlNode> trCells = from cell in row.SelectNodes("th|td").Cast<HtmlNode>()
                                                 select cell;
 
-                Debug.WriteLine(": " + trCells.ElementAt(0).InnerHtml);
-                Debug.WriteLine(": " + trCells.ElementAt(1).InnerHtml);
-                Debug.WriteLine(": " + trCells.ElementAt(3).InnerHtml);
+                //Debug.WriteLine(": " + trCells.ElementAt(0).InnerHtml);
+                //Debug.WriteLine(": " + trCells.ElementAt(1).InnerHtml);
+                //Debug.WriteLine(": " + trCells.ElementAt(3).InnerHtml);
 
                 Chemical parsedChemical = new Chemical
                 {
-                    CasNum = trCells.ElementAt(0).InnerHtml,
+                    CasNum = String.Concat(trCells.ElementAt(0).InnerHtml.Where(c => !Char.IsWhiteSpace(c))),
                     Name = trCells.ElementAt(1).InnerHtml,
                     ReportableQuantity = Convert.ToDouble(trCells.ElementAt(3).InnerHtml),
                     ReportableQuantityUnits = "lbs",
@@ -81,23 +81,47 @@ namespace SpillTracker.Controllers
 
                 if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChemical.CasNum && c.Name == parsedChemical.Name && c.ReportableQuantity == parsedChemical.ReportableQuantity))
                 {
-                    Debug.WriteLine(parsedChemical.Name + " already exists in the database, skipping entry...");
+                    Debug.WriteLine("{{{ NAME:" + parsedChemical.Name + ", CAS:" + parsedChemical.CasNum + ", RQ:" + parsedChemical.ReportableQuantity + "}}} exists in the database, skipping entry...");
                 }
                 else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChemical.CasNum && c.Name == parsedChemical.Name && c.ReportableQuantity != parsedChemical.ReportableQuantity))
                 {
-                    Debug.WriteLine(parsedChemical.Name + " exists in the database but reportable quantity of " + parsedChemical.ReportableQuantity
+                    Debug.WriteLine("{{{ NAME:" + parsedChemical.Name + ", CAS:" + parsedChemical.CasNum + "}}} exists in the database but reportable quantity of " + parsedChemical.ReportableQuantity
                         + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().ReportableQuantity 
-                        + " lbs. Updating entry in database...");
+                        + " lbs. Updating RQ in database...");
                     dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().ReportableQuantity = parsedChemical.ReportableQuantity;
+                }
+                else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChemical.CasNum && c.ReportableQuantity == parsedChemical.ReportableQuantity && c.Name != parsedChemical.Name))
+                {
+                    Debug.WriteLine("{{{ CAS:" + parsedChemical.CasNum + ", RQ:" + parsedChemical.ReportableQuantity + "}}} exists in the database but its name, " + parsedChemical.Name + ", did not match the existing name," 
+                        + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().Name + ". Adding " + parsedChemical.Name 
+                        + " as a synonym to chemical " + parsedChemical.CasNum);
+
+                    if (String.IsNullOrEmpty(dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().Aliases))
+                    {
+                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().Aliases += parsedChemical.Name + "<br>";
+                    }
+                    else
+                    {
+                        string[] aliasArr = dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().Aliases.Split("<br>");
+
+                        if (aliasArr.Contains(parsedChemical.Name) == false)
+                        {
+                            dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChemical.CasNum).FirstOrDefault().Aliases += parsedChemical.Name + "<br>";
+
+                        }
+                    }
                 }
                 else
                 {
-                    Debug.WriteLine(parsedChemical.Name + " doesn't exist in the database. Adding the substance to the list...");
+                    Debug.WriteLine("{{{ NAME:" + parsedChemical.Name + ", CAS:" + parsedChemical.CasNum + ", RQ:" + parsedChemical.ReportableQuantity + "}}} doesn't exist in the database. Adding the substance to the list...");
                     dbSpllTracker.Add(parsedChemical);
                 }
+                dbSpllTracker.SaveChanges();
             }
 
-            dbSpllTracker.SaveChanges();
+            
+
+            //dbSpllTracker.SaveChanges();
 
         }
 
@@ -129,11 +153,11 @@ namespace SpillTracker.Controllers
                 IEnumerable<HtmlNode> trCells = from cell in row.SelectNodes("th|td").Cast<HtmlNode>()
                                                 select cell;
 
-                Debug.WriteLine(": " + trCells.ElementAt(0).InnerHtml);
+                //Debug.WriteLine(": " + trCells.ElementAt(0).InnerHtml);
                 //string[] casStrArr = trCells.ElementAt(1).InnerHtml.Split()
-                Debug.WriteLine(": " + trCells.ElementAt(1).InnerHtml.Replace("<br>", ", "));
+                //Debug.WriteLine(": " + trCells.ElementAt(1).InnerHtml.Replace("<br>", ", "));
                 string[] rqStrArr = trCells.ElementAt(4).InnerHtml.Split('(');
-                Debug.WriteLine(": " + rqStrArr[0]);
+                //Debug.WriteLine(": " + rqStrArr[0]);
 
                 if (String.IsNullOrEmpty(rqStrArr[0]))
                 {
@@ -141,31 +165,64 @@ namespace SpillTracker.Controllers
                     Chemical lastChem = dbSpllTracker.Chemicals.AsEnumerable().Last();
                     //Debug.WriteLine("\n\nlast chem: " + lastChem.Name + " , RQ: " + lastChem.ReportableQuantity + "\n\n");
 
-                    Chemical parsedChem = new Chemical
-                    {
-                        CasNum = trCells.ElementAt(1).InnerHtml.Replace("<br>", ", "),
-                        Name = trCells.ElementAt(0).InnerHtml,
-                        ReportableQuantity = lastChem.ReportableQuantity,
-                        ReportableQuantityUnits = "lbs",
-                        CerclaChem = true
-                    };
+                    string[] casNumArr = trCells.ElementAt(1).InnerHtml.Split("<br>");
 
-                    if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
+                    foreach (string casNum in casNumArr)
                     {
-                        Debug.WriteLine(parsedChem.Name + " already exists in the database, skipping entry...");
+                        Chemical parsedChem = new Chemical
+                        {
+                            CasNum = String.Concat(casNum.Where(c => !Char.IsWhiteSpace(c))),
+                            Name = trCells.ElementAt(0).InnerHtml,
+                            ReportableQuantity = lastChem.ReportableQuantity,
+                            ReportableQuantityUnits = "lbs",
+                            CerclaChem = true
+                        };
+
+                        if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database, skipping entry...");
+                        }
+                        else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity != parsedChem.ReportableQuantity))
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + "}}} exists in the database but reportable quantity of " + parsedChem.ReportableQuantity
+                                + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity
+                                + " lbs. Updating RQ in database...");
+                            dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity = parsedChem.ReportableQuantity;
+                        }
+                        else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.ReportableQuantity == parsedChem.ReportableQuantity && c.Name != parsedChem.Name))
+                        {
+                            Debug.WriteLine("{{{ CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database but its name, " + parsedChem.Name + ", did not match the existing name,"
+                                + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name + ". Adding " + parsedChem.Name
+                                + " as a synonym to chemical " + parsedChem.CasNum);
+
+                            if (String.IsNullOrEmpty(dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases))
+                            {
+                                dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                            }
+                            else
+                            {
+                                string[] aliasArr = dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases.Split("<br>");
+
+                                if (aliasArr.Contains(parsedChem.Name) == false)
+                                {
+                                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+
+                                }
+                            }
+
+                            dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().CerclaChem = true;
+
+
+                        }
+                        else
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} doesn't exist in the database. Adding the substance to the list...");
+                            dbSpllTracker.Add(parsedChem);
+                        }
+                        dbSpllTracker.SaveChanges();
                     }
-                    else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity != parsedChem.ReportableQuantity))
-                    {
-                        Debug.WriteLine(parsedChem.Name + " exists in the database but reportable quantity of " + parsedChem.ReportableQuantity
-                            + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity
-                            + " lbs. Updating entry in database...");
-                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity = parsedChem.ReportableQuantity;
-                    }
-                    else
-                    {
-                        Debug.WriteLine(parsedChem.Name + " doesn't exist in the database. Adding the substance to the list...");
-                        dbSpllTracker.Add(parsedChem);
-                    }
+
+                    
 
                 }
                 else if (rqStrArr[0].Contains("**")) // ** means no rq for the broad term so skip this listing on the table
@@ -185,48 +242,63 @@ namespace SpillTracker.Controllers
                 }
                 else
                 {
-                    Chemical parsedChem = new Chemical();
+                    string[] casNumArr = trCells.ElementAt(1).InnerHtml.Split("<br>");
 
-                    if (trCells.ElementAt(0).InnerHtml.Equals("Mercurous nitrate"))
+                    foreach (string casNum in casNumArr)
                     {
-                        parsedChem.CasNum = trCells.ElementAt(1).InnerHtml + ", " + trCells.ElementAt(4).InnerHtml;
-                        parsedChem.Name = trCells.ElementAt(0).InnerHtml;
-                        string[] thisrq = trCells.ElementAt(3).InnerHtml.Split('(');
-                        parsedChem.ReportableQuantity = Convert.ToDouble(thisrq[0]);
-                        parsedChem.ReportableQuantityUnits = "lbs";
-                        parsedChem.CerclaChem = true;
-                    }
-                    else
-                    {
-                        parsedChem.CasNum = trCells.ElementAt(1).InnerHtml.Replace("<br>", ", ");
-                        parsedChem.Name = trCells.ElementAt(0).InnerHtml;
-                        parsedChem.ReportableQuantity = Convert.ToDouble(rqStrArr[0]);
-                        parsedChem.ReportableQuantityUnits = "lbs";
-                        parsedChem.CerclaChem = true;
-                    }
-                    //Chemical parsedChem = new Chemical
-                    //{
-                    //    CasNum = trCells.ElementAt(1).InnerHtml.Replace("<br>", ", "),
-                    //    Name = trCells.ElementAt(0).InnerHtml,
-                    //    ReportableQuantity = Convert.ToDouble(rqStrArr[0]),
-                    //    ReportableQuantityUnits = "lbs"
-                    //};
+                        //Chemical newChemList
+                        Chemical parsedChem = new Chemical
+                        {
+                            CasNum = String.Concat(casNum.Where(c => !Char.IsWhiteSpace(c))),
+                            Name = trCells.ElementAt(0).InnerHtml,
+                            ReportableQuantity = Convert.ToDouble(rqStrArr[0]),
+                            ReportableQuantityUnits = "lbs",
+                            CerclaChem = true
+                        };
 
-                    if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
-                    {
-                        Debug.WriteLine(parsedChem.Name + " already exists in the database, skipping entry...");
-                    }
-                    else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity != parsedChem.ReportableQuantity))
-                    {
-                        Debug.WriteLine(parsedChem.Name + " exists in the database but reportable quantity of " + parsedChem.ReportableQuantity
-                            + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity
-                            + " lbs. Updating entry in database...");
-                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity = parsedChem.ReportableQuantity;
-                    }
-                    else
-                    {
-                        Debug.WriteLine(parsedChem.Name + " doesn't exist in the database. Adding the substance to the list...");
-                        dbSpllTracker.Add(parsedChem);
+                        if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database, skipping entry...");
+                        }
+                        else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity != parsedChem.ReportableQuantity))
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + "}}} exists in the database but reportable quantity of " + parsedChem.ReportableQuantity
+                                + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity
+                                + " lbs. Updating RQ in database...");
+                            dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity = parsedChem.ReportableQuantity;
+                        }
+                        else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.ReportableQuantity == parsedChem.ReportableQuantity && c.Name != parsedChem.Name))
+                        {
+                            Debug.WriteLine("{{{ CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database but its name, " + parsedChem.Name + ", did not match the existing name,"
+                                + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name + ". Adding " + parsedChem.Name
+                                + " as a synonym to chemical " + parsedChem.CasNum);
+
+                            if (String.IsNullOrEmpty(dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases)) 
+                            {
+                                dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                            }
+                            else
+                            {
+                                string[] aliasArr = dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases.Split("<br>");
+
+                                if (aliasArr.Contains(parsedChem.Name) == false)
+                                {
+                                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+
+                                }
+                            }
+
+                            
+
+                            dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().CerclaChem = true;
+
+                        }
+                        else
+                        {
+                            Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} doesn't exist in the database. Adding the substance to the list...");
+                            dbSpllTracker.Add(parsedChem);
+                        }
+                        dbSpllTracker.SaveChanges();
                     }
                 }
 
@@ -239,7 +311,7 @@ namespace SpillTracker.Controllers
                 }
             }
 
-                dbSpllTracker.SaveChanges();
+                //dbSpllTracker.SaveChanges();
                 
 
         }
