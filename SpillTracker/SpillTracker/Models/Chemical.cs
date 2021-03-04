@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
+// If you have enabled NRTs for your project, then un-comment the following line:
+// #nullable disable
+
 namespace SpillTracker.Models
 {
     [Table("Chemical")]
     public partial class Chemical
     {
-        
         public Chemical()
         {
             FacilityChemicals = new HashSet<FacilityChemical>();
@@ -18,10 +21,11 @@ namespace SpillTracker.Models
         [Key]
         [Column("ID")]
         public int Id { get; set; }
-        [StringLength(100)]
+        [StringLength(300)]
         public string Name { get; set; }
+        public string Aliases { get; set; }
         [Column("CAS_Num")]
-        [StringLength(15)]
+        [StringLength(150)]
         public string CasNum { get; set; }
         [Column("PubChemCID")]
         public int? PubChemCid { get; set; }
@@ -53,6 +57,5 @@ namespace SpillTracker.Models
         public virtual ICollection<FacilityChemical> FacilityChemicals { get; set; }
         [InverseProperty(nameof(Form.Chemical))]
         public virtual ICollection<Form> Forms { get; set; }
-
     }
 }

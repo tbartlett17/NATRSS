@@ -14,12 +14,12 @@ namespace SpillTracker.Controllers
     public class Status : Controller
     {
         private readonly SpillTrackerDbContext dbSpllTracker;
+        internal DbSet<Chemical> chemicals;
 
         public Status(SpillTrackerDbContext context)
         {
             dbSpllTracker = context;
         }
-
 
         public IActionResult Index()
         {

@@ -15,6 +15,8 @@ namespace SpillTracker.Controllers
 
         private readonly SpillTrackerDbContext db;
 
+        Home mystatus = new Home();
+
         public HomeController(ILogger<HomeController> logger, SpillTrackerDbContext context)
         {
             _logger = logger;
@@ -23,7 +25,9 @@ namespace SpillTracker.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Chemicals);
+            mystatus.chemicals = db.Chemicals;
+            mystatus.times = db.StatusTimes;
+            return View(mystatus);
         }
 
         public IActionResult Privacy()

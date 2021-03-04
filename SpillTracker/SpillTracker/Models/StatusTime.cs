@@ -9,17 +9,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpillTracker.Models
 {
-    [Table("ContactInfo")]
-    public partial class ContactInfo
+    [Table("StatusTime")]
+    public partial class StatusTime
     {
         [Key]
         [Column("ID")]
         public int Id { get; set; }
-        [StringLength(150)]
-        public string AgencyName { get; set; }
-        [StringLength(20)]
-        public string PhoneNumber { get; set; }
-        [StringLength(35)]
-        public string State { get; set; }
+
+
+        [Column("CERCLAScraperTime",TypeName = "datetime")]
+        public DateTime? CerclaScraperTime { get; set; }
+
+
+        [Column("EPCRAScraperTime", TypeName = "datetime")]
+        public DateTime? EpcrascraperTime { get; set; }
+
+
+        [Column("PubChemAPITime", TypeName = "datetime")]
+        public DateTime? PubChemApitime { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SpillTracker.Models.Chemical>
+﻿@model SpillTracker.Models.Home
 
 @{
     ViewData["Title"] = "Home Page";
@@ -31,10 +31,12 @@
 
     </div>
     <div class="col border rounded" style="border: 5% solid black;">
-        <p class="lead">There are currently <b>@Model.Count()</b> chemicals stored in our database!</p>
+        <p class="lead">There are currently <b>@Model.chemicals.Count()</b> chemicals stored in our database!</p>
         <br>
-        <p class="lead">The EPCRA list of Extremely Hazardous Substances was last scraped on </p>
+        <p class="lead">The EPCRA list of Extremely Hazardous Substances was last scraped on @Model.times.Last().EpcrascraperTime</p>
         <br>
-        <p class="lead">The CERCLA list of Extremely Hazardous Substances was last scraped on </p>
+        <p class="lead">The CERCLA list of Extremely Hazardous Substances was last scraped on @Model.times.Last().CerclaScraperTime</p>
+        <br>
+        <p class="lead">The Pub Chem API was last succesfully ran on @Model.times.Last().PubChemApitime</p>
     </div>
 </div>
