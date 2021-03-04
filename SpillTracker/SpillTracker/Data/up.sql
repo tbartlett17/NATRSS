@@ -66,6 +66,7 @@ GO
 CREATE TABLE [Chemical] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(300),
+  [Aliases] nvarchar(max),
   [CAS_Num] nvarchar(150),
   [PubChemCID] int,
   [Reportable_Quantity] float,
@@ -129,6 +130,14 @@ CREATE TABLE [Company] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(100),
   [Num_Facilities] int
+)
+GO
+
+CREATE TABLE [StatusTime] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [CerclaScraperTime] datetime,
+  [EPCRAScraperTime] datetime,
+  [PubChemAPITime] datetime
 )
 GO
 

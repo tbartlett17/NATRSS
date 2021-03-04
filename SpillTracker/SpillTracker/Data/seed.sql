@@ -10,11 +10,11 @@ INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyI
     ('','Bob','Ross','A1',1);
 
 
-INSERT INTO [Chemical] (Name,CAS_Num,PubChemCID,Reportable_Quantity,Reportable_Quantity_Units,Density,Density_Units,Molecular_Weight,Molecular_Weight_Units,Vapor_Pressure,Vapor_Pressure_Units,CERCLA_Chem,EPCRA_Chem) VALUES
-    ('Acetone Cyanohydrin','75-86-5',6406,10,'lbs',0.9267,'g/cm\u2073',85.1,'g/mol',0.8,'mm Hg',0,1),
-    ('Acetone Thiosemicarbazide','1752-30-3',2770166,1000,'lbs',NULL,'g/cm\u2073',131.2,'g/mol',NULL,'mm Hg',0,1), -- missing density, vapor pressure. setting to 0. info not available on PubChem. need a case for when this occurs or to keep track of it
-    ('Acrolein','107-02-8',7847,1,'lbs',0.8389,'g/cm\u2073',56.06,'g/mol',135.71,'mm Hg',0,1),
-    ('Acrylamide','79-06-1',6579,5000,'lbs',1.122,'g/cm\u2073',71.08,'g/mol',0.007,'mm Hg',0,1);
+INSERT INTO [Chemical] (Name,Aliases,CAS_Num,PubChemCID,Reportable_Quantity,Reportable_Quantity_Units,Density,Density_Units,Molecular_Weight,Molecular_Weight_Units,Vapor_Pressure,Vapor_Pressure_Units,CERCLA_Chem,EPCRA_Chem) VALUES
+    ('Acetone Cyanohydrin','','75-86-5',6406,10,'lbs',0.9267,'g/cm\u2073',85.1,'g/mol',0.8,'mm Hg',0,1),
+    ('Acetone Thiosemicarbazide','','1752-30-3',2770166,1000,'lbs',NULL,'g/cm\u2073',131.2,'g/mol',NULL,'mm Hg',0,1), -- missing density, vapor pressure. setting to 0. info not available on PubChem. need a case for when this occurs or to keep track of it
+    ('Acrolein','','107-02-8',7847,1,'lbs',0.8389,'g/cm\u2073',56.06,'g/mol',135.71,'mm Hg',0,1),
+    ('Acrylamide','','79-06-1',6579,5000,'lbs',1.122,'g/cm\u2073',71.08,'g/mol',0.007,'mm Hg',0,1);
 
 
 INSERT INTO [ChemicalState] (Type) VALUES
@@ -42,3 +42,5 @@ INSERT INTO [Form] (Spill_Reported_By,Spill_Reported_Time,Spill_Location,Spill_O
 INSERT INTO [ContactInfo] (AgencyName,PhoneNumber,State) VALUES 
     ('National Response Center','1-800-424-8802','Federal'),
     ('Oregon Department of Environmental Quality','1-503-378-8240','Oregon');
+
+INSERT INTO [StatusTime] (CerclaScraperTime, EPCRAScraperTime, PubChemAPITime) VALUES ('2021-2-28 05:00:00','2021-2-28 05:00:00','2021-2-28 05:00:00')

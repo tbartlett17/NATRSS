@@ -18,3 +18,4 @@ DROP TABLE Facility
 DROP TABLE FacilityChemicals
 DROP TABLE Form
 DROP TABLE ContactInfo
+DROP TABLE StatusTime

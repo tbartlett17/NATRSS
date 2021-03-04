@@ -33,3 +33,5 @@ function search()
         document.getElementById("NotExist").innerHTML = "Does not exist!";    
     }    
 }   
+
+// part of js code found at https://www.c-sharpcorner.com/article/custom-search-using-client-side-code/
