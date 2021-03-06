@@ -53,8 +53,8 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             // added username to the InputModel
 
             [Required]            
-            [Display(Name = "Username")]
-            public string Username { get; set; }
+            [Display(Name = "Name")]
+            public string Name { get; set; }
 
             //
 
@@ -83,7 +83,7 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 //replaced email as a username display with the username 
-                var user = new IdentityUser { UserName = Input.Username, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.Name, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
