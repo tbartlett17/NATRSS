@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using SpillTracker.Data;
+using SpillTracker.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,17 +25,20 @@ namespace SpillTracker.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly SpillTrackerDbContext _stDbContext;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            SpillTrackerDbContext spillTrackerDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _stDbContext = spillTrackerDbContext;
         }
 
         [BindProperty]
@@ -53,9 +58,12 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             // added username to the InputModel
 
             [Required]            
-            [Display(Name = "Name")]
-            public string Name { get; set; }
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
 
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
             //
 
             [Required]
@@ -82,12 +90,22 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                //replaced email as a username display with the username 
-                var user = new IdentityUser { UserName = Input.Name, Email = Input.Email };
+                 
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Creates one of our users
+                    Stuser a = new Stuser
+                    {
+                        AspnetIdentityId = user.Id, // grabs the aspnet id of the new user
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName
+                    };
+                    _stDbContext.Add(a);
+                    await _stDbContext.SaveChangesAsync();
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
