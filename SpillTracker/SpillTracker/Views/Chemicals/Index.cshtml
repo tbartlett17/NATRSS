@@ -33,6 +33,9 @@
             <th style="width: 20%; text-align: left">
                 @*@Html.DisplayNameFor(model => model.ReportableQuantity)*@Reportable Wt.
             </th>
+            <th>
+                Synonyms
+            </th>
             @* <th >
                 @Html.DisplayNameFor(model => model.ReportableQuantityUnits)
             </th> *@
@@ -66,7 +69,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td >
                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a> 
             </td>
             <td style="text-align: center;">
@@ -79,6 +82,26 @@
                 @Html.DisplayFor(modelItem => item.ReportableQuantity) 
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
+            @if (item.Aliases == null) 
+            {
+                <td>None Known</td>
+            }
+            
+            else
+            { 
+                string[] arr = item.Aliases.Split("<br>");
+                List<string> als = arr.ToList();
+                als.Remove(als.Last());
+                <td>
+                <Select style="width: 25%; text-align:center">
+                @foreach(var aliase in als) 
+                {
+                    <option type="submit" asp-action="Details" asp-route-id="@item.Id">@aliase</option> 
+                }
+                </Select>
+                </td>
+            }
+            
             @*<td>
                 @Html.DisplayFor(modelItem => item.Density)
             </td>
