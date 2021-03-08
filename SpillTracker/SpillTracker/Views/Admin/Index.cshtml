@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1 class="text-center">Admin Panel</h1>
+            </div>
+            <p>
+               
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 border rounded" style="padding-bottom: 1%">
+            <div id="EPCRAoverlay">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <h4 class="text-center">EPCRA Scraper</h4>
+            <p>
+                Running this will run the EPCRA Scraper function.
+            </p>
+            <div class="form-group" style="text-align: center" >
+                <label for="EPCRAtableXpath">Table Xpath:</label>
+                <input id="EPCRAtableXpath" type="text" style="width:100%"/>
+            </div>
+            <button id="EPCRAscrapeBtn" type="button" class="btn btn-primary btn-block" >
+                Execute
+            </button>
+        </div>
+        <div class="col-md-4 border rounded" style="padding-bottom: 1%">
+            <div id="overlay">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <h4 class="text-center">CERCLA Scraper</h4>
+            <p>
+                Running this will run the CERCLA Scraper function.
+            </p>
+            <div class="form-group" style="text-align: center">
+                <label for="CERCLAtableXpath">Table Xpath:</label>
+                <input id="CERCLAtableXpath" type="text" style="width:100%" />
+            </div>
+            <button id="CERCLAscrapeBtn" type="button" class="btn btn-primary btn-block">
+                Execute
+            </button>
+        </div>
+        <div class="col-md-4 border rounded" style="padding-bottom: 1%">
+            <h4 class="text-center">Update Chemical Data</h4>
+            <p>
+                Running this will run the Chemicals in the DB through the PubChem APIs to retireve chemical data.
+            </p>
+            <button id="UpdateChemsBtn" type="button" class="btn btn-primary btn-block">
+                Execute
+            </button>
+        </div>
+    
+
+</div>
+
+@*<div class="row" style="padding-top:5%">
+    <div class="col">
+        <h3 class="text-center">Output Log</h3>
+        <textarea id="outputLog" style="width:100%; height:25%" disabled>
+            
+        </textarea>
+        
+    </div>
+</div>*@
+
+
+@section Scripts {
+    <script src="/js/AdminPanel.js"></script>
+}
