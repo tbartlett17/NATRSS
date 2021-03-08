@@ -33,10 +33,10 @@
     <div class="col border rounded" style="border: 5% solid black;">
         <p class="lead">There are currently <b>@Model.chemicals.Count()</b> chemicals stored in our database!</p>
         <br>
-        <p class="lead">The EPCRA list of Extremely Hazardous Substances was last scraped on <b>@Model.times.Last().EpcrascraperTime</b></p>
+        <p class="lead">The EPCRA list of Extremely Hazardous Substances was last scraped on <b>@Model.times.Where(s => s.SourceName == "EPCRA Scraper").Last().Time</b></p>
         <br>
-        <p class="lead">The CERCLA list of Extremely Hazardous Substances was last scraped on <b> @Model.times.Last().CerclaScraperTime</b></p>
+        <p class="lead">The CERCLA list of Extremely Hazardous Substances was last scraped on <b> @Model.times.Where(s => s.SourceName == "CERCLA Scraper").Last().Time</b></p>
         <br>
-        <p class="lead">The Pub Chem API was last succesfully ran on <b>@Model.times.Last().PubChemApitime</b> </p>
+        <p class="lead">The Pub Chem API was last succesfully ran on <b>@Model.times.Where(s => s.SourceName == "PubChem API").Last().Time</b> </p>
     </div>
 </div>
