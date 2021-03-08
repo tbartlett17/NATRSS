@@ -34,11 +34,11 @@ $("#CERCLAscrapeBtn").click(function (e) {
     $("#CERCLAoverlay").css({ display: "none" });
 });
 
-$("#UpdateChemsBtn").click(function (e) {
+//$("#UpdateChemsBtn").click(function (e) {
    
-    console.log("attempting to update the chemical list via PubChem API calls");
+//    console.log("attempting to update the chemical list via PubChem API calls");
 
-});
+//});
 
 function errorOnAjax() {
     console.log("ERROR in ajax request");
