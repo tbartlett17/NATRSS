@@ -11,10 +11,11 @@ function search()
     for(i=0;i<tr.length;i++)    
     {    
         td=tr[i].getElementsByTagName("td")[0];
-        td1=tr[i].getElementsByTagName("td")[1]; //search keyword searched only in 1st column of the table, if you want to search other columns then change [0] to [1] or any required column number    
-        if(td || td1)    
+        td1=tr[i].getElementsByTagName("td")[1];
+        td2=tr[i].getElementsByTagName("td")[3]; //search keyword searched only in 1st column of the table, if you want to search other columns then change [0] to [1] or any required column number    
+        if(td || td1 || td2)    
         {    
-            if(td.innerHTML.toUpperCase().indexOf(filter)>-1 || td1.innerHTML.toUpperCase().indexOf(filter)>-1)    
+            if(td.innerHTML.toUpperCase().indexOf(filter)>-1 || td1.innerHTML.toUpperCase().indexOf(filter)>-1 || td2.innerHTML.toUpperCase().indexOf(filter)>-1)    
             {    
                 countvisble++;    
                 tr[i].style.display="";    

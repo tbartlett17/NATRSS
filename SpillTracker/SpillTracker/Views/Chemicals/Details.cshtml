@@ -63,11 +63,24 @@
             </dd>
         }
         <dt>
-            @Html.DisplayNameFor(model => model.Aliases)
+            Synonyms
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Aliases)
-        </dd>
+        @if (String.IsNullOrEmpty(Model.Aliases))
+        {
+            <dd>None known</dd>
+        }
+        else 
+        {
+            string[] arr = Model.Aliases.Split("<br>"); 
+            @foreach (var item in arr)
+                    {
+                        <dd>
+                            @item
+                        </dd>
+                    }
+        }
+        
+        
 
     </dl>
 </div>
