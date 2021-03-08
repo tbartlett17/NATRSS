@@ -15,17 +15,12 @@ namespace SpillTracker.Models
         [Key]
         [Column("ID")]
         public int Id { get; set; }
+        
+        [Column("SourceName")]
+        public string SourceName { get; set; }
+        [StringLength(100)]
 
-
-        [Column("CERCLAScraperTime",TypeName = "datetime")]
-        public DateTime? CerclaScraperTime { get; set; }
-
-
-        [Column("EPCRAScraperTime", TypeName = "datetime")]
-        public DateTime? EpcrascraperTime { get; set; }
-
-
-        [Column("PubChemAPITime", TypeName = "datetime")]
-        public DateTime? PubChemApitime { get; set; }
+        [Column("Time",TypeName = "datetime")]
+        public DateTime? Time { get; set; }
     }
 }

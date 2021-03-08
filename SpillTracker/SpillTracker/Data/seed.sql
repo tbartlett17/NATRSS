@@ -43,4 +43,6 @@ INSERT INTO [ContactInfo] (AgencyName,PhoneNumber,State) VALUES
     ('National Response Center','1-800-424-8802','Federal'),
     ('Oregon Department of Environmental Quality','1-503-378-8240','Oregon');
 
-INSERT INTO [StatusTime] (CerclaScraperTime, EPCRAScraperTime, PubChemAPITime) VALUES ('2021-2-28 05:00:00','2021-2-28 05:00:00','2021-2-28 05:00:00')
+INSERT INTO [StatusTime] (SourceName, Time) VALUES ('EPCRA Scraper','2021-2-28 05:00:00')
+INSERT INTO [StatusTime] (SourceName, Time) VALUES ('CERCLA Scraper','2021-2-28 05:00:00')
+INSERT INTO [StatusTime] (SourceName, Time) VALUES ('PubChem API','2021-2-28 05:00:00')

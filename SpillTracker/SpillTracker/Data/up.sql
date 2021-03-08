@@ -135,9 +135,8 @@ GO
 
 CREATE TABLE [StatusTime] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [CerclaScraperTime] datetime,
-  [EPCRAScraperTime] datetime,
-  [PubChemAPITime] datetime
+  [SourceName] nvarchar(100),
+  [Time] datetime
 )
 GO
 
