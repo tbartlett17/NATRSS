@@ -35,7 +35,7 @@
             </button>
         </div>
         <div class="col-md-4 border rounded" style="padding-bottom: 1%">
-            <div id="overlay">
+            <div id="CERCLAoverlay">
                 <div class="w-100 d-flex justify-content-center align-items-center">
                     <div class="spinner"></div>
                 </div>
@@ -46,19 +46,24 @@
             </p>
             <div class="form-group" style="text-align: center">
                 <label for="CERCLAtableXpath">Table Xpath:</label>
-                <input id="CERCLAtableXpath" type="text" style="width:100%" value="/html/body/div/div[2]/div[2]/div[4]/div[2]/table"/>
+                <input id="CERCLAtableXpath" type="text" style="width:100%" value="/html/body/div/div[2]/div[2]/div[4]/div[2]/table" />
             </div>
             <button id="CERCLAscrapeBtn" type="button" class="btn btn-primary btn-block">
                 Execute
             </button>
         </div>
         <div class="col-md-4 border rounded" style="padding-bottom: 1%">
+            <div id="updateChemsOverlay">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="spinner"></div>
+                </div>
+            </div>
             <h4 class="text-center">Update Chemical Data</h4>
             <p>
                 Running this will run the Chemicals in the DB through the PubChem APIs to retireve chemical data.
             </p>
-            <button id="UpdateChemsBtn" type="button" class="btn btn-primary btn-block">
-                Execute
+            <button id="UpdateChemsBtn" type="button" class="btn btn-primary btn-block" disabled>
+                btn disabled
             </button>
         </div>
     

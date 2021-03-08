@@ -30,23 +30,20 @@ namespace SpillTracker
         public void ConfigureServices(IServiceCollection services)
         {
             //identity connection
-            
-            /*services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            */services.AddDbContext<ApplicationDbContext>(opts =>
+            services.AddDbContext<ApplicationDbContext>(opts =>
             {
-                //identity connection local
-
+                //local host connection
                 opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                //azure connection
                 //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
             });
 
+            //spilltracker connection
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //local host connection
-                
                 opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
+                //azure connection
                 //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
             });
 

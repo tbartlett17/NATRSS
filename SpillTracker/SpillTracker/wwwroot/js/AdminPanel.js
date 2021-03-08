@@ -20,7 +20,7 @@ $("#EPCRAscrapeBtn").click(function (e) {
 $("#CERCLAscrapeBtn").click(function (e) {
     var inputXpath = $("#CERCLAtableXpath").val();
     console.log("running CERCLA Scrapper with xpath: " + inputXpath);
-    $("#overlay").css({ display: "flex" });
+    $("#CERCLAoverlay").css({ display: "flex" });
 
     $.ajax({
         type: "POST",
@@ -31,22 +31,24 @@ $("#CERCLAscrapeBtn").click(function (e) {
         error: errorOnAjax
     });
 
-    $("#overlay").css({ display: "none" });
+    $("#CERCLAoverlay").css({ display: "none" });
 });
 
 $("#UpdateChemsBtn").click(function (e) {
-    
+   
     console.log("attempting to update the chemical list via PubChem API calls");
 
 });
 
 function errorOnAjax() {
     console.log("ERROR in ajax request");
+    alert("ERROR in ajax request");
     $("#outputLog").val += ("ERROR in ajax request\n");
     $("#overlay").css({ display: "none" });
 }
 
 function successParse(data) {
     $("#outputLog").val += ("success\n");
+    alert("success on ajax request");
     //$("#overlay").css({ display: "none" });
 }
