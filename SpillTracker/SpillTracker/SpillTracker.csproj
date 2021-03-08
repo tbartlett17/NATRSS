@@ -35,14 +35,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\AdminPanel.js" />
+    <Content Remove="wwwroot\js\adminpanel2.js" />
   </ItemGroup>
   <ItemGroup>
     <Watch Remove="wwwroot\css\SpinnerOverlay.css" />
     <Watch Remove="wwwroot\js\AdminPanel.js" />
+    <Watch Remove="wwwroot\js\adminpanel2.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Admin\Index.cshtml" />
-    <None Include="wwwroot\js\AdminPanel.js" />
+    <None Include="wwwroot\js\adminpanel.js" />
+    <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>
 
 </Project>

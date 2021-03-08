@@ -33,7 +33,7 @@ $("#CERCLAscrapeBtn").click(function (e) {
 });
 
 //$("#UpdateChemsBtn").click(function (e) {
-   
+
 //    console.log("attempting to update the chemical list via PubChem API calls");
 
 //});
