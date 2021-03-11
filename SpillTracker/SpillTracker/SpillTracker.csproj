@@ -20,9 +20,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -32,6 +32,20 @@
     <Watch Include="**/*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
     <Watch Include="**/*.cshtml" />
     <Watch Include="**/*.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\AdminPanel.js" />
+    <Content Remove="wwwroot\js\adminpanel2.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Watch Remove="wwwroot\css\SpinnerOverlay.css" />
+    <Watch Remove="wwwroot\js\AdminPanel.js" />
+    <Watch Remove="wwwroot\js\adminpanel2.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Admin\Index.cshtml" />
+    <None Include="wwwroot\js\adminpanel.js" />
+    <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>
 
 </Project>

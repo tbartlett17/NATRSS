@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
+// If you have enabled NRTs for your project, then un-comment the following line:
+// #nullable disable
+
 namespace SpillTracker.Models
 {
     public partial class SpillTrackerDbContext : DbContext
@@ -22,6 +26,7 @@ namespace SpillTracker.Models
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<FacilityChemical> FacilityChemicals { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
+        public virtual DbSet<StatusTime> StatusTimes { get; set; }
         public virtual DbSet<Stuser> Stusers { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
 

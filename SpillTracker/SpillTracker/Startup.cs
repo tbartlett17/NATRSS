@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpillTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SpillTracker
 {
@@ -29,32 +30,45 @@ namespace SpillTracker
         public void ConfigureServices(IServiceCollection services)
         {
             //identity connection
-            
-            /*services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            */services.AddDbContext<ApplicationDbContext>(opts =>
+            services.AddDbContext<ApplicationDbContext>(opts =>
             {
-                //identity connection local
-
-                //opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                //local host connection
+                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                //azure connection
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
             });
 
+            //spilltracker connection
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //local host connection
-                
-                //opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
+                opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
+                //azure connection
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.Configure<IdentityOptions>(opts =>
+            {
+                //opts.Password.RequiredLength = 8; //changes from default of 6 to 8
+                //opts.Password.RequiredUniqueChars = 4; //requires at least 4 unique characters ie no 'aaaaaaaa' type passwords
+                //opts.SignIn.Required = true; //set to true after we get an email verifiaction setup 
+                opts.User.RequireUniqueEmail = true; //cant have two users with same email
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
-            
+
+            //// Blocks access to everything unless specifically allowed on individual pages
+            //services.AddAuthorization(opts =>
+            //{
+            //    opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

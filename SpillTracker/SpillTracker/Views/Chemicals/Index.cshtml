@@ -3,31 +3,43 @@
 @{
     ViewData["Title"] = "Index";
 }
+<br>
+<h2 style="text-align:center">List of our current Chemicals</h2>
+<br>
 
-<h1>Index</h1>
+<div class="row">
+    <div class="col">
+            <div class="searchBox" style="text-align: center;">    
+                <input type="text" style="width: 60%;" class="searchTextBox" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
+                <label id="NotExist" style="display:none"></label>    
+            </div> 
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<br>
+
+<table class="table table-striped" id="mainTableid">
     <thead>
         <tr>
-            <th>
+            <th style="width: 50%;">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CasNum)
+            <th style="width: 20%; text-align: center">
+                @*@Html.DisplayNameFor(model => model.*@CAS No.
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PubChemCid)
+            </th>*@
+            <th style="width: 20%; text-align: left">
+                @*@Html.DisplayNameFor(model => model.ReportableQuantity)*@Reportable Wt.
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReportableQuantity)
+                Synonyms
             </th>
-            <th>
+            @* <th >
                 @Html.DisplayNameFor(model => model.ReportableQuantityUnits)
-            </th>
-            <th>
+            </th> *@
+            @*<th>
                 @Html.DisplayNameFor(model => model.Density)
             </th>
             <th>
@@ -50,29 +62,47 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EpcraChem)
-            </th>
-            <th></th>
+            </th>*@
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
+            <td >
+               <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a> 
             </td>
-            <td>
+            <td style="text-align: center;">
                 @Html.DisplayFor(modelItem => item.CasNum)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PubChemCid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportableQuantity)
-            </td>
-            <td>
+            </td>*@
+            <td style="text-align: left;">
+                @Html.DisplayFor(modelItem => item.ReportableQuantity) 
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
-            <td>
+            @if (item.Aliases == null) 
+            {
+                <td>None Known</td>
+            }
+            
+            else
+            { 
+                string[] arr = item.Aliases.Split("<br>");
+                List<string> als = arr.ToList();
+                als.Remove(als.Last());
+                <td>
+                <Select style="width: 25%; text-align:center">
+                @foreach(var aliase in als) 
+                {
+                    <option type="submit" asp-action="Details" asp-route-id="@item.Id">@aliase</option> 
+                }
+                </Select>
+                </td>
+            }
+            
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Density)
             </td>
             <td>
@@ -95,13 +125,21 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EpcraChem)
-            </td>
-            <td>
+            </td>*@
+                      
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="/js/searchbar.js"></script>
+}
+
+
+@* search bar info found at https://www.c-sharpcorner.com/article/custom-search-using-client-side-code/*@
