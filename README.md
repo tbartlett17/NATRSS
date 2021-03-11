@@ -80,7 +80,7 @@ We use equation 7 from the [EPA's Technical Guidance for Hazard Analysis Appx. G
 - <a href="https://github.com/edgyJackson">Reggie Johnson</a>  
 
 # Access
-Spill-Tracker.azurewebsites.net - Coming Soon!
+<a href="https://spilltracker.azurewebsites.net">Website Link</a> - Coming Soon!
 
 # Team Rules
 - Be Kind
