@@ -164,12 +164,12 @@ namespace SpillTracker.Controllers
 
 
         //Attempt to get CID and Molecular weight from the Pug REst API
-        public ExtraChemData GetCIDMolWeightFromPUGRest(string casNumber)
+        public  ExtraChemData GetCIDMolWeightFromPUGRest(string casNumber)
         {
  
             string url;
             int cIDNumber;
-            float molWeight;
+            double molWeight;
             ExtraChemData currentData = new ExtraChemData 
             { 
                 CID = 0, 
@@ -181,8 +181,7 @@ namespace SpillTracker.Controllers
             };
 
             url = $"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{casNumber}/property/MolecularWeight/json";
-
-            
+         
             //try to search for compound using the CID from Pug-Rest API If that doesn't work try again with CAS-prepended to the CAS number
             try
             {
@@ -203,7 +202,7 @@ namespace SpillTracker.Controllers
                 JObject geo = JObject.Parse(jsonString);
 
                 cIDNumber = (int)geo["PropertyTable"]["Properties"][0]["CID"];
-                molWeight = (int)geo["PropertyTable"]["Properties"][0]["MolecularWeight"];
+                molWeight = (double)geo["PropertyTable"]["Properties"][0]["MolecularWeight"];
             }
             catch (Exception)
             {
@@ -213,7 +212,7 @@ namespace SpillTracker.Controllers
                 molWeight = 0;
             }
 
-            //if the first API call doesn't work then try this one
+            //Api format 
             if (cIDNumber==0)
             {
                 try
@@ -237,7 +236,7 @@ namespace SpillTracker.Controllers
                     JObject geo = JObject.Parse(jsonString);
 
                     cIDNumber = (int)geo["PropertyTable"]["Properties"][0]["CID"];
-                    molWeight = (int)geo["PropertyTable"]["Properties"][0]["MolecularWeight"];
+                    molWeight = (double)geo["PropertyTable"]["Properties"][0]["MolecularWeight"];
 
                 }
                 catch (Exception)
@@ -248,39 +247,36 @@ namespace SpillTracker.Controllers
                     molWeight = 0;
                 }
             }
-                
-
-
+            
             //If there is no cid number found by the API send back and empty extraChemData object to the controller
             if (cIDNumber != 0) 
             { 
                 currentData = GetDensVapPresFromPUGView(cIDNumber, casNumber, molWeight); 
-            }          
+            }
 
-          /*   if(_context.Chemicals.Where(a=>a.CasNum == casNumber).Select(x=>x.PubChemCid).FirstOrDefault() != cIDNumber)
-             {
-                 Chemical chem = _context.Chemicals.Where(a => a.CasNum == casNumber).First();
-                 chem.PubChemCid = cIDNumber;
+            if (_context.Chemicals.Where(a => a.CasNum == casNumber).Select(x => x.PubChemCid).FirstOrDefault() != cIDNumber)
+            {
+                Chemical chem = _context.Chemicals.Where(a => a.CasNum == casNumber).First();
+                chem.PubChemCid = cIDNumber;
                 chem.MolecularWeight = molWeight;
-                 _context.SaveChanges();
+                chem.MolecularWeightUnits = "g/mol";
+                _context.SaveChanges();
 
-             }*/
+            }
 
             return currentData;      
         }
 
-        public ExtraChemData GetDensVapPresFromPUGView(int cIDNumber, string casNumber, float molecweight)
+        public ExtraChemData GetDensVapPresFromPUGView(int cIDNumber, string casNumber, double molecweight)
         {
-
-
             string jsonString;
             string jsonString2;
             string url;
             string url2;
             string densityString;
             string vaporPressureString;
-            float density;
-            float vaporPressure; 
+            double density;
+            double vaporPressure; 
             Chemical C = _context.Chemicals.Where(c => c.CasNum == casNumber).FirstOrDefault();
             url = $"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cIDNumber}/JSON?heading=Density";
             url2 = $"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cIDNumber}/JSON?heading=Vapor+Pressure";
@@ -302,24 +298,24 @@ namespace SpillTracker.Controllers
                 //The call was successful populate the density and vapor pressure 
                 JObject geo = JObject.Parse(jsonString);
                 densityString = (string)geo["Record"]["Section"][0]["Section"][0]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"];
-                density = float.Parse(Regex.Match(densityString, @"^\d*\.*\d*").Value);
+                density = double.Parse(Regex.Match(densityString, @"^\d*\.*\d*").Value);
                 string densitytest = Regex.Match(densityString, @"^(\d*\.*\d*)-(\d*\.*\d*)").Value;
                 string densitytest2 = Regex.Match(densityString, @"^\d*\.*\d*").Value;
                 if (densitytest != "")
                 {
 
-                    density = float.Parse(Regex.Match(densityString, @"^(\d*\.*\d*)-(\d*\.*\d*)").Groups[2].Value);
+                    density = double.Parse(Regex.Match(densityString, @"^(\d*\.*\d*)-(\d*\.*\d*)").Groups[2].Value);
 
                 }
             }
             catch (Exception)
             {
                 //API call failed set the density to 0
-                density = (float)0.0;
+                density = (double)0.0;
                 Debug.WriteLine("density not found");
             }
 
-            //try to send an API call to the PugView API for Density
+            //try to send an API call to the PugView API for Vapor Pressure
             try
             {
                 HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(url2);
@@ -339,27 +335,27 @@ namespace SpillTracker.Controllers
                 //System.Text.RegularExpressions.Regex  
                 vaporPressureString = (string)geo2["Record"]["Section"][0]["Section"][0]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"];
                 vaporPressureString = vaporPressureString.Replace("X10-", "e-0");
-                vaporPressure = (float)Decimal.Parse(Regex.Match(vaporPressureString, @"^\d*\.*\d*e*-*\d*").Value, NumberStyles.Float);
+                vaporPressure = (double)Decimal.Parse(Regex.Match(vaporPressureString, @"^\d*\.*\d*e*-*\d*").Value, NumberStyles.Float);
               
             }
             catch (Exception)
             {
                 //API call failed set the vapor pressure to 0
-                vaporPressure = (float)0.0;
+                vaporPressure = (double)0.0;
                 Debug.WriteLine("vapor Pressure not found");
             }
 
-          
-            /*if (_context.Chemicals.Where(a => a.CasNum == casNumber).Select(x => x.Density).FirstOrDefault() != density)
+            if (_context.Chemicals.Where(a => a.CasNum == casNumber).Select(x => x.Density).FirstOrDefault() != density || _context.Chemicals.Where(a => a.CasNum == casNumber).Select(x => x.VaporPressure).FirstOrDefault() != vaporPressure )
             {
                 Chemical chem = _context.Chemicals.Where(a => a.CasNum == casNumber).First();
                 chem.Density = density;
                 chem.VaporPressure = vaporPressure;
+                chem.DensityUnits = "g/cm";
+                chem.VaporPressureUnits = "mm Hg";
                 _context.SaveChanges();
 
-            }*/
+            }
             return (new ExtraChemData { CID = cIDNumber, MolecularWeight = molecweight, Density = density, VaporPressure = vaporPressure, Message = "Success" });
-
 
         }
     }
