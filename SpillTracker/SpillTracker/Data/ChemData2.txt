@@ -1,0 +1,7 @@
+106-51-4 &#961;-Benzoquinone 4650 1.318 0.1 
+91-94-1 [1,1&prime;-Biphenyl]-4,4&prime;-diamine,3,3&prime;-dichloro- 7070 0 4.1E-06 
+91-94-1 [1,1&prime;-Biphenyl]-4,4&prime;-diamine,3,3&prime;-dichloro- 7070 0 4.1E-06 
+106-51-4 &#961;-Benzoquinone 4650 1.318 0.1 
+94-11-1 2,4-D Ester 7173 1.27 0.000232 
+51-28-5 2,4-Dinitrophenol 1493 1.68 0.00039 
+94-11-1 2,4-D Ester 7173 1.27 0.000232 
