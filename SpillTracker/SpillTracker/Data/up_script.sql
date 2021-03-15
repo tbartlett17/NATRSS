@@ -52,6 +52,7 @@ CREATE TABLE [Form] (
   [FacilityID] int
 );
 
+
 CREATE TABLE [STUser] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [ASPNetIdentityID] nvarchar(450),
@@ -60,6 +61,7 @@ CREATE TABLE [STUser] (
   [EmployeeNumber] nvarchar(25),
   [CompanyID] int
 );
+
 
 CREATE TABLE [Chemical] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -79,6 +81,7 @@ CREATE TABLE [Chemical] (
   [EPCRA_Chem] bit
 );
 
+
 CREATE TABLE [Surface] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Type] nvarchar(25)
@@ -88,6 +91,7 @@ CREATE TABLE [ChemicalState] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Type] nvarchar(25)
 );
+
 
 CREATE TABLE [Facility] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -110,7 +114,6 @@ CREATE TABLE [FacilityChemicals] (
   [ChemicalID] int,
   [FacilityID] int
 );
-
 CREATE TABLE [ContactInfo] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [AgencyName] nvarchar(150),
@@ -118,11 +121,13 @@ CREATE TABLE [ContactInfo] (
   [State] nvarchar(35)
 );
 
+
 CREATE TABLE [Company] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(100),
   [Num_Facilities] int
 );
+
 
 CREATE TABLE [StatusTime] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -149,3 +154,4 @@ ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalStat
 ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalID FOREIGN KEY ([ChemicalID]) REFERENCES [Chemical] ([ID]);
 
 ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_FacilityID FOREIGN KEY ([FacilityID])  REFERENCES [Facility] ([ID]);
+
