@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-*/.azure/*
+/SpillTracker/Spilltracker/.azure*
 
 
 # User-specific files
