@@ -36,6 +36,7 @@ namespace SpillTracker
                 opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
                 //azure connection
                 //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                
             });
 
             //spilltracker connection
@@ -45,6 +46,7 @@ namespace SpillTracker
                 opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
                 //azure connection
                 //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
+                
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
