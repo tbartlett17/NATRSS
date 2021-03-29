@@ -275,8 +275,8 @@ namespace SpillTracker.Controllers
             string url2;
             string densityString;
             string vaporPressureString;
-            double density;
-            double vaporPressure; 
+            double? density;
+            double? vaporPressure; 
             Chemical C = _context.Chemicals.Where(c => c.CasNum == casNumber).FirstOrDefault();
             url = $"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cIDNumber}/JSON?heading=Density";
             url2 = $"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cIDNumber}/JSON?heading=Vapor+Pressure";
@@ -311,7 +311,7 @@ namespace SpillTracker.Controllers
             catch (Exception)
             {
                 //API call failed set the density to 0
-                density = (double)0.0;
+                density = -1;
                 Debug.WriteLine("density not found");
             }
 
@@ -341,7 +341,7 @@ namespace SpillTracker.Controllers
             catch (Exception)
             {
                 //API call failed set the vapor pressure to 0
-                vaporPressure = (double)0.0;
+                vaporPressure = -1;
                 Debug.WriteLine("vapor Pressure not found");
             }
 
@@ -355,7 +355,7 @@ namespace SpillTracker.Controllers
                 _context.SaveChanges();
 
             }
-            return (new ExtraChemData { CID = cIDNumber, MolecularWeight = molecweight, Density = density, VaporPressure = vaporPressure, Message = "Success" });
+            return (new ExtraChemData { CID = cIDNumber, MolecularWeight = molecweight, Density = (double)density, VaporPressure = (double)vaporPressure, Message = "Success" });
 
         }
     }
