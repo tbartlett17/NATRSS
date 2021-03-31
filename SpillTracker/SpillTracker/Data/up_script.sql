@@ -50,7 +50,8 @@ CREATE TABLE [Form] (
   [Spill_SurfaceID] int,
   [ChemicalStateID] int,
   [FacilityID] int
-)
+);
+
 
 CREATE TABLE [STUser] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -59,7 +60,8 @@ CREATE TABLE [STUser] (
   [LastName] nvarchar(50),
   [EmployeeNumber] nvarchar(25),
   [CompanyID] int
-)
+);
+
 
 CREATE TABLE [Chemical] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -77,17 +79,19 @@ CREATE TABLE [Chemical] (
   [Vapor_Pressure_Units] nvarchar(30),
   [CERCLA_Chem] bit,
   [EPCRA_Chem] bit
-)
+);
+
 
 CREATE TABLE [Surface] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Type] nvarchar(25)
-)
+);
 
 CREATE TABLE [ChemicalState] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Type] nvarchar(25)
-)
+);
+
 
 CREATE TABLE [Facility] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -99,7 +103,7 @@ CREATE TABLE [Facility] (
   [Location] nvarchar(100),
   [Industry] nvarchar(50),
   [CompanyID] int
-)
+);
 
 CREATE TABLE [FacilityChemicals] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -109,43 +113,45 @@ CREATE TABLE [FacilityChemicals] (
   [ChemicalStateID] int,
   [ChemicalID] int,
   [FacilityID] int
-)
-
+);
 CREATE TABLE [ContactInfo] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [AgencyName] nvarchar(150),
   [PhoneNumber] nvarchar(20),
   [State] nvarchar(35)
-)
+);
+
 
 CREATE TABLE [Company] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(100),
   [Num_Facilities] int
-)
+);
+
 
 CREATE TABLE [StatusTime] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [SourceName] nvarchar(100),
   [Time] datetime
-)
+);
 
-ALTER TABLE [Form] ADD CONSTRAINT Form_FK_STUserID FOREIGN KEY ([STUserID]) REFERENCES [STUser] ([ID])
+ALTER TABLE [Form] ADD CONSTRAINT Form_FK_STUserID FOREIGN KEY ([STUserID]) REFERENCES [STUser] ([ID]);
 
-ALTER TABLE [Form] ADD CONSTRAINT  Form_FK_ChemicalID FOREIGN KEY ([ChemicalID]) REFERENCES [Chemical] ([ID])
+ALTER TABLE [Form] ADD CONSTRAINT  Form_FK_ChemicalID FOREIGN KEY ([ChemicalID]) REFERENCES [Chemical] ([ID]);
 
-ALTER TABLE [Form] ADD CONSTRAINT Form_FK_Spill_SurfaceID FOREIGN KEY ([Spill_SurfaceID]) REFERENCES [Surface] ([ID])
+ALTER TABLE [Form] ADD CONSTRAINT Form_FK_Spill_SurfaceID FOREIGN KEY ([Spill_SurfaceID]) REFERENCES [Surface] ([ID]);
 
-ALTER TABLE [Form] ADD CONSTRAINT Form_FK_ChemicalStateID FOREIGN KEY ([ChemicalStateID]) REFERENCES [ChemicalState] ([ID])
+ALTER TABLE [Form] ADD CONSTRAINT Form_FK_ChemicalStateID FOREIGN KEY ([ChemicalStateID]) REFERENCES [ChemicalState] ([ID]);
 
-ALTER TABLE [Form] ADD CONSTRAINT Form_FK_FacilityID FOREIGN KEY ([FacilityID]) REFERENCES [Facility] ([ID])
+ALTER TABLE [Form] ADD CONSTRAINT Form_FK_FacilityID FOREIGN KEY ([FacilityID]) REFERENCES [Facility] ([ID]);
 
-ALTER TABLE [STUser] ADD CONSTRAINT STUser_FK_CompanyID FOREIGN KEY ([CompanyID]) REFERENCES [Company] ([ID])
+ALTER TABLE [STUser] ADD CONSTRAINT STUser_FK_CompanyID FOREIGN KEY ([CompanyID]) REFERENCES [Company] ([ID]);
 
-ALTER TABLE [Facility] ADD CONSTRAINT Facility_FK_CompanyID FOREIGN KEY ([CompanyID]) REFERENCES [Company] ([ID])
+ALTER TABLE [Facility] ADD CONSTRAINT Facility_FK_CompanyID FOREIGN KEY ([CompanyID]) REFERENCES [Company] ([ID]);
 
-ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalStateID FOREIGN KEY ([ChemicalStateID]) REFERENCES [ChemicalState] ([ID])
+ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalStateID FOREIGN KEY ([ChemicalStateID]) REFERENCES [ChemicalState] ([ID]);
 
-ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalID FOREIGN KEY ([ChemicalID]) REFERENCES [Chemical] ([ID])
+ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalID FOREIGN KEY ([ChemicalID]) REFERENCES [Chemical] ([ID]);
 
-ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_FacilityID FOREIGN KEY ([FacilityID])  REFERENCES [Facility] ([ID])
+ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_FacilityID FOREIGN KEY ([FacilityID])  REFERENCES [Facility] ([ID]);
+
