@@ -2,11 +2,18 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SpillTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace SpillTracker.Controllers
 {
@@ -14,10 +21,13 @@ namespace SpillTracker.Controllers
     public class AdminController : Controller
     {
         private readonly SpillTrackerDbContext dbSpllTracker;
+        
+
 
         public AdminController(SpillTrackerDbContext context)
         {
             dbSpllTracker = context;
+          
         }
 
         public IActionResult Index()
@@ -252,5 +262,11 @@ namespace SpillTracker.Controllers
             dbSpllTracker.StatusTimes.Add(newStatusTime);
             dbSpllTracker.SaveChanges();
         }
+
+
+
+
     }
+
+    
 }
