@@ -11,7 +11,7 @@ namespace SpillTrackerCS.Tests.UnitTests
         }
 
         [Test]
-        public void Test1()
+        public void GetDensVapPresFromPUGView_RegexParsesDoubleOutOfDensityString_Success()
         {   //arrange
             string input = "1.51 at 68 °F (NTP, 1992)";
             //act
