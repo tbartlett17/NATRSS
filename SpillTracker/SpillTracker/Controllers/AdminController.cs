@@ -27,7 +27,6 @@ namespace SpillTracker.Controllers
         public AdminController(SpillTrackerDbContext context)
         {
             dbSpllTracker = context;
-          
         }
 
         public IActionResult Index()
@@ -83,6 +82,9 @@ namespace SpillTracker.Controllers
                         Name = parsedName,
                         ReportableQuantity = parsedRQ,
                         ReportableQuantityUnits = "lbs",
+                        DensityUnits = "g/cm³",
+                        MolecularWeightUnits = "g/mol",
+                        VaporPressureUnits = "mm Hg",
                         EpcraChem = true
                     };
 
@@ -143,6 +145,9 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = lastChem.ReportableQuantity,
                                 ReportableQuantityUnits = "lbs",
+                                DensityUnits = "g/cm³",
+                                MolecularWeightUnits = "g/mol",
+                                VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
                             };
 
@@ -179,6 +184,9 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = parsedRQ,
                                 ReportableQuantityUnits = "lbs",
+                                DensityUnits = "g/cm³",
+                                MolecularWeightUnits = "g/mol",
+                                VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
                             };
 
@@ -204,6 +212,19 @@ namespace SpillTracker.Controllers
 
         public void ProcessChemical(Chemical parsedChem)
         {
+            if (parsedChem.CasNum.Contains("&nbsp;&nbsp;&nbsp;")) // delete these whitespace html values
+            {
+                parsedChem.CasNum = null;
+                //Debug.WriteLine("found one");
+            }
+
+            if (!String.IsNullOrEmpty(parsedChem.CasNum) && !parsedChem.CasNum.Contains("-")) // cas num needs to get formatted properly. ex: change xxxxyyz to xxxx-yy-z
+            {
+                parsedChem.CasNum = parsedChem.CasNum.Insert((parsedChem.CasNum.Length - 1), "-");
+                parsedChem.CasNum = parsedChem.CasNum.Insert((parsedChem.CasNum.Length - 4), "-");
+                //Debug.WriteLine(parsedChem.CasNum);
+            }
+
             if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
             {
                 Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database, skipping entry...");
