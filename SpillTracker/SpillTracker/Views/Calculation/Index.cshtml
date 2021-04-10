@@ -1,0 +1,59 @@
+@model SpillTracker.Models.Calculation
+
+@{
+    ViewData["TItle"] = "searchChems";
+}
+
+<h1 style="text-align: center;">Quick Spill Calculation</h1>
+<br>
+<div style="text-align: center;">
+    <form asp-controller="Calculation" asp-action="Index" method="GET" style="text-align: center">
+        <div class="input-group">
+           <input type="text" minlength="3" class="form-control" asp-for="input" placeholder="Enter a chemical name or CAS number">
+           <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="submit-btn">Search</button>
+            </div>
+        </div> 
+    </form>
+    <br>
+</div>
+
+<div>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Chemical Name</th>
+            <th>CAS Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (true)
+        {
+            int count = 0;
+            @foreach (var item in Model.chemicals)
+            {
+                count++;
+                if(count < 15) 
+                {
+                <tr>
+                    <td>
+                        <a class="btn btn-info" type="submit" asp-controller="Calculation" asp-action="Output" asp-route-id="@item.Id">Calculate</a>
+                    </td>
+                    <td>
+                        <a  asp-controller="Chemicals" asp-action="Details" asp-route-id="@item.Id">@item.Name</a> 
+                    </td>
+                    <td>
+                        @item.CasNum
+                    </td>
+                </tr>
+                }
+                
+            } 
+        } 
+
+        
+</div>
+<div style="text-align: center;">
+    <p>*If you don't find what you are searching for, narrow your results or see if it is in our chemical database <a asp-action="Index" asp-controller="Chemicals">here</a>*</p>
+</div>
