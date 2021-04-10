@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpillTracker", "SpillTracker\SpillTracker.csproj", "{F624F07B-8118-40D1-95DD-CE67EF5E6E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpillTrackerCS.Tests", "SpillTrackerCS.Tests\SpillTrackerCS.Tests.csproj", "{5E442231-096B-44DA-ACB3-B185BB5233D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F624F07B-8118-40D1-95DD-CE67EF5E6E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F624F07B-8118-40D1-95DD-CE67EF5E6E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F624F07B-8118-40D1-95DD-CE67EF5E6E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E442231-096B-44DA-ACB3-B185BB5233D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E442231-096B-44DA-ACB3-B185BB5233D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E442231-096B-44DA-ACB3-B185BB5233D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E442231-096B-44DA-ACB3-B185BB5233D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

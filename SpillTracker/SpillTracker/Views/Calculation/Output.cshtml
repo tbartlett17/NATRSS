@@ -1,0 +1,41 @@
+@model SpillTracker.Models.Calculation
+
+<div style="text-align: center;">
+    <h1>Calculation</h1>
+    <p id="chemName">@Model.chemName</p>
+    <span>Reportable Quantity: </span><span id="chemRW">@Model.reportableQuantity</span><span> lbs.</span> 
+    <br>
+    <br>
+    <div style="text-align: center;">
+        <div>
+            <label for="">Amount Released in lbs: </label> 
+            <input type="number" min="0" required id="amountReleased">
+        </div>
+        <br>
+        <div>
+            <label for="">Time of Release in hours: </label>
+            <input type="number" min="0" required id="timeReleased">
+        </div> 
+        <br>
+        <div>
+            <label for="">Total percent of Mixture: </label>
+            <input type="number" min="0" max="100" required id="percentReleased">
+        </div>
+        <br>
+        <button type="submit" id="calcButton"  class="btn btn-info">Calculate</button>
+
+    </div>
+</div>
+<br>
+<br>
+
+<div style="text-align: center;" id="stats">
+    <p id="totalReleased"></p>
+    <p id="releasePerHour"></p>
+    <p id="dayRelease"></p>
+</div>
+
+
+@section Scripts {
+    <script src="/js/calculation.js"></script>
+}
