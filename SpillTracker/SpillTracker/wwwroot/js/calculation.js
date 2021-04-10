@@ -19,9 +19,9 @@ $("#calcButton").click(function()
     let dayRelease = (24*releasePerHour).toFixed(2);
     
     let tr = $("#totalReleased");
-    let rph = $("#releasePerHour")
-    let dr = $("#dayRelease")
-    let ttr = $("timeTillReport")
+    let rph = $("#releasePerHour");
+    let dr = $("#dayRelease");
+    let ttr = $("#timeTillReport");
     $("#totalReleased").empty();
     $("#releasePerHour").empty();
     $("#dayRelease").empty();
@@ -32,12 +32,12 @@ $("#calcButton").click(function()
 
     if(dayRelease > reportableWeight) 
     {
-        dr.append(" This exceeds the reportable quantity for " + chemical + ". You will need to report this to the proper authorities.")
+        dr.append(" This exceeds the reportable quantity for " + chemical + ". You will need to report this to the proper " + `<a asp-controller="ContactInfoes" asp-action="Index">authorities</a>.`)
     }
     console.log(timeTillReport);
     if(timeTillReport > 0)
     {
-        ttr.append("This spill is not yet reportable, if the spill is still occuring it will become reportable in " + timeTillReport + " hrs.")
+        ttr.append("This spill is not yet reportable, at the current release rate of " + releasePerHour + " lbs/hr this spill will become reportable in " + timeTillReport + " hrs.")
     }
 
 }
