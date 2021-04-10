@@ -49,6 +49,7 @@ namespace SpillTracker.Controllers
             calc.chemName = chem.Name;
             calc.reportableQuantity = chem.ReportableQuantity;
             calc.chemNum = chem.CasNum;
+            calc.cercla = chem.CerclaChem;
 
 
             return View("Output", calc);
