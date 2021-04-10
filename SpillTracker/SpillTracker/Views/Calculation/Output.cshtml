@@ -4,25 +4,38 @@
     <h1>Calculation</h1>
     <p id="chemName">@Model.chemName</p>
     <span>Reportable Quantity: </span><span id="chemRW">@Model.reportableQuantity</span><span> lbs.</span> 
+    <div hidden="true">
+    @if(Model.cercla == true) 
+    {
+        <p id="cercla">CERCLA</p>
+    }
+    else 
+    {
+        <span id="cercla"> </span>
+    }
+    </div>
     <br>
     <br>
     <div style="text-align: center;">
+        <form action="">
         <div>
             <label for="">Amount Released in lbs: </label> 
-            <input type="number" min="0" required id="amountReleased">
+            <input type="number" min="0" required id="amountReleased" required>
         </div>
         <br>
         <div>
             <label for="">Time of Release in hours: </label>
-            <input type="number" min="0" required id="timeReleased">
+            <input type="number" min="0" required id="timeReleased" required>
         </div> 
         <br>
         <div>
             <label for="">Total percent of Mixture: </label>
-            <input type="number" min="0" max="100" required id="percentReleased">
+            <input type="number" min="0" max="100" required id="percentReleased" required>
         </div>
         <br>
         <button type="submit" id="calcButton"  class="btn btn-info">Calculate</button>
+        </form>
+        
 
     </div>
 </div>
@@ -32,8 +45,14 @@
 <div style="text-align: center;" id="stats">
     <p id="totalReleased"></p>
     <p id="releasePerHour"></p>
+    <p id="timeTillReport"></p>
     <p id="dayRelease"></p>
 </div>
+
+<div style="text-align: center;">
+    <a style="text-align: center;" type="submit" asp-controller="Calculation" asp-action="Index">Back to Search</a>
+</div>
+
 
 
 @section Scripts {
