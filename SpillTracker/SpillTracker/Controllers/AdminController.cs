@@ -82,7 +82,7 @@ namespace SpillTracker.Controllers
                         Name = parsedName,
                         ReportableQuantity = parsedRQ,
                         ReportableQuantityUnits = "lbs",
-                        DensityUnits = "g/cm³",
+                        DensityUnits = "g/cm\u00B3",
                         MolecularWeightUnits = "g/mol",
                         VaporPressureUnits = "mm Hg",
                         EpcraChem = true
@@ -96,6 +96,8 @@ namespace SpillTracker.Controllers
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+
             }
             return Json(true);
         }
@@ -145,7 +147,7 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = lastChem.ReportableQuantity,
                                 ReportableQuantityUnits = "lbs",
-                                DensityUnits = "g/cm³",
+                                DensityUnits = "g/cm\u00B3",
                                 MolecularWeightUnits = "g/mol",
                                 VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
@@ -184,7 +186,7 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = parsedRQ,
                                 ReportableQuantityUnits = "lbs",
-                                DensityUnits = "g/cm³",
+                                DensityUnits = "g/cm\u00B3",
                                 MolecularWeightUnits = "g/mol",
                                 VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
@@ -202,9 +204,10 @@ namespace SpillTracker.Controllers
 
                 UpdateStatusTime("CERCLA Scraper");
             }
-            catch (Exception ex)
+            catch (Exception ex) // change status code 
             {
                 Debug.WriteLine(ex);
+                Response.StatusCode = 500;
             }
 
             return Json(true);
