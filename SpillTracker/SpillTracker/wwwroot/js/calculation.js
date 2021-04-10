@@ -21,9 +21,11 @@ $("#calcButton").click(function()
     let tr = $("#totalReleased");
     let rph = $("#releasePerHour")
     let dr = $("#dayRelease")
+    let ttr = $("timeTillReport")
     $("#totalReleased").empty();
     $("#releasePerHour").empty();
     $("#dayRelease").empty();
+    $("#timeTillReport").empty();
     tr.append("Amount released so far: " + totalRelease + " lbs")
     rph.append("Amount released per hour: " + releasePerHour + " lbs")
     dr.append("Assuming continuous release, over the course of 24 hours " + dayRelease + " lbs. will be released.")
@@ -31,6 +33,11 @@ $("#calcButton").click(function()
     if(dayRelease > reportableWeight) 
     {
         dr.append(" This exceeds the reportable quantity for " + chemical + ". You will need to report this to the proper authorities.")
+    }
+    console.log(timeTillReport);
+    if(timeTillReport > 0)
+    {
+        ttr.append("This spill is not yet reportable, if the spill is still occuring it will become reportable in " + timeTillReport + " hrs.")
     }
 
 }
