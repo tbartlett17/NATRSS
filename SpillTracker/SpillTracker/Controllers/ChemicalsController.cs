@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using SpillTracker.Models;
+using SpillTracker.Utilities;
 
 namespace SpillTracker.Controllers
 {
@@ -267,6 +268,8 @@ namespace SpillTracker.Controllers
             return currentData;      
         }
 
+     
+
         public ExtraChemData GetDensVapPresFromPUGView(int cIDNumber, string casNumber, double molecweight)
         {
             string jsonString;
@@ -298,7 +301,9 @@ namespace SpillTracker.Controllers
                 //The call was successful populate the density and vapor pressure 
                 JObject geo = JObject.Parse(jsonString);
                 densityString = (string)geo["Record"]["Section"][0]["Section"][0]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"];
-                density = double.Parse(Regex.Match(densityString, @"^\d*\.*\d*").Value);
+
+                density = RegexParserUtilities.RegexDensityParse(densityString); double.Parse(Regex.Match(densityString, @"^\d*\.*\d*").Value);
+
                 string densitytest = Regex.Match(densityString, @"^(\d*\.*\d*)-(\d*\.*\d*)").Value;
                 string densitytest2 = Regex.Match(densityString, @"^\d*\.*\d*").Value;
                 if (densitytest != "")
@@ -350,8 +355,8 @@ namespace SpillTracker.Controllers
                 Chemical chem = _context.Chemicals.Where(a => a.CasNum == casNumber).First();
                 chem.Density = density;
                 chem.VaporPressure = vaporPressure;
-                chem.DensityUnits = "g/cm";
-                chem.VaporPressureUnits = "mm Hg";
+                /*chem.DensityUnits = "g/cm";
+                chem.VaporPressureUnits = "mm Hg";*/
                 _context.SaveChanges();
 
             }
