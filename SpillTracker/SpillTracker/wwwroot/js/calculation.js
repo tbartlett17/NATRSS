@@ -17,39 +17,57 @@ $("#calcButton").click(function()
 
     let totalRelease = (amountReleased * percentReleased).toFixed(2);
     let releasePerHour = (totalRelease / timeReleased).toFixed(2);
-    let timeTillReport = (reportableWeight/releasePerHour) - timeReleased;
+    let timeTillReport = ((reportableWeight/releasePerHour) - timeReleased).toFixed(2);
     let dayRelease = (24*releasePerHour).toFixed(2);
     
     let tr = $("#totalReleased");
     let rph = $("#releasePerHour");
     let dr = $("#dayRelease");
     let ttr = $("#timeTillReport");
+    let headerGood = $("#headergood")
+    let headerBad = $("#headerbad")
+    
     $("#totalReleased").empty();
     $("#releasePerHour").empty();
     $("#dayRelease").empty();
     $("#timeTillReport").empty();
-
-    if(totalRelease > 0) 
-    {
-        tr.append("Amount released so far: " + totalRelease + " lbs")
-        rph.append("Amount released per hour: " + releasePerHour + " lbs")
-        dr.append("Assuming continuous release, over the course of 24 hours " + dayRelease + " lbs. will be released.")
-    }
+    $("#headergood").empty();
+    $("#headerbad").empty();
+     
     
-
-    if(dayRelease > reportableWeight) 
+    tr.append("Amount released so far: " + totalRelease + " lbs")
+    rph.append("Amount released per hour: " + releasePerHour + " lbs")
+ 
+    
+    if(totalRelease > reportableWeight)
     {
-        dr.append(" This exceeds the reportable quantity for " + chemical + ". You will need to report this to the proper " + `<a asp-controller="ContactInfoes" asp-action="Index">authorities</a>.`)
+        document.getElementById("modal-content").style.backgroundColor = "tomato";
+        headerBad.append("Notice: The chemical spill needs to be reported to the proper authorities.")
         if(cercla == "CERCLA" && cercla != null) 
         {
-            dr.append(" and notify the National Response Center at 1-800-424-8802")
+            dr.append(" Since this is a CERCLA chemical you will need to contact the National Response Center at 1-800-424-8802")
+        }
+
+    }
+    else 
+    {
+        document.getElementById("modal-content").style.backgroundColor = "springgreen";
+        headerGood.append("Notice: The chemical spill has not reached the reportable quantity")
+        ttr.append("At the current release rate of " + releasePerHour + " lbs/hr this spill will become reportable in ")
+        if(timeTillReport < 24 && timeTillReport > 1) 
+        {
+            ttr.append(timeTillReport + " hrs.");
+        }
+        else if(timeTillReport < 1)
+        {
+            timeTillReport = (timeTillReport * 60);
+            ttr.append(timeTillReport + " minutes")
+        }
+        else
+        {
+            timeTillReport = (timeTillReport / 24).toFixed(2);
+            ttr.append(timeTillReport + " days");
         }
     }
-
-    if(timeTillReport > 0)
-    {
-        ttr.append("This spill is not yet reportable, at the current release rate of " + releasePerHour + " lbs/hr this spill will become reportable in " + timeTillReport + " hrs.")
-    }
-
 }
 )

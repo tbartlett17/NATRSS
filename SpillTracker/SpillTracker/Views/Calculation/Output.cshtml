@@ -17,7 +17,7 @@
     <br>
     <br>
     <div style="text-align: center;">
-        <form action="">
+        
         <div>
             <label for="">Amount Released in lbs: </label> 
             <input type="number" min="0" required id="amountReleased" required>
@@ -33,20 +33,40 @@
             <input type="number" min="0" max="100" required id="percentReleased" required>
         </div>
         <br>
-        <button type="submit" id="calcButton"  class="btn btn-info">Calculate</button>
-        </form>
-        
+        <button type="submit" id="calcButton"  class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Calculate</button>
 
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" id="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="background-color: springgreen;" id="headergood"></h5>
+        <h5 style="background-color: tomato;" class="modal-title" id="headerbad"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <p id="timeTillReport"></p>
+            <p id="dayRelease"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <br>
 <br>
 
 <div style="text-align: center;" id="stats">
     <p id="totalReleased"></p>
     <p id="releasePerHour"></p>
-    <p id="timeTillReport"></p>
-    <p id="dayRelease"></p>
+
 </div>
 
 <div style="text-align: center;">
