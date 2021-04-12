@@ -354,9 +354,7 @@ namespace SpillTracker.Controllers
             {
                 Chemical chem = _context.Chemicals.Where(a => a.CasNum == casNumber).First();
                 chem.Density = density;
-                chem.VaporPressure = vaporPressure;
-                /*chem.DensityUnits = "g/cm";
-                chem.VaporPressureUnits = "mm Hg";*/
+                chem.VaporPressure = vaporPressure;             
                 _context.SaveChanges();
 
             }
