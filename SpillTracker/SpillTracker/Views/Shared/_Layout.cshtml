@@ -61,7 +61,7 @@
                         <li>
                              @if (User.Identity.IsAuthenticated)
                              {
-                                 if (User.IsInRole("Admin") || User.IsInRole("Facilitymanager") || User.IsInRole("Employee"))
+                                 if (User.IsInRole("Admin") || User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
                                  {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
                                  }

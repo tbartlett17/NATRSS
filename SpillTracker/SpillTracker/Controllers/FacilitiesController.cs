@@ -43,7 +43,7 @@ namespace SpillTracker.Controllers
                 //Debug.WriteLine("\n\n STuser aspnet identity id: " + currentUser.AspnetIdentityId);
 
                 // select this user's company's facilities
-                spillTrackerDbContext = _context.Facilities  .Include(f => f.Company);
+                spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
             }
 
             //var spillTrackerDbContext = _context.Facilities.Include(f => f.Company);
