@@ -33,7 +33,7 @@
             <input type="number" min="0" max="100" required id="percentReleased" required>
         </div>
         <br>
-        <button type="submit" id="calcButton"  class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Calculate</button>
+        <button type="submit" id="calcButton"  class="btn btn-info" data-toggle="modal" onclick="calculate()" data-target="#exampleModalCenter">Calculate</button>
 
     </div>
 </div>
@@ -44,7 +44,7 @@
     <div class="modal-content" id="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" style="background-color: springgreen;" id="headergood"></h5>
-        <h5 style="background-color: tomato;" class="modal-title" id="headerbad"></h5>
+        <h5 class="modal-title" id="headerbad"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -76,5 +76,5 @@
 
 
 @section Scripts {
-    <script src="/js/calculation.js"></script>
+    <script src="/js/calculation.js" type="module"></script>
 }

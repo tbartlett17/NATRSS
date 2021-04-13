@@ -40,6 +40,11 @@
     <None Include="Views\ContactInfoes\Details.cshtml" />
     <None Include="Views\ContactInfoes\Edit.cshtml" />
     <None Include="Views\ContactInfoes\Index.cshtml" />
+    <None Include="Views\Forms\Create.cshtml" />
+    <None Include="Views\Forms\Delete.cshtml" />
+    <None Include="Views\Forms\Details.cshtml" />
+    <None Include="Views\Forms\Edit.cshtml" />
+    <None Include="Views\Forms\Index.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>
