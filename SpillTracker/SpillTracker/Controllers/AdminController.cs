@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace SpillTracker.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly SpillTrackerDbContext dbSpllTracker;

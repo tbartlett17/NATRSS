@@ -20,9 +20,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -34,6 +34,15 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
+    <Watch Remove="wwwroot\js\EditFacilityChems.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\FacilityChemicals\Create.cshtml" />
+    <None Include="Views\FacilityChemicals\Delete.cshtml" />
+    <None Include="Views\FacilityChemicals\Details.cshtml" />
+    <None Include="Views\FacilityChemicals\Edit.cshtml" />
+    <None Include="Views\FacilityChemicals\Index.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>

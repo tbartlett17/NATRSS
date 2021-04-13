@@ -1,4 +1,4 @@
-﻿@model SpillTracker.Models.Facility
+﻿@model SpillTracker.Models.FacilityManagementVM
 
 @{
     ViewData["Title"] = "Details";
@@ -8,60 +8,125 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Facility</h4>
+    <div class="row" style="margin-bottom: 0px; padding-bottom:0">
+        <h4 class="col-sm-auto">Facility</h4>
+        <a class="col-sm-auto" asp-action="Edit" asp-route-id="@Model.Facility.Id">Edit</a>
+    </div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressStreet)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.AddressStreet)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddressStreet)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.AddressStreet)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressCity)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.AddressCity)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddressCity)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.AddressCity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressState)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.AddressState)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddressState)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.AddressState)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressZip)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.AddressZip)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddressZip)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.AddressZip)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.Location)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.Location)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Industry)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.Industry)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Industry)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.Industry)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.Company)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.Company.Id)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <div class="row" style="margin-bottom: 0px; padding-bottom:0">
+        <h4 class="col-sm-auto">Chemicals</h4>
+        <a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.Id">Edit</a>
+    </div>
+    <hr />
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Chemical)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Concentration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperature)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperatureUnits)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalState)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Facility)
+            </th>*@
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FacilityChemicals) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chemical.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Concentration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalTemperature) @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalState.Type)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Facility.Id)
+            </td>*@
+            @*<td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>*@
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+
+<div>
     <a asp-action="Index">Back to List</a>
 </div>
