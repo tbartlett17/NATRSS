@@ -34,22 +34,34 @@
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
                         </li>
-                        <li>
+                       
                              @if (User.Identity.IsAuthenticated)
                              {
                                  if (User.IsInRole("Admin"))
                                  {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
+                                    </li> 
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">All Facilities</a>
+                                    </li>
+                                    
+                                 }
+                                 if (User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
+                                 {
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">My Facilities</a>
+                                    </li>
+                                     
                                  }
                              }
-                        </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Calculation" asp-action="Index">Calculation</a>
                         </li>
                         <li>
                              @if (User.Identity.IsAuthenticated)
                              {
-                                 if (User.IsInRole("Admin") || User.IsInRole("Facilitymanager") || User.IsInRole("Employee"))
+                                 if (User.IsInRole("Admin") || User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
                                  {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
                                  }

@@ -10,7 +10,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.32" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.14" />
@@ -34,17 +34,15 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Admin\Index.cshtml" />
-    <None Include="Views\ContactInfoes\Create.cshtml" />
-    <None Include="Views\ContactInfoes\Delete.cshtml" />
-    <None Include="Views\ContactInfoes\Details.cshtml" />
-    <None Include="Views\ContactInfoes\Edit.cshtml" />
-    <None Include="Views\ContactInfoes\Index.cshtml" />
-    <None Include="Views\Forms\Create.cshtml" />
-    <None Include="Views\Forms\Delete.cshtml" />
-    <None Include="Views\Forms\Details.cshtml" />
-    <None Include="Views\Forms\Edit.cshtml" />
-    <None Include="Views\Forms\Index.cshtml" />
+    <Watch Remove="wwwroot\js\EditFacilityChems.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\FacilityChemicals\Create.cshtml" />
+    <None Include="Views\FacilityChemicals\Delete.cshtml" />
+    <None Include="Views\FacilityChemicals\Details.cshtml" />
+    <None Include="Views\FacilityChemicals\Edit.cshtml" />
+    <None Include="Views\FacilityChemicals\Index.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>

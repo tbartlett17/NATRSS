@@ -1,9 +1,12 @@
 INSERT INTO [Company] (Name,Num_Facilities) VALUES
-    ('Test Company',1);
+    ('Test Company 1',1),
+    ('Test Company 2',2);
 
 
 INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,CompanyID) VALUES
-    ('Test Facilty','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1);            
+    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1),  
+    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics',2),
+    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals',1);
 
 
 INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyID) VALUES 
@@ -24,7 +27,10 @@ INSERT INTO [ChemicalState] (Type) VALUES
 
 
 INSERT INTO [FacilityChemicals](Concentration,Chemical_Temperature,Chemical_Temperature_Units,ChemicalStateID,ChemicalID,FacilityID) VALUES
-    (0.50,60,'F',2,1,1);
+    (0.50,60,'°F',2,1,1),
+    (0.75,60,'°F',2,2,1),
+    (0.20,60,'°F',2,3,2),
+    (0.32,60,'°F',2,4,2);
 
 
 INSERT INTO [Surface] (Type) VALUES

@@ -17,6 +17,9 @@ namespace SpillTracker.Data
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool EmailConfirmed { get; set; } = true;
+        public string Role { get; set; }
+
+        public int CompanyID { get; set; }
     }
 
     public class SeedData
@@ -26,10 +29,10 @@ namespace SpillTracker.Data
         /// </summary>
         public static readonly UserInfoData[] UserSeedData = new UserInfoData[]
         {
-            new UserInfoData { UserName = "TaliaK", Email = "knott@example.com", FirstName = "Talia", LastName = "Knott" },
-            new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com", FirstName = "Zayden", LastName = "Clark" },
-            new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com", FirstName = "Hareem", LastName = "Davila" },
-            new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com", FirstName = "Krzysztof", LastName = "Ponce" }
+            new UserInfoData { UserName = "TaliaK", Email = "knott@example.com", FirstName = "Talia", LastName = "Knott", Role="FacilityManager", CompanyID=1 },
+            new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com", FirstName = "Zayden", LastName = "Clark", Role="Employee", CompanyID=1 },
+            new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com", FirstName = "Hareem", LastName = "Davila", Role="FacilityManager", CompanyID=2 },
+            new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com", FirstName = "Krzysztof", LastName = "Ponce", Role="Employee", CompanyID=2 }
         };
     }
 }
