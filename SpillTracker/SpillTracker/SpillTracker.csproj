@@ -10,19 +10,19 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.12" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.12" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.12">
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.32" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -34,7 +34,15 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Admin\Index.cshtml" />
+    <Watch Remove="wwwroot\js\EditFacilityChems.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\FacilityChemicals\Create.cshtml" />
+    <None Include="Views\FacilityChemicals\Delete.cshtml" />
+    <None Include="Views\FacilityChemicals\Details.cshtml" />
+    <None Include="Views\FacilityChemicals\Edit.cshtml" />
+    <None Include="Views\FacilityChemicals\Index.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>

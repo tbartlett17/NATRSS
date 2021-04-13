@@ -1,9 +1,12 @@
 INSERT INTO [Company] (Name,Num_Facilities) VALUES
-    ('Test Company',1);
+    ('Test Company 1',1),
+    ('Test Company 2',2);
 
 
 INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,CompanyID) VALUES
-    ('Test Facilty','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1);            
+    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1),  
+    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics',2),
+    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals',1);
 
 
 INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyID) VALUES 
@@ -11,10 +14,10 @@ INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyI
 
 
 INSERT INTO [Chemical] (Name,Aliases,CAS_Num,PubChemCID,Reportable_Quantity,Reportable_Quantity_Units,Density,Density_Units,Molecular_Weight,Molecular_Weight_Units,Vapor_Pressure,Vapor_Pressure_Units,CERCLA_Chem,EPCRA_Chem) VALUES
-    ('Acetone Cyanohydrin','','75-86-5',6406,10,'lbs',0.9267,'g/cm\u2073',85.1,'g/mol',0.8,'mm Hg',0,1),
-    ('Acetone Thiosemicarbazide','','1752-30-3',2770166,1000,'lbs',NULL,'g/cm\u2073',131.2,'g/mol',NULL,'mm Hg',0,1), -- missing density, vapor pressure. setting to 0. info not available on PubChem. need a case for when this occurs or to keep track of it
-    ('Acrolein','','107-02-8',7847,1,'lbs',0.8389,'g/cm\u2073',56.06,'g/mol',135.71,'mm Hg',0,1),
-    ('Acrylamide','','79-06-1',6579,5000,'lbs',1.122,'g/cm\u2073',71.08,'g/mol',0.007,'mm Hg',0,1);
+    ('Acetone Cyanohydrin','','75-86-5',6406,10,'lbs',0.9267,'g/cm³',85.1,'g/mol',0.8,'mm Hg',0,1),
+    ('Acetone Thiosemicarbazide','','1752-30-3',2770166,1000,'lbs',NULL,'g/cm³',131.2,'g/mol',NULL,'mm Hg',0,1), -- missing density, vapor pressure. setting to 0. info not available on PubChem. need a case for when this occurs or to keep track of it
+    ('Acrolein','','107-02-8',7847,1,'lbs',0.8389,'g/cm³',56.06,'g/mol',135.71,'mm Hg',0,1),
+    ('Acrylamide','','79-06-1',6579,5000,'lbs',1.122,'g/cm³',71.08,'g/mol',0.007,'mm Hg',0,1);
 
 
 INSERT INTO [ChemicalState] (Type) VALUES
@@ -24,7 +27,10 @@ INSERT INTO [ChemicalState] (Type) VALUES
 
 
 INSERT INTO [FacilityChemicals](Concentration,Chemical_Temperature,Chemical_Temperature_Units,ChemicalStateID,ChemicalID,FacilityID) VALUES
-    (0.50,60,'F',2,1,1);
+    (0.50,60,'°F',2,1,1),
+    (0.75,60,'°F',2,2,1),
+    (0.20,60,'°F',2,3,2),
+    (0.32,60,'°F',2,4,2);
 
 
 INSERT INTO [Surface] (Type) VALUES
