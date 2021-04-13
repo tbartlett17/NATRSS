@@ -1,0 +1,330 @@
+﻿@model IEnumerable<SpillTracker.Models.Form>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillReportedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillReportedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillOngoing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillContained)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChemicalPressurized)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillVolumeUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChemicalConcentration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillFormingPuddle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillReachWaterSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CleanupStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChemicalTemperature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChemicalTemperatureUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillWidthUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillLengthUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillDepthUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillAreaUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillReportable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindDirection)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindSpeed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindSpeedUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressZip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeatherTemperature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeatherTemperatureUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeatherHumidity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeatherHumidityUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkyConditions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillEvaporationRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillEvaporationRateUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountEvaporated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountEvaporatedUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountSpilled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountSpilledUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chemical)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChemicalState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facility)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillSurface)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stuser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillReportedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillReportedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillOngoing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillContained)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalPressurized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillVolumeUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalConcentration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillFormingPuddle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillReachWaterSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WaterSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillDuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CleanupStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalTemperature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillWidthUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillLengthUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillDepth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillDepthUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillAreaUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillReportable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindDirection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindSpeed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindSpeedUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressZip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeatherTemperature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeatherTemperatureUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeatherHumidity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeatherHumidityUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkyConditions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillEvaporationRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillEvaporationRateUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountEvaporated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountEvaporatedUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountSpilled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountSpilledUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chemical.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalState.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Facility.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillSurface.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stuser.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

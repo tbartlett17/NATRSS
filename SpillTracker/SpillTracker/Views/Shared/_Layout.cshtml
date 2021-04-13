@@ -58,6 +58,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Calculation" asp-action="Index">Calculation</a>
                         </li>
+                        <li>
+                             @if (User.Identity.IsAuthenticated)
+                             {
+                                 if (User.IsInRole("Admin") || User.IsInRole("Facilitymanager") || User.IsInRole("Employee"))
+                                 {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
+                                 }
+                             }
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -77,6 +86,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @* <script src="~/js/calculation.js" asp-append-version="true" type="module"></script>  *@
     
     @RenderSection("Scripts", required: false)
 </body>
