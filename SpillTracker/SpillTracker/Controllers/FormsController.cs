@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SpillTracker.Models;
 
+
 namespace SpillTracker.Controllers
 {
+    [Authorize(Roles = "Admin, FacilityManager, Employee")]
     public class FormsController : Controller
     {
         private readonly SpillTrackerDbContext _context;
@@ -21,7 +25,27 @@ namespace SpillTracker.Controllers
         // GET: Forms
         public async Task<IActionResult> Index()
         {
-            var spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser);
+            var spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser).Take(0);
+
+            if (User.IsInRole("Admin")) 
+            {
+                spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser);
+            }
+            if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) 
+            {
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                string userId = claim.Value;
+
+                // look up the current user in the spill tracker DB
+                Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
+                 spillTrackerDbContext = _context.Forms.Where(c => c.Facility.CompanyId == currentUser.CompanyId).Include(f => f.Chemical)
+                            .Include(f => f.ChemicalState)
+                            .Include(f => f.Facility)
+                            .Include(f => f.SpillSurface)
+                            .Include(f => f.Stuser);
+            }
             return View(await spillTrackerDbContext.ToListAsync());
         }
 

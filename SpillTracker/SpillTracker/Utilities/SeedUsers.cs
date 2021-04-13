@@ -85,7 +85,7 @@ namespace SpillTracker.Utilities
                     }
                     // Now make sure admin role exists and give it to this user
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    await EnsureRoleForUser(roleManager, userManager, identityID, "admin");
+                    await EnsureRoleForUser(roleManager, userManager, identityID, "Admin");
                 }
             }
             catch (InvalidOperationException ex)
