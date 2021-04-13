@@ -43,6 +43,18 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+
+            @*add
+        @*roles dropdown*@
+            <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect01" asp-for="Input.RoleOption">
+                    <option selected>Role...</option>
+                    <option value="1">Employee</option>                    
+                    <option value="2">Facility Manager</option>
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
