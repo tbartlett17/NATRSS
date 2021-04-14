@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SpillTracker.Models;
 
 namespace SpillTracker.Controllers
@@ -62,7 +63,7 @@ namespace SpillTracker.Controllers
             Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
 
 
-            
+
             FacilityManagementVM facilityManagementVM = new FacilityManagementVM();
 
             if (id == null)
@@ -96,9 +97,73 @@ namespace SpillTracker.Controllers
         // GET: Facilities/Create
         [Authorize(Roles = "Admin, FacilityManager")]
         public IActionResult Create()
-
         {
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id");
+            // get the current users identity ID
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
+
+            ViewData["CompanyId"] = currentUser.CompanyId;
+            ViewData["States"] = new List<SelectListItem>
+            {
+                new SelectListItem() {Text="AL", Value="AL"},
+                new SelectListItem() { Text="AK", Value="AK"},
+                new SelectListItem() { Text="AZ", Value="AZ"},
+                new SelectListItem() { Text="AR", Value="AR"},
+                new SelectListItem() { Text="CA", Value="CA"},
+                new SelectListItem() { Text="CO", Value="CO"},
+                new SelectListItem() { Text="CT", Value="CT"},
+                new SelectListItem() { Text="DC", Value="DC"},
+                new SelectListItem() { Text="DE", Value="DE"},
+                new SelectListItem() { Text="FL", Value="FL"},
+                new SelectListItem() { Text="GA", Value="GA"},
+                new SelectListItem() { Text="HI", Value="HI"},
+                new SelectListItem() { Text="ID", Value="ID"},
+                new SelectListItem() { Text="IL", Value="IL"},
+                new SelectListItem() { Text="IN", Value="IN"},
+                new SelectListItem() { Text="IA", Value="IA"},
+                new SelectListItem() { Text="KS", Value="KS"},
+                new SelectListItem() { Text="KY", Value="KY"},
+                new SelectListItem() { Text="LA", Value="LA"},
+                new SelectListItem() { Text="ME", Value="ME"},
+                new SelectListItem() { Text="MD", Value="MD"},
+                new SelectListItem() { Text="MA", Value="MA"},
+                new SelectListItem() { Text="MI", Value="MI"},
+                new SelectListItem() { Text="MN", Value="MN"},
+                new SelectListItem() { Text="MS", Value="MS"},
+                new SelectListItem() { Text="MO", Value="MO"},
+                new SelectListItem() { Text="MT", Value="MT"},
+                new SelectListItem() { Text="NE", Value="NE"},
+                new SelectListItem() { Text="NV", Value="NV"},
+                new SelectListItem() { Text="NH", Value="NH"},
+                new SelectListItem() { Text="NJ", Value="NJ"},
+                new SelectListItem() { Text="NM", Value="NM"},
+                new SelectListItem() { Text="NY", Value="NY"},
+                new SelectListItem() { Text="NC", Value="NC"},
+                new SelectListItem() { Text="ND", Value="ND"},
+                new SelectListItem() { Text="OH", Value="OH"},
+                new SelectListItem() { Text="OK", Value="OK"},
+                new SelectListItem() { Text="OR", Value="OR"},
+                new SelectListItem() { Text="PA", Value="PA"},
+                new SelectListItem() { Text="PR", Value="PR"},
+                new SelectListItem() { Text="RI", Value="RI"},
+                new SelectListItem() { Text="SC", Value="SC"},
+                new SelectListItem() { Text="SD", Value="SD"},
+                new SelectListItem() { Text="TN", Value="TN"},
+                new SelectListItem() { Text="TX", Value="TX"},
+                new SelectListItem() { Text="UT", Value="UT"},
+                new SelectListItem() { Text="VT", Value="VT"},
+                new SelectListItem() { Text="VA", Value="VA"},
+                new SelectListItem() { Text="WA", Value="WA"},
+                new SelectListItem() { Text="WV", Value="WV"},
+                new SelectListItem() { Text="WI", Value="WI"},
+                new SelectListItem() { Text="WY", Value="WY"}
+            };
+
             return View();
         }
 
@@ -112,11 +177,15 @@ namespace SpillTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                //string location = getCoords(AddressStreet, AddressCity, AddressState, AddressZip);
+                //facility.Location = location;
                 _context.Add(facility);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id", facility.CompanyId);
+
+
             return View(facility);
         }
 
@@ -250,6 +319,8 @@ namespace SpillTracker.Controllers
                 return NotFound();
             }
 
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Type");
+
             EditFacilityChemsVM chems = new EditFacilityChemsVM();
 
             chems.Chemicals = await _context.Chemicals.OrderBy(x => x.Name).ToListAsync();
@@ -257,7 +328,7 @@ namespace SpillTracker.Controllers
                 .Include(fc => fc.Chemical)
                 .Include(fc => fc.ChemicalState)
                 .Where(f => f.FacilityId == id);
-
+            chems.FacilityId = id;
 
             if (currentUser.CompanyId == facility.CompanyId || User.IsInRole("Admin"))
             {
@@ -269,40 +340,44 @@ namespace SpillTracker.Controllers
             }
         }
 
-        //// POST: Facilities/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> EditChems(int id, [Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId")] Facility facility)
-        //{
-        //    if (id != facility.Id)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(facility);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!FacilityExists(facility.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id", facility.CompanyId);
-        //    return View(facility);
-        //}
+        // POST: FacilityChemicals/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFacilityChem([Bind("Id,Concentration,ChemicalTemperature,ChemicalTemperatureUnits,ChemicalStateId,ChemicalId,FacilityId")] FacilityChemical facilityChemical)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(facilityChemical);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ChemicalId"] = new SelectList(_context.Chemicals, "Id", "Id", facilityChemical.ChemicalId);
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Id", facilityChemical.ChemicalStateId);
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", facilityChemical.FacilityId);
+            return View(facilityChemical);
+        }
+
+        //string concetration, string chemTemp, string chemTempUnits, int chemStateId, int chemId, int facilityId
+        public IActionResult SaveChemical(string chemData)
+        {
+            FacilityChemical newFacChem = new FacilityChemical();
+            try
+            {
+                newFacChem = JsonConvert.DeserializeObject<FacilityChemical>(chemData);
+              
+                _context.FacilityChemicals.Add(newFacChem);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+            }
+            return Json("latitude: ");
+        }
     }
 }
+
