@@ -63,7 +63,6 @@ $("#calcButton").click(function()
             {
                 dr.append(" Since this is a CERCLA chemical you will need to contact the National Response Center at 1-800-424-8802")
             }
-
         }
         else 
         {
@@ -72,11 +71,11 @@ $("#calcButton").click(function()
             ttr.append("At the current release rate of " + releasePerHour + " lbs/hr this spill will become reportable in ")
             if(timeTillReport < 24 && timeTillReport >= 1) 
             {
-                ttr.append(timeTillReport + " hrs.");
+                ttr.append(timeTillReport + " hrs.").toFixed(2);
             }
             else if(timeTillReport < 1)
             {
-                timeTillReport = (timeTillReport * 60);
+                timeTillReport = (timeTillReport * 60).toFixed(2);
                 ttr.append(timeTillReport + " minutes")
             }
             else
@@ -88,5 +87,3 @@ $("#calcButton").click(function()
     }
 }
 )
-
-export { calculate }
