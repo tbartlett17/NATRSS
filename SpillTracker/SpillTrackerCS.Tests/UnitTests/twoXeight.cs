@@ -23,5 +23,24 @@ namespace SpillTrackerCS.Tests.UnitTests
             Assert.AreEqual(64,y);
 
         } 
+
+        //Tyler's Test
+        [Test]
+        public void AnotherTest()
+        {
+            //arrange
+            double x = 125.66;
+            int y = 5;
+            double result;
+
+            //act
+            result = Math.Pow(x, 2) * y;
+            //assert
+            Assert.IsNotNull(x);
+            Assert.IsNotNull(y);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(78952.178, result);
+
+        }
     }
 }

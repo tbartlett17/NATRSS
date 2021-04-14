@@ -33,9 +33,9 @@ namespace SpillTracker
             services.AddDbContext<ApplicationDbContext>(opts =>
             {
                 //local host connection
-                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                //opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
                 //azure connection
-                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
                 
             });
 
@@ -43,9 +43,9 @@ namespace SpillTracker
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //local host connection
-                opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
+                //opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
                 //azure connection
-                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
+                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
                 
             });
 
