@@ -89,7 +89,7 @@ function saveChemical()
         chemicalId: $("#chemId").text(),
         facilityId: $("#facilityId").text()
     };
-    console.log("fac id: " + chemData.chemId);
+    //console.log("fac id: " + chemData.chemId);
 
     var jsonChemData = JSON.stringify(chemData);
 

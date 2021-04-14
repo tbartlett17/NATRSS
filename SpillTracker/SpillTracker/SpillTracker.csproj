@@ -34,12 +34,17 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\js\geoCoordLookup.js" />
+  </ItemGroup>
+  <ItemGroup>
     <Watch Remove="wwwroot\js\EditFacilityChems.js" />
+    <Watch Remove="wwwroot\js\geoCoordLookup.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Facilities\EditFacChems.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
+    <None Include="wwwroot\js\geoCoordLookup.js" />
   </ItemGroup>
 
 </Project>
