@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ExpeditionProject.Models.userAndFormReviewVM
+<!--the form------------------------------------------------->
+<div>
+    <h4>Request Form # @Model.thisForm.Id</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.thisForm.SubmissionDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.thisForm.SubmissionDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.thisForm.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.thisForm.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.thisForm.ExpeditionId)
+        </dt>
+
+
+
+        @if (Model.thisUser.UserTypeId == 1)
+        {
+
+
+            <dd class="col-sm-10">
+                <a asp-controller="Expeditions"
+                   asp-action="Edit"
+                   asp-route-id="@Model.thisForm.ExpeditionId" target="_blank">@Model.thisForm.ExpeditionId</a>
+            </dd>
+
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.thisForm.ExpeditionId)
+            </dd>
+        }
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.thisForm.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.thisForm.Description)
+        </dd>
+
+    </dl>
+    <form action="List" method="get">
+        <button asp-controller="RequestForm" asp-action="List" class="btn btn-sm btn-outline-dark mb-3  col-sm-5" id="id" name="id" value="@Model.thisUser.Id">Complete</button>
+    </form>
+
+</div>

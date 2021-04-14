@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ExpeditionProject.Models.userAndFormArrayVM
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                UserID
+            </th>
+
+            <th>
+                ExpeditionID
+            </th>
+            <th>
+                Submission Date
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Completed
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.thisFormArray)
+        {
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpeditionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            
+            <td>
+                <input type="button" id="supportticketbtn" class="btn btn-outline-primary btn-sm btn-block" value="Review" onclick="location.href='@Url.Action("RequestFormReview", "RequestForm", new { id = @item.Id, uid = Model.thisUser.UserTypeId })'" />
+                
+            </td>
+            
+
+        </tr>
+
+        }
+    </tbody>
+</table>
