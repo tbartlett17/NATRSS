@@ -23,22 +23,29 @@ namespace SpillTracker.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly SpillTrackerDbContext _stDbContext;
+        // add 
+        private readonly ApplicationDbContext AspNetContext;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             SpillTrackerDbContext spillTrackerDbContext)
+            
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _stDbContext = spillTrackerDbContext;
+            // add 
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -76,6 +83,8 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string RoleOption { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -106,6 +115,33 @@ namespace SpillTracker.Areas.Identity.Pages.Account
                     };
                     _stDbContext.Add(a);
                     await _stDbContext.SaveChangesAsync();
+
+                    // switch case that helps tie the roles to the database
+                    
+                    string roleName = "";
+                    //_logger.LogInformation("Role Chosen: " + Input.RoleOption);
+                    switch (Input.RoleOption)
+                    {
+                        case "1":
+                            roleName = "Employee";
+                            break;                       
+                        case "2":
+                            roleName = "Facility Manager";
+                            break;
+                    }
+
+                    bool employeeRoleExists = await _roleManager.RoleExistsAsync(roleName);
+                    if (!employeeRoleExists)
+                    {
+                        _logger.LogInformation("Adding " + roleName);
+                        await _roleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+
+                    if(!await _userManager.IsInRoleAsync(user, roleName))
+                    {
+                        _logger.LogInformation("Adding user to the " + roleName +" role");
+                        var userResult = await _userManager.AddToRoleAsync(user, roleName);
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
