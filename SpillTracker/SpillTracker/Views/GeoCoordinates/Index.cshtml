@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SpillTracker.Models.StreetAddress;
+
+<h1 style="text-align: center;">Get Geo Coordinates</h1>
+<br>
+<div style="text-align: center;">
+
+    <form asp-controller="GeoCoordinates" asp-action="Index" method="post">
+        <br>
+        <div style="text-align: center;">
+            <div>
+                <label for="">StreetAddress: </label>
+                <input asp-for="Street" type="text" min="0" required id="theStreetAddress">
+            </div>
+            <br>
+            <div>
+                <label for="">City: </label>
+                <input asp-for="City" type="text" min="0" required id="theCity">
+            </div>
+            <br>
+            <div>
+                @*<label for="@Model.State">State: </label>
+                <input type="text" min="0" max="2" required id="percentReleased">*@
+                <select asp-for="State" class="form-control" id="theState" asp-items="ViewBag.States"></select>
+
+                <span asp-validation-for="State"></span>
+            </div>
+            <div>
+                <label for="">PostalCode: </label>
+                <input asp-for="PostalCode" type="text" min="5" max="5" required id="theZipCode">
+            </div>
+            <br>
+            <button type="submit" id="getGeoLocationButton" class="btn btn-info">Enter</button>
+
+        </div>
+    </form>
+</div>
+<br>
+
