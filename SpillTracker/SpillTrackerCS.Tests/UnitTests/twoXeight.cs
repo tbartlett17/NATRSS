@@ -5,24 +5,23 @@ using System.Text;
 
 namespace SpillTrackerCS.Tests.UnitTests
 {
-    class BadEmailInput
+    class twoXeight
     {
         [SetUp]
-        public void SetUp() 
+        public void SetuUp() 
         {
-        }
 
+        }
         [Test]
-        public void BadEmailInputRegister_test() 
+        public void mathLogic_test() 
         {
             //arrange
-            string input = "@gm@.com";
+            int x = 8; int y;
             //act
-            string output = (model).name(input);
+            y = x * x;
             //assert
-            Assert.AreSame("a@g.com", output);
+            Assert.AreEqual(64,y);
 
         } 
-
     }
 }
