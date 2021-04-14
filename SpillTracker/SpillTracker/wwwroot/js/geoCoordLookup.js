@@ -23,7 +23,7 @@ function getCoords()
         type: "POST",
         dataType: "json",
         data: { streetAddress: jsonAddress },
-        url: "/GeoCoordinates/Index",
+        url: "/GeoCoordinates/GetCoords",
         success: successOnAjax,
         error: errorOnAjax
     });
