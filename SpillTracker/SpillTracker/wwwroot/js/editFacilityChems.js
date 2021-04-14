@@ -43,17 +43,94 @@ function search()
 // part of js code found at https://www.c-sharpcorner.com/article/custom-search-using-client-side-code/
 
 
-function modalMngr()
-{
-    var chemical{
-        name;
+$("input").click(function (e) {
+    if (e.target.id.substring(0, 11) == "addChemBtn_")
+    {
+        var chemId = e.target.id.substring(11);
+        var chemName = e.target.parentNode.parentNode.id;
+
+        //hide chem selector
+        $('#addChem').modal('hide');
+
+        //open new modal with selected chem
+        $('#addChem').on('hidden.bs.modal', function () {
+
+            $("#chemDetailsTitle").empty();
+            $("#chemDetailsTitle").append(chemName);
+
+            $("#chemId").empty();
+            $("#chemId").append(chemId);
+
+            $("#formConcentration").val('');
+            $("#formTemperature").val('')
+
+
+            $('#ChemDetails').modal('show');
+        })
     }
+});
 
 
-    $('#addChem').modal('hide')
 
-    $('#addChem').on('hidden.bs.modal', function () {
-        // Load up a new modal...
-        $('#ChemDetails').modal('show')
-    })
+function saveChemical()
+{
+    // disable button
+    $("#saveChemBtn").prop("disabled", true);
+    // add spinner to button
+    $("#saveChemBtn").html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+    );
+
+    var chemData = {
+        concentration: $("#formConcentration").val(),
+        chemicalTemperature: $("#formTemperature").val(),
+        ChemicalTemperatureUnits: $("#formTempUnits").val(),
+        chemicalStateId: $("#formChemState").val(),
+        chemicalId: $("#chemId").text(),
+        facilityId: $("#facilityId").text()
+    };
+    console.log("fac id: " + chemData.chemId);
+
+    var jsonChemData = JSON.stringify(chemData);
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: { chemData: jsonChemData },
+        url: "/Facilities/SaveChemical",
+        success: updateTable,
+        error: errorOnAjax
+    });
+
+    
+}
+
+function errorOnAjax() {
+    console.log("ERROR in ajax request");
+    alert("ERROR in ajax request");
+}
+
+function updateTable(data) {
+    //insert the new chem to the table
+    var table = document.getElementById("facilityChemsTbl");
+   
+    //for (var i = 0, d; d = data[i]; i++) {
+
+    //    var row = table.insertRow();
+    //    var cell1 = row.insertCell(); //Chem Name
+    //    var cell2 = row.insertCell(); //Concentration
+    //    var cell3 = row.insertCell(); //Temperature
+    //    var cell4 = row.insertCell(); //Chem State
+
+    //    cell1.innerHTML = "chem name";
+    //    cell2.innerHTML = "conc";
+    //    cell3.innerHTML = "temp";
+    //    cell4.innerHTML = "state";
+    //    table.append(row);
+    //}
+
+    console.log(data);
+    //alert("success on ajax");
+    $('#ChemDetails').modal('hide');
+    window.location.reload();
 }

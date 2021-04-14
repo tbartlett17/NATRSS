@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SpillTracker.Models;
 
 namespace SpillTracker.Controllers
@@ -62,7 +63,7 @@ namespace SpillTracker.Controllers
             Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
 
 
-            
+
             FacilityManagementVM facilityManagementVM = new FacilityManagementVM();
 
             if (id == null)
@@ -96,9 +97,19 @@ namespace SpillTracker.Controllers
         // GET: Facilities/Create
         [Authorize(Roles = "Admin, FacilityManager")]
         public IActionResult Create()
-
         {
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id");
+            // get the current users identity ID
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
+
+            ViewData["CompanyId"] = currentUser.CompanyId;
+            
+            
             return View();
         }
 
@@ -250,6 +261,8 @@ namespace SpillTracker.Controllers
                 return NotFound();
             }
 
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Type");
+
             EditFacilityChemsVM chems = new EditFacilityChemsVM();
 
             chems.Chemicals = await _context.Chemicals.OrderBy(x => x.Name).ToListAsync();
@@ -257,7 +270,7 @@ namespace SpillTracker.Controllers
                 .Include(fc => fc.Chemical)
                 .Include(fc => fc.ChemicalState)
                 .Where(f => f.FacilityId == id);
-
+            chems.FacilityId = id;
 
             if (currentUser.CompanyId == facility.CompanyId || User.IsInRole("Admin"))
             {
@@ -269,40 +282,55 @@ namespace SpillTracker.Controllers
             }
         }
 
-        //// POST: Facilities/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> EditChems(int id, [Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId")] Facility facility)
-        //{
-        //    if (id != facility.Id)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(facility);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!FacilityExists(facility.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id", facility.CompanyId);
-        //    return View(facility);
-        //}
+        // POST: FacilityChemicals/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFacilityChem([Bind("Id,Concentration,ChemicalTemperature,ChemicalTemperatureUnits,ChemicalStateId,ChemicalId,FacilityId")] FacilityChemical facilityChemical)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(facilityChemical);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ChemicalId"] = new SelectList(_context.Chemicals, "Id", "Id", facilityChemical.ChemicalId);
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Id", facilityChemical.ChemicalStateId);
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", facilityChemical.FacilityId);
+            return View(facilityChemical);
+        }
+
+        //string concetration, string chemTemp, string chemTempUnits, int chemStateId, int chemId, int facilityId
+        public IActionResult SaveChemical(string chemData)
+        {
+            FacilityChemical newFacChem = new FacilityChemical();
+            try
+            {
+                newFacChem = JsonConvert.DeserializeObject<FacilityChemical>(chemData);
+                //newFacChem.Chemical = _context.Chemicals.Where(c => c.Id == newFacChem.ChemicalId).FirstOrDefault();
+                //newFacChem.ChemicalState = _context.ChemicalStates.Where(s => s.Id == newFacChem.ChemicalStateId).FirstOrDefault();
+
+                //Debug.WriteLine("state: " + newFacChem.ChemicalStateId);
+
+                _context.FacilityChemicals.Add(newFacChem);
+                _context.SaveChanges();
+
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+
+            }
+
+            //return Json(returnString);
+            return Json(newFacChem);
+            //return Json(_context.FacilityChemicals.Where(fc => fc.FacilityId == newFacChem.FacilityId).Include(fc => fc.Chemical).Include(fc => fc.ChemicalState));
+        }
+
     }
 }
+
