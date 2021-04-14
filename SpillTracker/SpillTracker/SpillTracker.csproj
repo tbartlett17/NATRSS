@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Admin\Index.cshtml" />
+    <None Include="Views\GeoCoordinates\Index.cshtml" />
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
   </ItemGroup>

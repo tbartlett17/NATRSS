@@ -19,9 +19,7 @@ namespace SpillTracker.Controllers
     public class ChemicalsController : Controller
     {
         private readonly SpillTrackerDbContext _context;
-        private readonly String outputFilename = "Data\\BasicChemData.txt";
-        private readonly String outputFilename2 = "Data\\ChemData2.txt";
-
+       
         public ChemicalsController(SpillTrackerDbContext context)
         {
             _context = context;
