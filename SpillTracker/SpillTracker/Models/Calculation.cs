@@ -19,6 +19,8 @@ namespace SpillTracker.Models
 
         public string chemNum {get; set;}
 
+        public bool? cercla {get; set;}
+
         public double? reportableQuantity {get; set;}
 
         public IEnumerable<FacilityChemical> facilityChems {get; set;}

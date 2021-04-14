@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SpillTracker.Models.Form>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Time
+            </th>
+            <th>
+                By
+            </th>
+            <th>
+                Chemical Spilled
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountSpilled)
+            </th>
+            <th>
+                Reportable?
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpillLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facility)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpillReportedTime)
+            </td>
+            <td>
+                @item.Stuser.FirstName @item.Stuser.LastName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chemical.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountSpilled) @item.AmountSpilledUnits
+            </td>
+            @if (item.SpillReportable == true)
+            {
+                <td>
+                    Reportable
+                </td>
+            }
+            else 
+            {
+                <td>
+                    Not Reportable
+                </td>
+            }
+            <td>
+                @item.Facility.AddressStreet @item.Facility.AddressCity @item.Facility.AddressState
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Facility.Name)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
