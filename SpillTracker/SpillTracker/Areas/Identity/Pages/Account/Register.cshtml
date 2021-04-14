@@ -47,13 +47,16 @@
 
             @*add
         @*roles dropdown*@
-            <div class="input-group mb-3">
-                <select class="custom-select" id="inputGroupSelect01" asp-for="Input.RoleOption">
-                    <option selected>Role...</option>
-                    <option value="1">Employee</option>                    
-                    <option value="2">Facility Manager</option>
-                </select>
-            </div>
+        <div class="input-group mb-3">
+            <select required class="custom-select" id="inputGroupSelect01" asp-for="Input.RoleOption">
+                @*<option hidden>Role...</option>*@
+                <option value="" disabled selected>Select your Role</option>
+                <option value="1">Employee</option>
+                <option value="2">Facility Manager</option>
+
+            </select>
+            <span asp-validation-for="Input.RoleOption"></span>
+        </div>
 
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
