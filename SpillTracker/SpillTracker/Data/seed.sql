@@ -30,7 +30,9 @@ INSERT INTO [FacilityChemicals](Concentration,Chemical_Temperature,Chemical_Temp
     (0.50,60,'°F',2,1,1),
     (0.75,60,'°F',2,2,1),
     (0.20,60,'°F',2,3,2),
-    (0.32,60,'°F',2,4,2);
+    (0.32,60,'°F',2,4,2),
+    (0.25,60,'°F',2,1,3),
+    (0.70,60,'°F',2,4,3);
 
 
 INSERT INTO [Surface] (Type) VALUES

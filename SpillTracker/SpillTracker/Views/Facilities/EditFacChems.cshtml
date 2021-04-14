@@ -15,7 +15,7 @@
 <body>
     <h4>Chemicals</h4>
     <hr />
-    <table class="table">
+    <table class="table" id="facilityChemsTbl">
         <thead>
             <tr>
                 <th>
@@ -59,18 +59,16 @@
                         @Html.DisplayFor(modelItem => item.ChemicalState.Type)
                     </td>
                     @*<td>
-                            @Html.DisplayFor(modelItem => item.Facility.Id)
-                        </td>*@
-                    @*<td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>*@
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
+                        </button>
+                    </td>*@
+                   
                 </tr>
             }
         </tbody>
     </table>
-    <!-- Button trigger modal -->
+    <!-- Button trigger Chem Chooser -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChem">
         Add Chemical
     </button>
@@ -110,7 +108,7 @@
                         <tbody>
                             @foreach (var item in Model.Chemicals)
                             {
-                                <tr>
+                                <tr id="@item.Name">
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
@@ -132,17 +130,15 @@
                                             <Select style="width: 25%; text-align:center">
                                                 @foreach (var aliase in als)
                                                 {
-                                                    <option type="submit" asp-action="Details" asp-route-id="@item.Id">@aliase</option>
-
+                                                    <option>@aliase</option>
                                                 }
                                             </Select>
                                         </td>
                                     }
 
                                     <td>
-                                        <button type="button" id ="addChemBtn" class="btn btn-primary" onclick="modalMngr()">
-                                            add
-                                        </button>
+                                        <input type="button" id="addChemBtn_@item.Id" class="btn btn-primary" value="add" />
+                                           
                                     </td>
 
                                 </tr>
@@ -152,10 +148,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-footer">
+                @*<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -165,17 +161,45 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="chemDetailsTitle"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" >
-                    
+                <div class="modal-body">
+                    <p id="chemId" hidden></p>
+                    <p id="facilityId" hidden>@Model.FacilityId</p>
+                    <form asp-action="CreateFacilityChem">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Concentration" class="control-label"></label>
+                            <input id="formConcentration" asp-for="Concentration" class="form-control" />
+                            <span asp-validation-for="Concentration" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalTemperature" class="control-label"></label>
+                            <input id="formTemperature" asp-for="ChemicalTemperature" class="form-control" />
+                            <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
+                            @*<input id="formTempUnits" asp-for="ChemicalTemperatureUnits" class="form-control" />*@
+                            <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="formTempUnits">
+                                <option value="°F">°F</option>
+                                <option value="°C">°C</option>
+                            </select>
+                            <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalStateId" class="control-label"></label>
+                            <select id="formChemState" asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
+                        </div>
+
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" id ="saveChemBtn" class="btn btn-primary" onclick="saveChemical()">Save Chem</button>
                 </div>
             </div>
         </div>
