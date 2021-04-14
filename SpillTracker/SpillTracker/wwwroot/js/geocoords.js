@@ -22,7 +22,7 @@ function getCoords() {
         type: "POST",
         dataType: "json",
         data: { streetAddress: jsonAddress },
-        url: "/GeoCoordinates/Index",
+        url: "/GeoCoordinates/GetCoords",
         success: successOnAjax,
         error: errorOnAjax
     });
@@ -36,10 +36,17 @@ function errorOnAjax() {
 
 function successOnAjax(data) {
     console.log(data);
-    alert("success on ajax");
+    //alert("success on ajax");
 
-    $("#location").append(data);
+    //data = {"Longitude":"-123.047074","Latitude":"44.623521"}
 
+    var coords = JSON.parse(data);
+    var location = coords.Latitude + ", " + coords.Longitude;
 
-    document.forms[0].submit();
+    console.log(location);
+
+    $("#location").val(location);
+
+    document.getElementById("submitForm").click();
+    //document.forms[0].submit();
 }

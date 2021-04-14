@@ -53,6 +53,7 @@
                 <input asp-for="CompanyId" class="form-control" value="@ViewBag.CompanyId" />
             </div>
             <div class="form-group">
+                <input type="submit" id ="submitForm" value="Save" class="btn btn-primary" hidden/>
                 <button type="button" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Create</button>
             </div>
         </form>
