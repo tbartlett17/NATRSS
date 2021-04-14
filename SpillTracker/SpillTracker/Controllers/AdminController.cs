@@ -2,18 +2,27 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SpillTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace SpillTracker.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly SpillTrackerDbContext dbSpllTracker;
+        
+
 
         public AdminController(SpillTrackerDbContext context)
         {
@@ -73,6 +82,9 @@ namespace SpillTracker.Controllers
                         Name = parsedName,
                         ReportableQuantity = parsedRQ,
                         ReportableQuantityUnits = "lbs",
+                        DensityUnits = "g/cm\u00B3",
+                        MolecularWeightUnits = "g/mol",
+                        VaporPressureUnits = "mm Hg",
                         EpcraChem = true
                     };
 
@@ -84,6 +96,8 @@ namespace SpillTracker.Controllers
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+
             }
             return Json(true);
         }
@@ -133,6 +147,9 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = lastChem.ReportableQuantity,
                                 ReportableQuantityUnits = "lbs",
+                                DensityUnits = "g/cm\u00B3",
+                                MolecularWeightUnits = "g/mol",
+                                VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
                             };
 
@@ -169,6 +186,9 @@ namespace SpillTracker.Controllers
                                 Name = parsedName,
                                 ReportableQuantity = parsedRQ,
                                 ReportableQuantityUnits = "lbs",
+                                DensityUnits = "g/cm\u00B3",
+                                MolecularWeightUnits = "g/mol",
+                                VaporPressureUnits = "mm Hg",
                                 CerclaChem = true
                             };
 
@@ -184,9 +204,10 @@ namespace SpillTracker.Controllers
 
                 UpdateStatusTime("CERCLA Scraper");
             }
-            catch (Exception ex)
+            catch (Exception ex) // change status code 
             {
                 Debug.WriteLine(ex);
+                Response.StatusCode = 500;
             }
 
             return Json(true);
@@ -194,6 +215,19 @@ namespace SpillTracker.Controllers
 
         public void ProcessChemical(Chemical parsedChem)
         {
+            if (parsedChem.CasNum.Contains("&nbsp;&nbsp;&nbsp;")) // delete these whitespace html values
+            {
+                parsedChem.CasNum = null;
+                //Debug.WriteLine("found one");
+            }
+
+            if (!String.IsNullOrEmpty(parsedChem.CasNum) && !parsedChem.CasNum.Contains("-")) // cas num needs to get formatted properly. ex: change xxxxyyz to xxxx-yy-z
+            {
+                parsedChem.CasNum = parsedChem.CasNum.Insert((parsedChem.CasNum.Length - 1), "-");
+                parsedChem.CasNum = parsedChem.CasNum.Insert((parsedChem.CasNum.Length - 4), "-");
+                //Debug.WriteLine(parsedChem.CasNum);
+            }
+
             if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
             {
                 Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database, skipping entry...");
@@ -252,5 +286,11 @@ namespace SpillTracker.Controllers
             dbSpllTracker.StatusTimes.Add(newStatusTime);
             dbSpllTracker.SaveChanges();
         }
+
+
+
+
     }
+
+    
 }

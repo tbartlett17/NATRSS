@@ -1,0 +1,212 @@
+﻿@model EditFacilityChemsVM
+
+@{
+    ViewData["Title"] = "Edit Chems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Chems</title>
+</head>
+<body>
+    <h4>Chemicals</h4>
+    <hr />
+    <table class="table" id="facilityChemsTbl">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Chemical)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Concentration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperature)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperatureUnits)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalState)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Facility)
+                    </th>*@
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FacilityChemicals)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Chemical.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concentration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChemicalTemperature) @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChemicalState.Type)
+                    </td>
+                    @*<td>
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
+                        </button>
+                    </td>*@
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- Button trigger Chem Chooser -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChem">
+        Add Chemical
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="addChem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Select a Chemical</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="searchBox" style="text-align: center;">
+                                <input type="text" style="width: 60%;" class="searchTextBox" id="searchTextBoxid" onkeyup="search()" placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'" />
+                                <label id="NotExist" style="display:none"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped" id="mainTableid">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%;">
+                                    @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().Name)
+                                </th>
+                                <th style="width: 20%; text-align: center">
+                                    @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().CasNum)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().Aliases)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Chemicals)
+                            {
+                                <tr id="@item.Name">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.CasNum)
+                                    </td>
+
+                                    @if (item.Aliases == null)
+                                    {
+                                        <td></td>
+                                    }
+
+                                    else
+                                    {
+                                        string[] arr = item.Aliases.Split("<br>");
+                                        List<string> als = arr.ToList();
+                                        als.Remove(als.Last());
+                                        <td>
+                                            <Select style="width: 25%; text-align:center">
+                                                @foreach (var aliase in als)
+                                                {
+                                                    <option>@aliase</option>
+                                                }
+                                            </Select>
+                                        </td>
+                                    }
+
+                                    <td>
+                                        <input type="button" id="addChemBtn_@item.Id" class="btn btn-primary" value="add" />
+                                           
+                                    </td>
+
+                                </tr>
+
+                            }
+                            
+                        </tbody>
+                    </table>
+                </div>
+                @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ChemDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chemDetailsTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="chemId" hidden></p>
+                    <p id="facilityId" hidden>@Model.FacilityId</p>
+                    <form asp-action="CreateFacilityChem">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Concentration" class="control-label"></label>
+                            <input id="formConcentration" asp-for="Concentration" class="form-control" />
+                            <span asp-validation-for="Concentration" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalTemperature" class="control-label"></label>
+                            <input id="formTemperature" asp-for="ChemicalTemperature" class="form-control" />
+                            <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
+                            @*<input id="formTempUnits" asp-for="ChemicalTemperatureUnits" class="form-control" />*@
+                            <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="formTempUnits">
+                                <option value="°F">°F</option>
+                                <option value="°C">°C</option>
+                            </select>
+                            <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChemicalStateId" class="control-label"></label>
+                            <select id="formChemState" asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id ="saveChemBtn" class="btn btn-primary" onclick="saveChemical()">Save Chem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script src="~/js/editFacilityChems.js"></script>
+}

@@ -37,13 +37,16 @@ namespace SpillTracker.Utilities
                         // Ensure this user exists or is newly created (Email is used for username since that is the default in Register and Login -- change those and then use username here if you want it different than email
                         var identityID = await EnsureUser(userManager, testUserPw, u.Email, u.Email, u.EmailConfirmed);
                         // Create a new FujiUser if this one doesn't already exist
-                        Stuser fu = new Stuser { AspnetIdentityId = identityID, FirstName = u.FirstName, LastName = u.LastName };
+                        Stuser fu = new Stuser { AspnetIdentityId = identityID, FirstName = u.FirstName, LastName = u.LastName, CompanyId = u.CompanyID };
                         if (!context.Stusers.Any(x => x.AspnetIdentityId == fu.AspnetIdentityId && x.FirstName == fu.FirstName && x.LastName == fu.LastName))
                         {
                             // Doesn't already exist, so add a new user
                             context.Add(fu);
                             await context.SaveChangesAsync();
                         }
+                        // Now make sure admin role exists and give it to this user
+                        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                        await EnsureRoleForUser(roleManager, userManager, identityID, u.Role);
                     }
                 }
             }
@@ -85,7 +88,7 @@ namespace SpillTracker.Utilities
                     }
                     // Now make sure admin role exists and give it to this user
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    await EnsureRoleForUser(roleManager, userManager, identityID, "admin");
+                    await EnsureRoleForUser(roleManager, userManager, identityID, "Admin");
                 }
             }
             catch (InvalidOperationException ex)
@@ -95,6 +98,9 @@ namespace SpillTracker.Utilities
                 throw new Exception("Failed to initialize admin user or role, service provider did not have the correct service:" + ex.Message);
             }
         }
+
+      
+
 
         /// <summary>
         /// Helper method to ensure that the Identity user exists or has been newly created.  Modified from
