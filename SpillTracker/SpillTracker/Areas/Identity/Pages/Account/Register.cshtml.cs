@@ -141,7 +141,7 @@ namespace SpillTracker.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("Adding user to the " + roleName +" role");
                         var userResult = await _userManager.AddToRoleAsync(user, roleName);
-                    }
+                    }                    
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
