@@ -29,9 +29,6 @@
                 Reportable?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SpillLocation)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Facility)
             </th>
             <th></th>
@@ -64,9 +61,6 @@
                     Not Reportable
                 </td>
             }
-            <td>
-                @item.Facility.AddressStreet @item.Facility.AddressCity @item.Facility.AddressState
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Facility.Name)
             </td>
