@@ -22,33 +22,7 @@
                 <dd>
                     <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid" target="_blank">@Html.DisplayFor(model => model.PubChemCid)</a>
                 </dd>
-                <dt id="enlarge">
-                    @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
-                </dd>
-                <dt id="enlarge">
-                    @Html.DisplayNameFor(model => model.Density)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Density) @Html.DisplayFor(model => model.DensityUnits)
-                </dd>
-            </div>
-            <div class="col-sm-6">
-                <dt id="enlarge">
-                    @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
-                </dd>
-                <dt id="enlarge">
-                    @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
-                </dd>
-
+                @*PLACE CHEM CLASS here*@
                 <dt id="enlarge">
                     Chemical Classification
                 </dt>
@@ -65,6 +39,7 @@
                         EPCRA Chemical
                     </dd>
                 }
+                @*PLACE Synonyms here*@
                 <dt id="enlarge">
                     Synonyms
                 </dt>
@@ -82,6 +57,35 @@
                         </dd>
                     }
                 }
+            </div>
+            <div class="col-sm-6">
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
+                </dd>
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
+                </dd>
+
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
+                </dd>
+                
+                @*PLACE Density here*@
+                <dt id="enlarge">
+                    @Html.DisplayNameFor(model => model.Density)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Density) @Html.DisplayFor(model => model.DensityUnits)
+                </dd>
             </div>
         </div>
 
