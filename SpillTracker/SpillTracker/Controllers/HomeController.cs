@@ -30,12 +30,17 @@ namespace SpillTracker.Controllers
             return View(mystatus);
         }
 
-        public IActionResult twoXeight() 
+        public IActionResult Guide() 
+        {
+            return View();
+        }
+
+       /* public IActionResult twoXeight() 
         {
             int x = 8;
             int y ;
             return View();
-        }
+        }*/
 
 
 

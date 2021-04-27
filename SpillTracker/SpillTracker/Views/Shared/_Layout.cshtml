@@ -29,44 +29,48 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
-                        </li>*@
-                         <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+        </li>*@
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
                         </li>
-                       
-                             @if (User.Identity.IsAuthenticated)
-                             {
-                                 if (User.IsInRole("Admin"))
-                                 {
-                                    <li>
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
-                                    </li> 
-                                    <li>
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">All Facilities</a>
-                                    </li>
-                                    
-                                 }
-                                 if (User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
-                                 {
-                                    <li>
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">My Facilities</a>
-                                    </li>
-                                     
-                                 }
-                             }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">All Facilities</a>
+                                </li>
+
+                            }
+                            if (User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
+                            {
+                                <li>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">My Facilities</a>
+                                </li>
+
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Calculation" asp-action="Index">Calculation</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Guide">Guide</a>
+                        </li>
                         <li>
-                             @if (User.Identity.IsAuthenticated)
-                             {
-                                 if (User.IsInRole("Admin") || User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
-                                 {
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (User.IsInRole("Admin") || User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
+                                {
                                     <a class="nav-link text-light" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
-                                 }
-                             }
-                        </li> 
+                                }
+                            }
+                        </li>
                     </ul>
                 </div>
             </div>
