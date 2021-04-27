@@ -62,7 +62,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.SpillReportedTime)
+                @Html.DisplayFor(modelItem => item.SpillReportedDate) @Html.DisplayFor(modelItem => item.SpillReportedTime)
             </td>
             <td>
                 @item.Stuser.FirstName @item.Stuser.LastName
@@ -85,9 +85,6 @@
                     Not Reportable
                 </td>
             }
-            <td>
-                @item.Facility.AddressStreet @item.Facility.AddressCity @item.Facility.AddressState
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Facility.Name)
             </td>

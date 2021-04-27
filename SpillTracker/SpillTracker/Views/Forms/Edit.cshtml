@@ -34,7 +34,11 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <input asp-for="SpillReportedTime" class="form-control" />
+                        <input type="date" asp-for="SpillReportedDate" class="form-control" />
+                        <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" asp-for="SpillReportedTime" class="form-control" />
                         <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
                     </div>
                 </td>
@@ -203,7 +207,7 @@
                 <th>Spill Reach a Water Source</th>
                 <th>Spill Forming a Puddle</th>
                 <th>Spill Surface</th>
-                <th>Spill Duration in hours</th>
+                <th>Spill Duration</th>
                 <th>Cleanup Time</th>
             </tr>
             <tr>
@@ -254,8 +258,12 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        <input asp-for="SpillDuration" class="form-control" />
-                        <span asp-validation-for="SpillDuration" class="text-danger"></span>
+                        <input asp-for="SpillDurationHours" class="form-control" />
+                        <span asp-validation-for="SpillDurationHours" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="SpillDurationMinutes" class="form-control" />
+                        <span asp-validation-for="SpillDurationMinutes" class="text-danger"></span>
                     </div>
                 </td>
                 <td>

@@ -5,48 +5,83 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SpillTracker.Models;
-
+using SpillTracker.Utilities;
 
 namespace SpillTracker.Controllers
 {
     [Authorize(Roles = "Admin, FacilityManager, Employee")]
     public class FormsController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly SpillTrackerDbContext _context;
+        private readonly IConfiguration _config;
 
-        public FormsController(SpillTrackerDbContext context)
+        //private readonly ISpillTrackerUserRepository _stuRepo;
+        //private readonly ISpillTrackerFormRepository _stfRepo;
+        //private readonly ISpillTrackerChemicalRepository _stcRepo;
+
+
+
+        public FormsController(SpillTrackerDbContext context, IConfiguration config, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _config = config;
+            _userManager = userManager;
+            //_stuRepo = stRepo;
+            //_stfRepo = stfRepo;
+            //_stcRepo = stcRepo;
         }
 
         // GET: Forms
         public async Task<IActionResult> Index()
         {
+            // Information from Identity through the User Manager
+            string userId = _userManager.GetUserId(User);
+            IdentityUser identityUser = await _userManager.GetUserAsync(User);
+
+            Stuser stUser = null;
+            if (userId != null)
+            {
+                //stUser = _stuRepo.GetStUserByIdentity(userId);
+                stUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+            }
+
             var spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser).Take(0);
+            //List<Form> formsList = null;
 
             if (User.IsInRole("Admin")) 
             {
                 spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser);
+                //formsList = _stfRepo.GetAllForms();
             }
             if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) 
             {
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-                string userId = claim.Value;
 
-                // look up the current user in the spill tracker DB
-                Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+                //var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                //var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                //string userId = claim.Value;
 
-                 spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
+                //// look up the current user in the spill tracker DB
+                //Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
+
+
+
+                spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
                             .Include(f => f.ChemicalState)
                             .Include(f => f.Facility).ThenInclude(f => f.Company)
                             .Include(f => f.SpillSurface)
-                            .Include(f => f.Stuser).Where(c => c.Facility.CompanyId == currentUser.CompanyId);
+                            .Include(f => f.Stuser).Where(c => c.Facility.CompanyId == stUser.CompanyId);
+
+                ViewData["FacilityList"] = new SelectList(_context.Facilities.Where(x => x.CompanyId == stUser.CompanyId).OrderBy(x => x.Name), "Id", "Name");
             }
+
             return View(await spillTrackerDbContext.ToListAsync());
         }
 
@@ -95,7 +130,7 @@ namespace SpillTracker.Controllers
 
         // GET: Forms/Create
         [Authorize(Roles = "Admin, FacilityManager, Employee")]
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -108,9 +143,15 @@ namespace SpillTracker.Controllers
             form.SpillOngoing = false;
             form.SpillReachWaterSource = false;
             form.WaterSource = "";
-            ViewData["ChemicalId"] = new SelectList(_context.Chemicals.OrderBy(x => x.Name), "Id", "Name");
+            form.Facility = _context.Facilities.Where(f => f.Id == id).FirstOrDefault();
+
+            ViewData["ChemicalId"] = new SelectList(_context.FacilityChemicals
+                .Include(fc => fc.Chemical)
+                .Where(fc=> fc.FacilityId == id)
+                .OrderBy(fc => fc.Chemical.Name)
+                ,"Id", "Chemical.Name");
             ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates.OrderBy(x => x.Type), "Id", "Type");
-            ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(x => x.CompanyId == currentUser.CompanyId).OrderBy(x => x.Name), "Id", "Name");
+            //ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(f => f.Id == id), "Id", "Name");
             ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces.OrderBy(x => x.Type), "Id", "Type");
             ViewData["StuserId"] = new SelectList(_context.Stusers.OrderBy(x => x.FirstName), "Id", "FirstName");
             return View(form);
@@ -122,7 +163,7 @@ namespace SpillTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, FacilityManager, Employee")]
-        public async Task<IActionResult> Create([Bind("Id,SpillReportedBy,SpillReportedTime,SpillLocation,SpillOngoing,SpillContained,ChemicalPressurized,SpillVolume,SpillVolumeUnits,ChemicalConcentration,SpillFormingPuddle,SpillReachWaterSource,WaterSource,SpillDuration,CleanupStartTime,ChemicalTemperature,ChemicalTemperatureUnits,SpillWidth,SpillWidthUnits,SpillLength,SpillLengthUnits,SpillDepth,SpillDepthUnits,SpillArea,SpillAreaUnits,SpillReportable,WindDirection,WindSpeed,WindSpeedUnits,AddressStreet,AddressCity,AddressState,AddressZip,WeatherTemperature,WeatherTemperatureUnits,WeatherHumidity,WeatherHumidityUnits,SkyConditions,SpillEvaporationRate,SpillEvaporationRateUnits,AmountEvaporated,AmountEvaporatedUnits,AmountSpilled,AmountSpilledUnits,Notes,ContactNotes,StuserId,ChemicalId,SpillSurfaceId,ChemicalStateId,FacilityId")] Form form)
+        public async Task<IActionResult> Create([Bind("Id,SpillReportedBy,SpillReportedDate,SpillReportedTime,SpillLocation,SpillOngoing,SpillContained,ChemicalPressurized,SpillVolume,SpillVolumeUnits,ChemicalConcentration,SpillFormingPuddle,SpillReachWaterSource,WaterSource,SpillDuration,CleanupStartTime,ChemicalTemperature,ChemicalTemperatureUnits,SpillWidth,SpillWidthUnits,SpillLength,SpillLengthUnits,SpillDepth,SpillDepthUnits,SpillArea,SpillAreaUnits,SpillReportable,WindDirection,WindSpeed,WindSpeedUnits,AddressStreet,AddressCity,AddressState,AddressZip,WeatherTemperature,WeatherTemperatureUnits,WeatherHumidity,WeatherHumidityUnits,SkyConditions,SpillEvaporationRate,SpillEvaporationRateUnits,AmountEvaporated,AmountEvaporatedUnits,AmountSpilled,AmountSpilledUnits,Notes,ContactNotes,StuserId,ChemicalId,SpillSurfaceId,ChemicalStateId,FacilityId")] Form form)
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -190,10 +231,7 @@ namespace SpillTracker.Controllers
             else
             {
                 return Redirect("~/Identity/Account/AccessDenied"); // need to return access denied because user tried accessing a company data they are not apart of 
-            }
-
-
-            
+            }      
         }
 
         // POST: Forms/Edit/5
@@ -246,39 +284,74 @@ namespace SpillTracker.Controllers
             return View(form);
         }
 
+        public IActionResult GetWeatherReport(string coords, DateTime dateTime)
+        {
+            WeatherReport wr = new WeatherReport();
+            try
+            {
+                string apiKey = _config["OpenWeatherMapsAPIKey"];
+                //Debug.WriteLine($"coords: {coords}, dateTime: {dateTime}");
+                wr = GetWeatherInfo.GetWeather(coords, dateTime, apiKey);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+            }
+            return Json(wr);
+        }
+
+        public IActionResult GetChemicalData(int id)
+        {
+            FacilityChemical fc = new FacilityChemical();
+            try
+            {
+                fc = _context.FacilityChemicals
+                    .Include(fc => fc.Chemical)
+                    .Include(fc => fc.ChemicalState)
+                    .Where(fc => fc.Id == id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Response.StatusCode = 500;
+            }
+            return Json(fc);
+        }
+
         // GET: Forms/Delete/5
-    //     public async Task<IActionResult> Delete(int? id)
-    //     {
-    //         if (id == null)
-    //         {
-    //             return NotFound();
-    //         }
+        //     public async Task<IActionResult> Delete(int? id)
+        //     {
+        //         if (id == null)
+        //         {
+        //             return NotFound();
+        //         }
 
-    //         var form = await _context.Forms
-    //             .Include(f => f.Chemical)
-    //             .Include(f => f.ChemicalState)
-    //             .Include(f => f.Facility)
-    //             .Include(f => f.SpillSurface)
-    //             .Include(f => f.Stuser)
-    //             .FirstOrDefaultAsync(m => m.Id == id);
-    //         if (form == null)
-    //         {
-    //             return NotFound();
-    //         }
+        //         var form = await _context.Forms
+        //             .Include(f => f.Chemical)
+        //             .Include(f => f.ChemicalState)
+        //             .Include(f => f.Facility)
+        //             .Include(f => f.SpillSurface)
+        //             .Include(f => f.Stuser)
+        //             .FirstOrDefaultAsync(m => m.Id == id);
+        //         if (form == null)
+        //         {
+        //             return NotFound();
+        //         }
 
-    //         return View(form);
-    //     }
+        //         return View(form);
+        //     }
 
-    //     // POST: Forms/Delete/5
-    //     [HttpPost, ActionName("Delete")]
-    //     [ValidateAntiForgeryToken]
-    //     public async Task<IActionResult> DeleteConfirmed(int id)
-    //     {
-    //         var form = await _context.Forms.FindAsync(id);
-    //         _context.Forms.Remove(form);
-    //         await _context.SaveChangesAsync();
-    //         return RedirectToAction(nameof(Index));
-    //     }
+        //     // POST: Forms/Delete/5
+        //     [HttpPost, ActionName("Delete")]
+        //     [ValidateAntiForgeryToken]
+        //     public async Task<IActionResult> DeleteConfirmed(int id)
+        //     {
+        //         var form = await _context.Forms.FindAsync(id);
+        //         _context.Forms.Remove(form);
+        //         await _context.SaveChangesAsync();
+        //         return RedirectToAction(nameof(Index));
+        //     }
 
         private bool FormExists(int id)
         {
