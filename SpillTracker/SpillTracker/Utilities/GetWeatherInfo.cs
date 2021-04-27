@@ -102,7 +102,6 @@ namespace SpillTracker.Utilities
                 owmWeather = JsonConvert.DeserializeObject<OWMReport>(jsonResult);
                 //Debug.WriteLine(owmWeather.Current.WindDeg);
 
-
                 // Get the weather data we actually need from the OWM weather data
                 weatherReport.DateTime = UnixTimeStampToDateTime(owmWeather.Current.Dt);
                 weatherReport.Latitude = owmWeather.Lat;
