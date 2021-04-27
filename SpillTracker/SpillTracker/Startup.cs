@@ -61,7 +61,10 @@ namespace SpillTracker
                 opts.User.RequireUniqueEmail = true; //cant have two users with same email
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddRazorPages();
 
             //// Blocks access to everything unless specifically allowed on individual pages

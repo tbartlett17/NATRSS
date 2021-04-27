@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <td>@Html.DisplayFor(model => model.SpillReportedBy)</td>
-                <td>@Html.DisplayFor(model => model.SpillReportedTime)</td>
+                <td>@Html.DisplayFor(model => model.SpillReportedDate) @Html.DisplayFor(model => model.SpillReportedTime)</td>
                 <td>@Html.DisplayFor(model => model.SpillLocation)</td>
                 <td>@Html.DisplayFor(model => model.Facility.Name)</td>
             </tr>
@@ -84,7 +84,7 @@
                 <td>@Html.DisplayFor(model => model.SpillReachWaterSource)</td>
                 <td>@Html.DisplayFor(model => model.SpillFormingPuddle)</td>
                 <td>@Html.DisplayFor(model => model.SpillSurface.Type)</td>
-                <td>@Html.DisplayFor(model => model.SpillDuration) hrs.</td>
+                <td>@Html.DisplayFor(model => model.SpillDurationHours) hrs. @Html.DisplayFor(model => model.SpillDurationMinutes) min.</td>
                 <td>@Html.DisplayFor(model => model.CleanupStartTime)</td>
             </tr>
         </table>
