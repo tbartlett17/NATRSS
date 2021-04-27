@@ -35,11 +35,23 @@ namespace SpillTracker.Controllers
             return View();
         }
 
-       /* public IActionResult twoXeight() 
+        /* public IActionResult twoXeight() 
+         {
+             int x = 8;
+             int y ;
+             return View();
+         }*/
+        
+        [HttpGet]
+        public IActionResult Contact() 
         {
-            int x = 8;
-            int y ;
             return View();
+        }
+
+        /*[HttpPost]
+        public IActionResult Contact(email e) 
+        {
+
         }*/
 
 
