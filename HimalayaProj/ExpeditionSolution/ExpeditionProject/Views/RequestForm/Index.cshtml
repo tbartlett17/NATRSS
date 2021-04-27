@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ExpeditionProject.Models.Form
+<!--the form------------------------------------------------->
+<div class="col-sm-5 text-center mt-4 mainForm">
+
+    <form class=" " asp-controller="RequestForm" asp-action="Index" method="post">
+        <!--priority input-->
+        <!-- Small button groups (default and split) -->
+        <!--Generate error message to tell us what data values failed-->
+        <!--<div asp-validation-summary="All"></div>-->
+
+
+        <div class="form-inline  mx-4">
+            <label for="SubmissionDateTime">Submission Date and Time</label>
+            @Html.EditorFor(model => model.SubmissionDateTime)
+
+        </div>
+
+        <div class="d-flex justify-content-between mt-3  ">
+
+            <div class=" ">
+                <div><label asp-for="ExpeditionId" class="control-label ml-4"> Expedition Id</label></div>
+            </div>
+            <div>
+                <input type="number" asp-for="ExpeditionId" id="ExpeditionId"  value="@ViewData["ThisCurrentExpedition"]">
+            </div>
+            <span asp-validation-for="ExpeditionId"></span>
+
+        </div>
+
+        <div class="d-flex justify-content-between mt-3  ">
+
+            <div class=" ">
+                <div><label asp-for="UserId" class="control-label ml-4">User Id</label></div>
+            </div>
+            <div>
+                <input type="number" asp-for="UserId" id="UserId" value="@ViewData["ThisCurrentUser"]">
+            </div>
+            <span asp-validation-for="UserId"></span>
+
+        </div>
+
+        @Html.HiddenFor(model => model.Status,
+                new { id = "Status", Value = "pending" })
+       
+        @Html.HiddenFor(model => model.Completed,
+                new { id = "Completed", Value = 0 })
+
+
+
+        <div class="form-group mt-3 mx-4">
+            <label for="Description">Add a description for your request:</label>
+            <textarea asp-for="Description" class="form-control" id="Description" rows="3" maxlength="200"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-sm btn-outline-dark mb-3  col-sm-5">Submit!!!</button>
+
+
+    </form>
+</div>

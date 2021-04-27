@@ -9,8 +9,8 @@
     @*<link rel="stylesheet" href ="~/css/SpinnerOverlay.css" />*@
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header style="background-color: #50773e">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #50773e; color: white">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="width: 5%;">
                     <img src="~/images/NATRSSLogo.png" width="125%" height="125%" alt="">
@@ -26,13 +26,13 @@
                    
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
                         </li>*@
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
                         </li>
                        
                              @if (User.Identity.IsAuthenticated)
@@ -40,30 +40,30 @@
                                  if (User.IsInRole("Admin"))
                                  {
                                     <li>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Admin Page</a>
                                     </li> 
                                     <li>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">All Facilities</a>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">All Facilities</a>
                                     </li>
                                     
                                  }
                                  if (User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
                                  {
                                     <li>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">My Facilities</a>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Facilities" asp-action="Index">My Facilities</a>
                                     </li>
                                      
                                  }
                              }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Calculation" asp-action="Index">Calculation</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Calculation" asp-action="Index">Calculation</a>
                         </li>
                         <li>
                              @if (User.Identity.IsAuthenticated)
                              {
                                  if (User.IsInRole("Admin") || User.IsInRole("FacilityManager") || User.IsInRole("Employee"))
                                  {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Forms" asp-action="Index">Forms</a>
                                  }
                              }
                         </li> 

@@ -78,7 +78,11 @@ namespace SpillTracker.Controllers
             {
                 return NotFound();
             }
-            if (currentUser.CompanyId == form.Facility.CompanyId || User.IsInRole("Admin"))
+            if (User.IsInRole("Admin"))
+            {
+                return View(form);
+            }
+            else if(currentUser.CompanyId == form.Facility.CompanyId) 
             {
                 return View(form);
             }
@@ -169,11 +173,11 @@ namespace SpillTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["ChemicalId"] = new SelectList(_context.Chemicals, "Id", "Id", form.ChemicalId);
-            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Id", form.ChemicalStateId);
-            ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(x => x.CompanyId == currentUser.CompanyId), "Id", "Id", form.FacilityId);
-            ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces, "Id", "Id", form.SpillSurfaceId);
-            ViewData["StuserId"] = new SelectList(_context.Stusers, "Id", "Id", form.StuserId);
+            ViewData["ChemicalId"] = new SelectList(_context.FacilityChemicals.Include(fc => fc.Chemical).Where(fc=> fc.FacilityId == id).OrderBy(fc => fc.Chemical.Name), "ChemicalId", "Chemical.Name");
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Type", form.ChemicalStateId);
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name", form.FacilityId);
+            ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces, "Id", "Type", form.SpillSurfaceId);
+            ViewData["StuserId"] = new SelectList(_context.Stusers, "Id", "FirstName", form.StuserId);
             //Debug.WriteLine(form.Facility.CompanyId);
             if (User.IsInRole("Admin"))
             {
@@ -200,6 +204,15 @@ namespace SpillTracker.Controllers
         [Authorize(Roles = "Admin, FacilityManager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SpillReportedBy,SpillReportedTime,SpillLocation,SpillOngoing,SpillContained,ChemicalPressurized,SpillVolume,SpillVolumeUnits,ChemicalConcentration,SpillFormingPuddle,SpillReachWaterSource,WaterSource,SpillDuration,CleanupStartTime,ChemicalTemperature,ChemicalTemperatureUnits,SpillWidth,SpillWidthUnits,SpillLength,SpillLengthUnits,SpillDepth,SpillDepthUnits,SpillArea,SpillAreaUnits,SpillReportable,WindDirection,WindSpeed,WindSpeedUnits,AddressStreet,AddressCity,AddressState,AddressZip,WeatherTemperature,WeatherTemperatureUnits,WeatherHumidity,WeatherHumidityUnits,SkyConditions,SpillEvaporationRate,SpillEvaporationRateUnits,AmountEvaporated,AmountEvaporatedUnits,AmountSpilled,AmountSpilledUnits,Notes,ContactNotes,StuserId,ChemicalId,SpillSurfaceId,ChemicalStateId,FacilityId")] Form form)
         {
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+             Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
+            //form.StuserId = currentUser.Id;
+
+
+
             if (id != form.Id)
             {
                 return NotFound();
@@ -224,12 +237,12 @@ namespace SpillTracker.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["ChemicalId"] = new SelectList(_context.Chemicals, "Id", "Id", form.ChemicalId);
-            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates, "Id", "Id", form.ChemicalStateId);
-            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", form.FacilityId);
-            ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces, "Id", "Id", form.SpillSurfaceId);
-            ViewData["StuserId"] = new SelectList(_context.Stusers, "Id", "Id", form.StuserId);
+            }ViewData["ChemicalId"] = new SelectList(_context.FacilityChemicals.Include(fc => fc.Chemical).Where(fc=> fc.FacilityId == id).OrderBy(fc => fc.Chemical.Name), "ChemicalId", "Chemical.Name");
+            //ViewData["ChemicalId"] = new SelectList(_context.Chemicals.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates.OrderBy(x => x.Type), "Id", "Type");
+            ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(x => x.CompanyId == currentUser.CompanyId).OrderBy(x => x.Name), "Id", "Name");
+            ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces.OrderBy(x => x.Type), "Id", "Type");
+            ViewData["StuserId"] = new SelectList(_context.Stusers.OrderBy(x => x.FirstName), "Id", "FirstName");
             return View(form);
         }
 
