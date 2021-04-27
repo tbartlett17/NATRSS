@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpillTracker.Models.Interfaces
 {
-    interface ISpillTrackerFormRepository : IRepository<Form>
+    public interface ISpillTrackerFormRepository : IRepository<Form>
     {
         IEnumerable<Form> GetAllFormsByCompanyId(int id);
+        IEnumerable<Form> GetAllForms();
+        bool FormExists(int id);
     }
 }

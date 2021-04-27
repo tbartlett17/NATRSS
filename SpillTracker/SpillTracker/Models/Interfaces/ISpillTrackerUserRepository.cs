@@ -7,7 +7,7 @@ using SpillTracker.Models;
 
 namespace SpillTracker.Models.Interfaces
 {
-    interface ISpillTrackerUserRepository : IRepository<Stuser>
+    public interface ISpillTrackerUserRepository : IRepository<Stuser>
     {
         Stuser GetStuserByIdentityId(string identityId);
         bool Exists(Stuser stu);
