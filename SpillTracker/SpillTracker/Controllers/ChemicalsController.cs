@@ -32,7 +32,8 @@ namespace SpillTracker.Controllers
             return View(await _context.Chemicals.OrderBy(x=>x.Name).ToListAsync());        
         }
 
-        public IActionResult ByFIrstLetter(string l) 
+        
+        public IActionResult ByFirstLetter(string l) 
         {
             //var list = new List<string> "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             var list = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".Split(" ").ToList();
@@ -45,7 +46,7 @@ namespace SpillTracker.Controllers
             
             if(l == null) 
             {
-                return View(_context.Chemicals.OrderBy(x=>x.Name).ToListAsync()); 
+                return View("Index", all); 
             }
             else if(l.Length > 1)
             {
@@ -62,7 +63,7 @@ namespace SpillTracker.Controllers
             }
             else
             {
-               return View(_context.Chemicals.OrderBy(x=>x.Name).ToListAsync());   
+               return View("Index", all);   
             }   
         }
 
