@@ -34,10 +34,14 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\js\chemDetails.js" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Views\Admin\Index.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Watch Remove="wwwroot\js\chemDetails.js" />
     <Watch Remove="wwwroot\js\EditFacilityChems.js" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +49,7 @@
 
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
+    <None Include="wwwroot\js\chemDetails.js" />
   </ItemGroup>
 
 </Project>

@@ -10,25 +10,25 @@
     <dl style="text-align: center;">
         <div class="row">
             <div class="col-sm-6">
-                <dt>
+                <dt id="enlarge">
                     @* @Html.DisplayNameFor(model => model.CasNum) *@ CAS Number
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.CasNum)
                 </dd>
-                <dt>
+                <dt id="enlarge">
                     @* @Html.DisplayNameFor(model => model.PubChemCid) *@ CID Number
                 </dt>
                 <dd>
                     <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid" target="_blank">@Html.DisplayFor(model => model.PubChemCid)</a>
                 </dd>
-                <dt>
+                <dt id="enlarge">
                     @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
                 </dd>
-                <dt>
+                <dt id="enlarge">
                     @Html.DisplayNameFor(model => model.Density)
                 </dt>
                 <dd>
@@ -36,20 +36,20 @@
                 </dd>
             </div>
             <div class="col-sm-6">
-                <dt>
+                <dt id="enlarge">
                     @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
                 </dd>
-                <dt>
+                <dt id="enlarge">
                     @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
                 </dd>
 
-                <dt>
+                <dt id="enlarge">
                     Chemical Classification
                 </dt>
 
@@ -65,7 +65,7 @@
                         EPCRA Chemical
                     </dd>
                 }
-                <dt>
+                <dt id="enlarge">
                     Synonyms
                 </dt>
                 @if (String.IsNullOrEmpty(Model.Aliases))
@@ -84,7 +84,7 @@
                 }
             </div>
         </div>
-        
+
 
 
 
@@ -93,3 +93,7 @@
 <div style="text-align: center;">
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script src="/js/chemDetails.js" type="module"></script>
+}
