@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SpillTracker.Models;
 using SpillTracker.Utilities;
+using SpillTracker.Models.Interfaces;
 
 namespace SpillTracker.Controllers
 {
@@ -22,19 +23,19 @@ namespace SpillTracker.Controllers
         private readonly SpillTrackerDbContext _context;
         private readonly IConfiguration _config;
 
-        //private readonly ISpillTrackerUserRepository _stuRepo;
-        //private readonly ISpillTrackerFormRepository _stfRepo;
+        private readonly ISpillTrackerUserRepository _stuRepo;
+        private readonly ISpillTrackerFormRepository _stfRepo;
         //private readonly ISpillTrackerChemicalRepository _stcRepo;
 
 
 
-        public FormsController(SpillTrackerDbContext context, IConfiguration config, UserManager<IdentityUser> userManager)
+        public FormsController(SpillTrackerDbContext context, IConfiguration config, UserManager<IdentityUser> userManager, ISpillTrackerUserRepository stuRepo, ISpillTrackerFormRepository stfRepo)
         {
             _context = context;
             _config = config;
             _userManager = userManager;
-            //_stuRepo = stRepo;
-            //_stfRepo = stfRepo;
+            _stuRepo = stuRepo;
+            _stfRepo = stfRepo;
             //_stcRepo = stcRepo;
         }
 
@@ -48,17 +49,17 @@ namespace SpillTracker.Controllers
             Stuser stUser = null;
             if (userId != null)
             {
-                //stUser = _stuRepo.GetStUserByIdentity(userId);
-                stUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+                stUser = _stuRepo.GetStuserByIdentityId(userId);
+                //stUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
             }
 
-            var spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser).Take(0);
-            //List<Form> formsList = null;
+            //var spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser).Take(0);
+            IEnumerable<Form> formsList = null;
 
             if (User.IsInRole("Admin")) 
             {
-                spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser);
-                //formsList = _stfRepo.GetAllForms();
+                //spillTrackerDbContext = _context.Forms.Include(f => f.Chemical).Include(f => f.ChemicalState).Include(f => f.Facility).Include(f => f.SpillSurface).Include(f => f.Stuser);
+                formsList = _stfRepo.GetAllForms();
             }
             if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) 
             {
@@ -72,17 +73,18 @@ namespace SpillTracker.Controllers
 
 
 
-
-                spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
-                            .Include(f => f.ChemicalState)
-                            .Include(f => f.Facility).ThenInclude(f => f.Company)
-                            .Include(f => f.SpillSurface)
-                            .Include(f => f.Stuser).Where(c => c.Facility.CompanyId == stUser.CompanyId);
+                formsList = _stfRepo.GetAllFormsByCompanyId((int)stUser.CompanyId);
+                //spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
+                //            .Include(f => f.ChemicalState)
+                //            .Include(f => f.Facility).ThenInclude(f => f.Company)
+                //            .Include(f => f.SpillSurface)
+                //            .Include(f => f.Stuser).Where(c => c.Facility.CompanyId == stUser.CompanyId);
 
                 ViewData["FacilityList"] = new SelectList(_context.Facilities.Where(x => x.CompanyId == stUser.CompanyId).OrderBy(x => x.Name), "Id", "Name");
             }
 
-            return View(await spillTrackerDbContext.ToListAsync());
+            return View(formsList);
+            //return View(await spillTrackerDbContext.ToListAsync());
         }
 
         // GET: Forms/Details/5

@@ -24,5 +24,19 @@ namespace SpillTracker.Models.Repositories
                 .Include(f => f.Stuser)
                 .Where(c => c.Facility.CompanyId == id);
         }
+
+        public virtual IEnumerable<Form> GetAllForms()
+        {
+            return _dbSet.Include(f => f.Chemical)
+                .Include(f => f.ChemicalState)
+                .Include(f => f.Facility).ThenInclude(f => f.Company)
+                .Include(f => f.SpillSurface)
+                .Include(f => f.Stuser);
+        }
+
+        public virtual bool FormExists(int id)
+        {
+            return _dbSet.Any(f => f.Id == id);
+        }
     }
 }
