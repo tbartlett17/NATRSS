@@ -1,10 +1,11 @@
+using SpillTracker.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpillTracker.Models
+namespace SpillTracker.Models.Repositories
 {
     /// <summary>
     /// Base class repository that implements only CRUD operations.  Meant to be like an abstract 
@@ -26,10 +27,10 @@ namespace SpillTracker.Models
     {
         // If you want to enforce full separation and ensure that this repository ONLY accesses the TEntity
         // then make _context private
-        protected readonly SpillTrackerDbContext _context;
+        protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public Repository(SpillTrackerDbContext ctx)
+        public Repository(DbContext ctx)
         {
             _context = ctx;
             _dbSet = _context.Set<TEntity>();   // must do it this way because we don't have a "navigation property" to use

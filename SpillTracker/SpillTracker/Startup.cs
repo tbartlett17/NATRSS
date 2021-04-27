@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpillTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using SpillTracker.Models.Interfaces;
+using SpillTracker.Models.Repositories;
 
 namespace SpillTracker
 {
@@ -48,6 +50,11 @@ namespace SpillTracker
                 //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
                 
             });
+
+            // Add our custom interfaces and repos for fun Dependency Injection
+            services.AddScoped<ISpillTrackerUserRepository, SpillTrackerUserRepository>();
+            services.AddScoped<ISpillTrackerFormRepository, SpillTrackerFormRepository>();
+
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
