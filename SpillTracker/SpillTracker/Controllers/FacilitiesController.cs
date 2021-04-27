@@ -376,7 +376,7 @@ namespace SpillTracker.Controllers
                 Debug.WriteLine(ex);
                 Response.StatusCode = 500;
             }
-            return Json("latitude: ");
+            return Json("coords: ");
         }
     }
 }

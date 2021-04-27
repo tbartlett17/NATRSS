@@ -9,42 +9,362 @@
 
 <h4>Form</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div style="text-align: center;">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
+             <div class="border border-bottom box-shadow rounded">
+        <br>
+            <h5>General</h5>
+        <table class="table table-striped ">
+            <tr>
+                <th>Spill Reported By</th>
+                <th>Spill Date and Time</th>
+                <th>Spill Location</th>
+                <th>Facility</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillReportedBy" class="form-control" />
+                        <span asp-validation-for="SpillReportedBy" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="date" asp-for="SpillReportedDate" class="form-control" />
+                        <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" asp-for="SpillReportedTime" class="form-control" />
+                        <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillLocation" class="form-control" />
+                        <span asp-validation-for="SpillLocation" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select asp-for="FacilityId" class="form-control" asp-items="ViewBag.FacilityId" id="FacilityId"></select>
+                        <span asp-validation-for="FacilityId" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>Chemical Info</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Chemical</th>
+                <th>Amount Spilled</th>
+                <th>Concentration</th>
+                <th>Temperature</th>
+                <th>Chemical State</th>
+                <th>Pressurized</th>
+            </tr>
+            
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <select asp-for="ChemicalId" class="form-control" asp-items="ViewBag.ChemicalId"></select>
+                        <span asp-validation-for="ChemicalId" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="AmountSpilled" class="form-control" />
+                        <span asp-validation-for="AmountSpilled" class="text-danger"></span>
+
+                        <select type="text" class="form-control" asp-for="AmountSpilledUnits" id="AmountSpilledUnits">
+                            <option value="lbs.">lbs.</option>
+                            <option value="kgs.">kgs.</option>
+                            <option value="gal.">gal.</option>
+                        </select>
+                        <span asp-validation-for="AmountSpilledUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="ChemicalConcentration" class="form-control" />
+                        <span asp-validation-for="ChemicalConcentration" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="ChemicalTemperature" class="form-control" />
+                        <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
+
+                        <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="ChemicalTemperatureUnits">
+                            <option value="&#8457">&#8457</option>
+                            <option value="&#8451">&#8451</option>
+                        </select>
+                        <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
+                        <span asp-validation-for="ChemicalStateId" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                         @Html.CheckBox("ChemicalPressurized", Model.ChemicalPressurized.Value)
+                        <span asp-validation-for="ChemicalPressurized" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>Weather Info</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Sky Conditions</th>
+                <th>Temperature</th>
+                <th>Wind Speed</th>
+                <th>Wind Direction</th>
+                <th>Humidity</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <select type="text" class="form-control" asp-for="SkyConditions" id="SkyConditions">
+                            <option value="Cloudy">Cloudy</option>
+                            <option value="Clear">Clear</option>
+                            <option value="Partially Cloudy">Partially Cloudy</option>
+                            <option value="Raining">Raining</option>
+                            <option value="Snowing">Snowing</option>
+                        </select>
+                        <span asp-validation-for="SkyConditions" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="WeatherTemperature" class="form-control" />
+                        <span asp-validation-for="WeatherTemperature" class="text-danger"></span>
+
+                        <select type="text" class="form-control" asp-for="WeatherTemperatureUnits" id="WeatherTemperatureUnits">
+                            <option value="&#8457">&#8457</option>
+                            <option value="&#8451">&#8451</option>
+                        </select>
+                        <span asp-validation-for="WeatherTemperatureUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="WindSpeed" class="form-control" />
+                        <span asp-validation-for="WindSpeed" class="text-danger"></span>
+
+                        <select type="text" class="form-control" asp-for="WindSpeedUnits" id="WindSpeedUnits">
+                            <option value="mph">mph</option>
+                            <option value="knots">knots</option>
+                            <option value="m/s">m/s</option>
+                            <option value="ft/s">ft/s</option>
+                        </select>
+                        <span asp-validation-for="WindSpeedUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select type="text" class="form-control" asp-for="WindDirection" id="WindDirection">
+                            <option value="North">North</option>
+                            <option value="East">East</option>
+                            <option value="South">South</option>
+                            <option value="West">West</option>
+                            <option value="NorthWest">NorthWest</option>
+                            <option value="NorthEast">NorthEast</option>
+                            <option value="SouthEast">SouthEast</option>
+                            <option value="SouthWest">SouthWest</option>
+                        </select>
+                        <span asp-validation-for="WindDirection" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="WeatherHumidity" class="form-control" />
+                        <span asp-validation-for="WeatherHumidity" class="text-danger"></span>
+
+                        <select type="text" class="form-control" asp-for="WeatherHumidityUnits" id="WeatherHumidityUnits">
+                            <option value="g/&#13221">g/&#13221</option>
+                            <option value="g/kg">g/kg</option>
+                        </select>
+                        <span asp-validation-for="WeatherHumidityUnits" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>Spill Info</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Spill Contained</th>
+                <th>Spill Ongoing</th>
+                <th>Spill Reach a Water Source</th>
+                <th>Spill Forming a Puddle</th>
+                <th>Spill Surface</th>
+                <th>Spill Duration</th>
+                <th>Cleanup Time</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        @Html.CheckBox("SpillContained", Model.SpillContained.Value)
+                        <span asp-validation-for="SpillContained" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @Html.CheckBox("SpillOngoing", Model.SpillOngoing.Value)
+                        <span asp-validation-for="SpillOngoing" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @if (Model.SpillReachWaterSource == null)
+                        {
+                            @Html.CheckBox("SpillReachWaterSource", false)
+                        }
+                        else
+                        {
+                            @Html.CheckBox("SpillReachWaterSource", Model.SpillReachWaterSource.Value)
+                        }
+                        <span asp-validation-for="SpillReachWaterSource" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @if ( Model.SpillFormingPuddle == null)
+                        {
+                            @Html.CheckBox("SpillFormingPuddle", false)
+                        }
+                        else
+                        {
+                            @Html.CheckBox("SpillFormingPuddle", Model.SpillFormingPuddle.Value)
+                        }
+                        
+                        <span asp-validation-for="SpillFormingPuddle" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select asp-for="SpillSurfaceId" class="form-control" asp-items="ViewBag.SpillSurfaceId"></select>
+                        <span asp-validation-for="SpillSurfaceId" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillDurationHours" class="form-control" />
+                        <span asp-validation-for="SpillDurationHours" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="SpillDurationMinutes" class="form-control" />
+                        <span asp-validation-for="SpillDurationMinutes" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="CleanupStartTime" class="form-control" />
+                        <span asp-validation-for="CleanupStartTime" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>Additional Spill Info</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Water Source</th>
+                <th>Spill Width</th>
+                <th>Spill Length</th>
+                <th>Spill Depth</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="WaterSource" class="form-control" />
+                        <span asp-validation-for="WaterSource" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillWidth" class="form-control" />
+                        <span asp-validation-for="SpillWidth" class="text-danger"></span>
+
+                        <select asp-for="SpillWidthUnits" id="">
+                            <option value="inch">inches</option>
+                            <option value="feet">feet</option>
+                            <option value="centimeters">centimeters</option>
+                            <option value="meters">meters</option>
+                        </select>
+                        <span asp-validation-for="SpillWidthUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillLength" class="form-control" />
+                        <span asp-validation-for="SpillLength" class="text-danger"></span>
+
+                        <select asp-for="SpillLengthUnits" id="SpillLengthUnits">
+                            <option value="inch">inches</option>
+                            <option value="feet">feet</option>
+                            <option value="centimeters">centimeters</option>
+                            <option value="meters">meters</option>
+                        </select>
+                        <span asp-validation-for="SpillLengthUnits" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input asp-for="SpillDepth" class="form-control" />
+                        <span asp-validation-for="SpillDepth" class="text-danger"></span>
+
+                        <select asp-for="SpillDepthUnits" id="SpillDepthUnits">
+                            <option value="inch">inches</option>
+                            <option value="feet">feet</option>
+                            <option value="centimeters">centimeters</option>
+                            <option value="meters">meters</option>
+                        </select>
+                        <span asp-validation-for="SpillDepthUnits" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <h5>Extra</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Notes</th>
+                <th>Contact Notes</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <textarea type="text" asp-for="Notes" id="Notes"></textarea>
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <textarea type="text" asp-for="ContactNotes" id="ContactNotes"></textarea>
+                        <span asp-validation-for="ContactNotes" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div style="display: none;">
+
             <div class="form-group">
-                <label asp-for="SpillReportedBy" class="control-label"></label>
-                <input asp-for="SpillReportedBy" class="form-control" />
-                <span asp-validation-for="SpillReportedBy" class="text-danger"></span>
+                <label asp-for="StuserId" class="control-label"></label>
+                <input asp-for="StuserId" class="form-control" >
+                <span asp-validation-for="StuserId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SpillReportedTime" class="control-label"></label>
-                <input asp-for="SpillReportedTime" class="form-control" />
-                <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillLocation" class="control-label"></label>
-                <input asp-for="SpillLocation" class="form-control" />
-                <span asp-validation-for="SpillLocation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillOngoing" class="control-label"></label>
-                <input asp-for="SpillOngoing" class="form-control" />
-                <span asp-validation-for="SpillOngoing" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillContained" class="control-label"></label>
-                <input asp-for="SpillContained" class="form-control" />
-                <span asp-validation-for="SpillContained" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalPressurized" class="control-label"></label>
-                <input asp-for="ChemicalPressurized" class="form-control" />
-                <span asp-validation-for="ChemicalPressurized" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="SpillVolume" class="control-label"></label>
                 <input asp-for="SpillVolume" class="form-control" />
                 <span asp-validation-for="SpillVolume" class="text-danger"></span>
@@ -54,106 +374,18 @@
                 <input asp-for="SpillVolumeUnits" class="form-control" />
                 <span asp-validation-for="SpillVolumeUnits" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ChemicalConcentration" class="control-label"></label>
-                <input asp-for="ChemicalConcentration" class="form-control" />
-                <span asp-validation-for="ChemicalConcentration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillFormingPuddle" class="control-label"></label>
-                <input asp-for="SpillFormingPuddle" class="form-control" />
-                <span asp-validation-for="SpillFormingPuddle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillReachWaterSource" class="control-label"></label>
-                <input asp-for="SpillReachWaterSource" class="form-control" />
-                <span asp-validation-for="SpillReachWaterSource" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WaterSource" class="control-label"></label>
-                <input asp-for="WaterSource" class="form-control" />
-                <span asp-validation-for="WaterSource" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillDuration" class="control-label"></label>
-                <input asp-for="SpillDuration" class="form-control" />
-                <span asp-validation-for="SpillDuration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CleanupStartTime" class="control-label"></label>
-                <input asp-for="CleanupStartTime" class="form-control" />
-                <span asp-validation-for="CleanupStartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalTemperature" class="control-label"></label>
-                <input asp-for="ChemicalTemperature" class="form-control" />
-                <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
-                <input asp-for="ChemicalTemperatureUnits" class="form-control" />
-                <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillWidth" class="control-label"></label>
-                <input asp-for="SpillWidth" class="form-control" />
-                <span asp-validation-for="SpillWidth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillWidthUnits" class="control-label"></label>
-                <input asp-for="SpillWidthUnits" class="form-control" />
-                <span asp-validation-for="SpillWidthUnits" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillLength" class="control-label"></label>
-                <input asp-for="SpillLength" class="form-control" />
-                <span asp-validation-for="SpillLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillLengthUnits" class="control-label"></label>
-                <input asp-for="SpillLengthUnits" class="form-control" />
-                <span asp-validation-for="SpillLengthUnits" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillDepth" class="control-label"></label>
-                <input asp-for="SpillDepth" class="form-control" />
-                <span asp-validation-for="SpillDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillDepthUnits" class="control-label"></label>
-                <input asp-for="SpillDepthUnits" class="form-control" />
-                <span asp-validation-for="SpillDepthUnits" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillArea" class="control-label"></label>
-                <input asp-for="SpillArea" class="form-control" />
-                <span asp-validation-for="SpillArea" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillAreaUnits" class="control-label"></label>
-                <input asp-for="SpillAreaUnits" class="form-control" />
-                <span asp-validation-for="SpillAreaUnits" class="text-danger"></span>
-            </div>
+
+
+
+
+
             <div class="form-group">
                 <label asp-for="SpillReportable" class="control-label"></label>
                 <input asp-for="SpillReportable" class="form-control" />
                 <span asp-validation-for="SpillReportable" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="WindDirection" class="control-label"></label>
-                <input asp-for="WindDirection" class="form-control" />
-                <span asp-validation-for="WindDirection" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WindSpeed" class="control-label"></label>
-                <input asp-for="WindSpeed" class="form-control" />
-                <span asp-validation-for="WindSpeed" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WindSpeedUnits" class="control-label"></label>
-                <input asp-for="WindSpeedUnits" class="form-control" />
-                <span asp-validation-for="WindSpeedUnits" class="text-danger"></span>
-            </div>
+
+
             <div class="form-group">
                 <label asp-for="AddressStreet" class="control-label"></label>
                 <input asp-for="AddressStreet" class="form-control" />
@@ -174,31 +406,92 @@
                 <input asp-for="AddressZip" class="form-control" />
                 <span asp-validation-for="AddressZip" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="WeatherTemperature" class="control-label"></label>
-                <input asp-for="WeatherTemperature" class="form-control" />
-                <span asp-validation-for="WeatherTemperature" class="text-danger"></span>
+                <label asp-for="SpillEvaporationRate" class="control-label"></label>
+                <input asp-for="SpillEvaporationRate" class="form-control" />
+                <span asp-validation-for="SpillEvaporationRate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WeatherTemperatureUnits" class="control-label"></label>
-                <input asp-for="WeatherTemperatureUnits" class="form-control" />
-                <span asp-validation-for="WeatherTemperatureUnits" class="text-danger"></span>
+                <label asp-for="SpillEvaporationRateUnits" class="control-label"></label>
+                <input asp-for="SpillEvaporationRateUnits" class="form-control" />
+                <span asp-validation-for="SpillEvaporationRateUnits" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WeatherHumidity" class="control-label"></label>
-                <input asp-for="WeatherHumidity" class="form-control" />
-                <span asp-validation-for="WeatherHumidity" class="text-danger"></span>
+                <label asp-for="AmountEvaporated" class="control-label"></label>
+                <input asp-for="AmountEvaporated" class="form-control" />
+                <span asp-validation-for="AmountEvaporated" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WeatherHumidityUnits" class="control-label"></label>
-                <input asp-for="WeatherHumidityUnits" class="form-control" />
-                <span asp-validation-for="WeatherHumidityUnits" class="text-danger"></span>
+                <label asp-for="AmountEvaporatedUnits" class="control-label"></label>
+                <input asp-for="AmountEvaporatedUnits" class="form-control" />
+                <span asp-validation-for="AmountEvaporatedUnits" class="text-danger"></span>
+            </div> *@
+        </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+            
+            
+ 
+
+
+
+@* 
+            <div class="form-group">
+                <label asp-for="SpillVolume" class="control-label"></label>
+                <input asp-for="SpillVolume" class="form-control" />
+                <span asp-validation-for="SpillVolume" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SkyConditions" class="control-label"></label>
-                <input asp-for="SkyConditions" class="form-control" />
-                <span asp-validation-for="SkyConditions" class="text-danger"></span>
+                <label asp-for="SpillVolumeUnits" class="control-label"></label>
+                <input asp-for="SpillVolumeUnits" class="form-control" />
+                <span asp-validation-for="SpillVolumeUnits" class="text-danger"></span>
             </div>
+
+
+
+
+
+            <div class="form-group">
+                <label asp-for="SpillReportable" class="control-label"></label>
+                <input asp-for="SpillReportable" class="form-control" />
+                <span asp-validation-for="SpillReportable" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="AddressStreet" class="control-label"></label>
+                <input asp-for="AddressStreet" class="form-control" />
+                <span asp-validation-for="AddressStreet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressCity" class="control-label"></label>
+                <input asp-for="AddressCity" class="form-control" />
+                <span asp-validation-for="AddressCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressState" class="control-label"></label>
+                <input asp-for="AddressState" class="form-control" />
+                <span asp-validation-for="AddressState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressZip" class="control-label"></label>
+                <input asp-for="AddressZip" class="form-control" />
+                <span asp-validation-for="AddressZip" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="SpillEvaporationRate" class="control-label"></label>
                 <input asp-for="SpillEvaporationRate" class="form-control" />
@@ -219,59 +512,25 @@
                 <input asp-for="AmountEvaporatedUnits" class="form-control" />
                 <span asp-validation-for="AmountEvaporatedUnits" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AmountSpilled" class="control-label"></label>
-                <input asp-for="AmountSpilled" class="form-control" />
-                <span asp-validation-for="AmountSpilled" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AmountSpilledUnits" class="control-label"></label>
-                <input asp-for="AmountSpilledUnits" class="form-control" />
-                <span asp-validation-for="AmountSpilledUnits" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactNotes" class="control-label"></label>
-                <input asp-for="ContactNotes" class="form-control" />
-                <span asp-validation-for="ContactNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StuserId" class="control-label"></label>
-                <select asp-for="StuserId" class="form-control" asp-items="ViewBag.StuserId"></select>
-                <span asp-validation-for="StuserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalId" class="control-label"></label>
-                <select asp-for="ChemicalId" class="form-control" asp-items="ViewBag.ChemicalId"></select>
-                <span asp-validation-for="ChemicalId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpillSurfaceId" class="control-label"></label>
-                <select asp-for="SpillSurfaceId" class="form-control" asp-items="ViewBag.SpillSurfaceId"></select>
-                <span asp-validation-for="SpillSurfaceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalStateId" class="control-label"></label>
-                <select asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
-                <span asp-validation-for="ChemicalStateId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FacilityId" class="control-label"></label>
-                <select asp-for="FacilityId" class="form-control" asp-items="ViewBag.FacilityId"></select>
-                <span asp-validation-for="FacilityId" class="text-danger"></span>
-            </div>
+            
+
+
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+        
     </div>
-</div>
+</div> *@
 
-<div>
+<div style="text-align: center;">
     <a asp-action="Index">Back to List</a>
 </div>
+
+<style>
+    th {
+        background-color: #50773e;
+        color: white;
+    }
+</style>
 

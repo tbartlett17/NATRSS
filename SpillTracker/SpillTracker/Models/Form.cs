@@ -18,8 +18,12 @@ namespace SpillTracker.Models
         [Column("Spill_Reported_By")]
         [StringLength(50)]
         public string SpillReportedBy { get; set; }
-        [Column("Spill_Reported_Time", TypeName = "datetime")]
-        public DateTime? SpillReportedTime { get; set; }
+        [Column("Spill_Reported_Date", TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy MMM dd}")]
+        public DateTime? SpillReportedDate { get; set; }
+        [Column("Spill_Reported_Time")]
+        //[DisplayFormat(DataFormatString = "{0:hh:mm tt}")]
+        public TimeSpan? SpillReportedTime { get; set; }
         [Column("Spill_Location")]
         [StringLength(100)]
         public string SpillLocation { get; set; }
@@ -43,9 +47,13 @@ namespace SpillTracker.Models
         [Column("Water_Source")]
         [StringLength(100)]
         public string WaterSource { get; set; }
-        [Column("Spill_Duration")]
-        public double? SpillDuration { get; set; }
+        [Column("Spill_Duration_Hours")]
+        public double? SpillDurationHours { get; set; }
+        [Column("Spill_Duration_Minutes")]
+        public double? SpillDurationMinutes { get; set; }
         [Column("Cleanup_StartTime", TypeName = "datetime")]
+        [DisplayFormat(DataFormatString = "{0:yyyy MMM dd hh:mm tt}")]
+
         public DateTime? CleanupStartTime { get; set; }
         [Column("Chemical_Temperature")]
         public double? ChemicalTemperature { get; set; }

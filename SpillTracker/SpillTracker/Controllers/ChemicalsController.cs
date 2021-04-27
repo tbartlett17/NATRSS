@@ -32,6 +32,41 @@ namespace SpillTracker.Controllers
             return View(await _context.Chemicals.OrderBy(x=>x.Name).ToListAsync());        
         }
 
+        
+        public IActionResult ByFirstLetter(string l) 
+        {
+            //var list = new List<string> "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            var list = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".Split(" ").ToList();
+            var all = _context.Chemicals.OrderBy(x=>x.Name).ToList();
+            var letter = new List<Chemical>();
+            var hashtag = new List<Chemical>();
+            letter = _context.Chemicals.Where(c => c.Name.Substring(0,1).Contains(l)).OrderBy(x => x.Name).ToList();
+            hashtag = _context.Chemicals.Where(c => !list.Contains(c.Name.Substring(0,1))).OrderBy(x => x.Name).ToList();
+            //_logger.LogInformation(sort.letterInput);(x => x.Name).ToList();
+            
+            if(l == null) 
+            {
+                return View("Index", all); 
+            }
+            else if(l.Length > 1)
+            {
+                letter = _context.Chemicals.Where(c => c.Name.Substring(0,l.Length).Contains(l)).OrderBy(x => x.Name).ToList();
+                return View("Index", letter);
+            }
+            else if(l != "#") 
+            {
+                return View("Index", letter);
+            }
+            else if (l == "#")
+            {
+                return View("Index", hashtag); //needs adjustment
+            }
+            else
+            {
+               return View("Index", all);   
+            }   
+        }
+
         // GET: Chemicals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
