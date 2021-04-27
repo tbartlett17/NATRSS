@@ -13,7 +13,6 @@ namespace SpillTracker.Utilities
 {
     public class GetWeatherInfo
     {
-        
         public static WeatherReport GetWeather(string coords, DateTime spillDateTime, string apiKey)
         {
             WeatherReport weatherReport = new WeatherReport();
@@ -35,8 +34,6 @@ namespace SpillTracker.Utilities
                 string currentWeatherDataCall = $"https://api.openweathermap.org/data/2.5/onecall?lat={_lat}&lon={_long}&exclude=minutely,daily,hourly,alerts&units=imperial&appid={apiKey}";
                 string historicWeatherDataCall = $"https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={_lat}&lon={_long}&dt={unixSpillDateTime}&units=imperial&appid={apiKey}";
 
-
-                
                 if (DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes <= 30)// if spill occured within last 30 min, use current weather 
                 {
                     Debug.WriteLine("getting current weather");
@@ -60,7 +57,6 @@ namespace SpillTracker.Utilities
                 return weatherReport;
             }
         }
-
 
         private static WeatherReport CallAPI(string url)
         {
