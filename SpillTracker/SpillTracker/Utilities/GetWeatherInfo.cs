@@ -34,19 +34,19 @@ namespace SpillTracker.Utilities
                 string currentWeatherDataCall = $"https://api.openweathermap.org/data/2.5/onecall?lat={_lat}&lon={_long}&exclude=minutely,daily,hourly,alerts&units=imperial&appid={apiKey}";
                 string historicWeatherDataCall = $"https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={_lat}&lon={_long}&dt={unixSpillDateTime}&units=imperial&appid={apiKey}";
 
-                if (DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes <= 30)// if spill occured within last 30 min, use current weather 
+                if (DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes < 30 && DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes > 0)// if spill occured within last 30 min, use current weather 
                 {
                     Debug.WriteLine("getting current weather");
                     weatherReport = CallAPI(currentWeatherDataCall);
                 }
-                else if (DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes > 30 && DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalHours <=(24*5))// if spill occured after last 30 min and within last 5 days 
+                else if (DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalMinutes >= 30 && DateTime.UtcNow.Subtract(spillDateTime.ToUniversalTime()).TotalHours <=(24*5))// if spill occured after last 30 min and within last 5 days 
                 {
                     Debug.WriteLine("getting historic weather");
                     weatherReport = CallAPI(historicWeatherDataCall);
                 }
-                else // spill occured more than 5 days ago, limitation of API without paying money
-                { 
-                    
+                else // spill occured more than 5 days ago or in the future, limitation of API without paying money
+                {
+                    return null;
                 }
 
                 return weatherReport;
