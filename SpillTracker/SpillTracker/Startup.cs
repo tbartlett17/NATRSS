@@ -54,6 +54,7 @@ namespace SpillTracker
             // Add our custom interfaces and repos for fun Dependency Injection
             services.AddScoped<ISpillTrackerUserRepository, SpillTrackerUserRepository>();
             services.AddScoped<ISpillTrackerFormRepository, SpillTrackerFormRepository>();
+            services.AddScoped<ISpillTrackerChemicalRepository, SpillTrackerChemicalRepository>();
 
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
