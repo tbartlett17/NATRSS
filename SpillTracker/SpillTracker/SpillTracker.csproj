@@ -36,18 +36,22 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Controllers\Guide.cshtml" />
     <Content Remove="wwwroot\js\chemDetails.js" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Controllers\Guide.cshtml" />
     <None Include="Views\Admin\Index.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Watch Remove="Controllers\Guide.cshtml" />
     <Watch Remove="wwwroot\js\chemDetails.js" />
     <Watch Remove="wwwroot\js\EditFacilityChems.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\Home\Guide.cshtml" />
 
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
