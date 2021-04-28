@@ -22,7 +22,6 @@ namespace SpillTracker.Models
         [DisplayFormat(DataFormatString = "{0:yyyy MMM dd}")]
         public DateTime? SpillReportedDate { get; set; }
         [Column("Spill_Reported_Time")]
-        //[DisplayFormat(DataFormatString = "{0:hh:mm tt}")]
         public TimeSpan? SpillReportedTime { get; set; }
         [Column("Spill_Location")]
         [StringLength(100)]
@@ -31,6 +30,8 @@ namespace SpillTracker.Models
         public bool? SpillOngoing { get; set; }
         [Column("Spill_Contained")]
         public bool? SpillContained { get; set; }
+        [Column("Need_Assistance")]
+        public bool? NeedAssistance { get; set; }
         [Column("Chemical_Pressurized")]
         public bool? ChemicalPressurized { get; set; }
         [Column("Spill_Volume")]
@@ -53,7 +54,6 @@ namespace SpillTracker.Models
         public double? SpillDurationMinutes { get; set; }
         [Column("Cleanup_StartTime", TypeName = "datetime")]
         [DisplayFormat(DataFormatString = "{0:yyyy MMM dd hh:mm tt}")]
-
         public DateTime? CleanupStartTime { get; set; }
         [Column("Chemical_Temperature")]
         public double? ChemicalTemperature { get; set; }
@@ -136,8 +136,8 @@ namespace SpillTracker.Models
         public string ContactNotes { get; set; }
         [Column("STUserID")]
         public int? StuserId { get; set; }
-        [Column("ChemicalID")]
-        public int? ChemicalId { get; set; }
+        [Column("FacilityChemicalID")]
+        public int? FacilityChemicalId { get; set; }
         [Column("Spill_SurfaceID")]
         public int? SpillSurfaceId { get; set; }
         [Column("ChemicalStateID")]
@@ -145,15 +145,15 @@ namespace SpillTracker.Models
         [Column("FacilityID")]
         public int? FacilityId { get; set; }
 
-        [ForeignKey(nameof(ChemicalId))]
-        [InverseProperty("Forms")]
-        public virtual Chemical Chemical { get; set; }
         [ForeignKey(nameof(ChemicalStateId))]
         [InverseProperty("Forms")]
         public virtual ChemicalState ChemicalState { get; set; }
         [ForeignKey(nameof(FacilityId))]
         [InverseProperty("Forms")]
         public virtual Facility Facility { get; set; }
+        [ForeignKey(nameof(FacilityChemicalId))]
+        [InverseProperty("Forms")]
+        public virtual FacilityChemical FacilityChemical { get; set; }
         [ForeignKey(nameof(SpillSurfaceId))]
         [InverseProperty(nameof(Surface.Forms))]
         public virtual Surface SpillSurface { get; set; }

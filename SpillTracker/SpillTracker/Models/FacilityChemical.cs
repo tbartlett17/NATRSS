@@ -11,6 +11,11 @@ namespace SpillTracker.Models
 {
     public partial class FacilityChemical
     {
+        public FacilityChemical()
+        {
+            Forms = new HashSet<Form>();
+        }
+
         [Key]
         [Column("ID")]
         public int Id { get; set; }
@@ -36,5 +41,7 @@ namespace SpillTracker.Models
         [ForeignKey(nameof(FacilityId))]
         [InverseProperty("FacilityChemicals")]
         public virtual Facility Facility { get; set; }
+        [InverseProperty(nameof(Form.FacilityChemical))]
+        public virtual ICollection<Form> Forms { get; set; }
     }
 }
