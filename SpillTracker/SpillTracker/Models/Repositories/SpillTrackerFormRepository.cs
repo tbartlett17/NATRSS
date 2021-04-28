@@ -15,21 +15,27 @@ namespace SpillTracker.Models.Repositories
 
         }
 
-        public virtual IEnumerable<Form> GetAllFormsByCompanyId(int id)
+        public virtual IQueryable<Form> GetAllFormsByCompanyId(int id)
         {
-            return _dbSet.Include(f => f.Chemical)
+            return _dbSet.Include(f => f.FacilityChemical)
+                .ThenInclude(fc => fc.Chemical)
+                .Include(f => f.FacilityChemical)
+                .ThenInclude(fc => fc.ChemicalState)
                 .Include(f => f.ChemicalState)
-                .Include(f => f.Facility).ThenInclude(f => f.Company)
+                .Include(f => f.Facility)
                 .Include(f => f.SpillSurface)
                 .Include(f => f.Stuser)
                 .Where(c => c.Facility.CompanyId == id);
         }
 
-        public virtual IEnumerable<Form> GetAllForms()
+        public override IQueryable<Form> GetAll()
         {
-            return _dbSet.Include(f => f.Chemical)
+            return _dbSet.Include(f => f.FacilityChemical)
+                .ThenInclude(fc => fc.Chemical)
+                .Include(f => f.FacilityChemical)
+                .ThenInclude(fc => fc.ChemicalState)
                 .Include(f => f.ChemicalState)
-                .Include(f => f.Facility).ThenInclude(f => f.Company)
+                .Include(f => f.Facility)
                 .Include(f => f.SpillSurface)
                 .Include(f => f.Stuser);
         }

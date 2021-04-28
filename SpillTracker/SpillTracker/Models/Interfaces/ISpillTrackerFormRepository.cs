@@ -8,8 +8,8 @@ namespace SpillTracker.Models.Interfaces
 {
     public interface ISpillTrackerFormRepository : IRepository<Form>
     {
-        IEnumerable<Form> GetAllFormsByCompanyId(int id);
-        IEnumerable<Form> GetAllForms();
+        IQueryable<Form> GetAllFormsByCompanyId(int id);
+        new IQueryable<Form> GetAll();
         bool FormExists(int id);
     }
 }
