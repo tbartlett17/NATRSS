@@ -228,6 +228,7 @@ namespace SpillTracker.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, FacilityManager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId")] Facility facility)
         {
             if (id != facility.Id)
@@ -346,6 +347,7 @@ namespace SpillTracker.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, FacilityManager")]
         public async Task<IActionResult> CreateFacilityChem([Bind("Id,Concentration,ChemicalTemperature,ChemicalTemperatureUnits,ChemicalStateId,ChemicalId,FacilityId")] FacilityChemical facilityChemical)
         {
             if (ModelState.IsValid)
