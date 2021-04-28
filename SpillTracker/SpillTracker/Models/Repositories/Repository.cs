@@ -27,10 +27,10 @@ namespace SpillTracker.Models.Repositories
     {
         // If you want to enforce full separation and ensure that this repository ONLY accesses the TEntity
         // then make _context private
-        protected readonly DbContext _context;
+        protected readonly SpillTrackerDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public Repository(DbContext ctx)
+        public Repository(SpillTrackerDbContext ctx)
         {
             _context = ctx;
             _dbSet = _context.Set<TEntity>();   // must do it this way because we don't have a "navigation property" to use

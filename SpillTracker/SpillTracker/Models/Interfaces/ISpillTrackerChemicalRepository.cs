@@ -12,6 +12,6 @@ namespace SpillTracker.Models.Interfaces
 
         Chemical GetChemByCAS(string casNumber);
 
-        IQueryable<Chemical> ByFirstLetter(string l);
+        List<Chemical> ByFirstLetter(string l);
     }
 }
