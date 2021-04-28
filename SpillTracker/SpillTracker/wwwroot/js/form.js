@@ -130,6 +130,10 @@ function nextPrev(n) {
 //     return false;
 //   }
   // Otherwise, display the correct tab:
+    if (currentTab == 1) {
+        var facId = $("#FacilityId").val();
+        loadFacilityData(facId);
+    }
 
     if (currentTab == 2) {
         var location = $("#SpillLocation").val();
@@ -164,6 +168,10 @@ function jumpToTab(n) {
 
     currentTab = n;
 
+    if (currentTab == 0) {
+        var facId = $("#FacilityId").val();
+        loadFacilityData(facId);
+    }
 
     if (currentTab == 2) {
         var location = $("#SpillLocation").val();
@@ -196,7 +204,7 @@ function fixStepIndicator(n) {
 }
 
 function loadChemicalData(id) {
-    //console.log("chem id: " + id); 
+    console.log("chem id: " + id); 
 
     $.ajax({
         type: "POST",
@@ -250,6 +258,33 @@ function successOnAjaxChemData(data) {
     }
 }
 
+function loadFacilityData(id) {
+    console.log("fac id: " + id); 
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: { id: id },
+        url: "/Forms/GetFacilityData",
+        success: successOnAjaxFacilityData,
+        error: errorOnAjaxFacilityData
+    });
+}
+
+function errorOnAjaxFacilityData() {
+    console.log("ERROR retrieving facility data");
+    alert("error retrieving facility data");
+}
+
+var selectedChemical;
+
+function successOnAjaxFacilityData(data) {
+    console.log(data);
+    //alert("success getting chem data");
+    $("#SpillLocation").val(data.location);
+
+}
+
 function getWeatherReport(coords, date) {
 
     var dateTime = date.toLocaleString();
@@ -277,7 +312,7 @@ function successOnAjaxWeather(data) {
 
     $("#weatherLoction").val(data.latitude + ", " + data.longitude);
     $("#SkyConditions").val(data.skyConditions);
-    $("#WeatherTemperature").val(data.temperature);
+    $("#WeatherTemperature").val(Math.round(data.temperature));
     $("#WindSpeed").val(data.windSpeed);
     $("#WeatherHumidity").val(data.humidity);
 
