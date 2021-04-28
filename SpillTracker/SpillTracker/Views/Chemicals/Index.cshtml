@@ -102,69 +102,75 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td >
-               <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a> 
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
             </td>
             <td style="text-align: center;">
                 @Html.DisplayFor(modelItem => item.CasNum)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.PubChemCid)
-            </td>*@
+            @Html.DisplayFor(modelItem => item.PubChemCid)
+        </td>*@
             <td style="text-align: left;">
-                @Html.DisplayFor(modelItem => item.ReportableQuantity) 
+                @Html.DisplayFor(modelItem => item.ReportableQuantity)
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
-            @if (item.Aliases == null) 
+            @if (item.Aliases == null)
             {
                 <td>None Known</td>
             }
-            
+
             else
-            { 
+            {
                 string[] arr = item.Aliases.Split("<br>");
                 List<string> als = arr.ToList();
                 als.Remove(als.Last());
                 <td>
-                <Select style="width: 25%; text-align:center">
-                @foreach(var aliase in als) 
-                {
-                    <option type="submit" asp-action="Details" asp-route-l="@item.Id">@aliase</option> 
-                }
-                </Select>
+                    <Select style="width: 25%; text-align:center">
+                        @foreach (var aliase in als)
+                        {
+                            <option type="submit" asp-action="Details" asp-route-l="@item.Id">@aliase</option>
+
+                        }
+                    </Select>
                 </td>
             }
-            
+
             @*<td>
-                @Html.DisplayFor(modelItem => item.Density)
-            </td>
+            @Html.DisplayFor(modelItem => item.Density)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DensityUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MolecularWeight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MolecularWeightUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaporPressure)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaporPressureUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CerclaChem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EpcraChem)
+        </td>*@
+
+        @if (this.User.IsInRole("Admin"))
+        {
             <td>
-                @Html.DisplayFor(modelItem => item.DensityUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MolecularWeight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MolecularWeightUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaporPressure)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaporPressureUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CerclaChem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EpcraChem)
-            </td>*@
-                      
-            @*<td>
-                <a asp-action="Edit" asp-route-l="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>@* |
                 <a asp-action="Details" asp-route-l="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-l="@item.Id">Delete</a>
-            </td>*@
+                <a asp-action="Delete" asp-route-l="@item.Id">Delete</a>*@
+            </td>
+        }
+
+            
         </tr>
 }
     </tbody>

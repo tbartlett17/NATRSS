@@ -8,9 +8,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SpillTracker.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace SpillTracker.Controllers
 {
+    [AllowAnonymous]
     public class CalculationController : Controller
     {
         private readonly SpillTrackerDbContext db;

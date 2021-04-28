@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SpillTracker.Controllers
 {
@@ -26,9 +27,10 @@ namespace SpillTracker.Controllers
             _config = config;
 
         }
-
+        
         // POST: GeoCoordinatesController/Create
-        [HttpPost] 
+        [HttpPost]
+        [AllowAnonymous]
         public IActionResult GetCoords(string streetAddress)
         {
 
