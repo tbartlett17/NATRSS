@@ -283,6 +283,12 @@
                 <input type="time" id="SpillReportedTime" asp-for="SpillReportedTime" class="form-control" />
                 <span asp-validation-for="SpillReportedTime" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="FacilityId" class="control-label">Facility: </label>
+                @*<input type="text" id="FacilityId" asp-for="FacilityId" class="form-control" value="@Model.Facility.Id" disabled />*@
+                <select id="FacilityId" asp-for="FacilityId" class="form-control" asp-items="ViewBag.FacilityId"></select>
+                <span asp-validation-for="FacilityId" class="text-danger"></span>
+            </div>
             <div>
                 <label>Is the spill contained?@Html.CheckBox("SpillContained", false)</label>
             </div>
@@ -290,20 +296,16 @@
                 <label>Is the spill ongoing? @Html.CheckBox("SpillOngoing", false)</label>
             </div>
             <div>
-                <label>Do you need assistance? @Html.CheckBox("Assistance", false)</label>
+                <label>Do you need assistance? @Html.CheckBox("NeedAssistance", false)</label>
             </div>
         </div>
 
         <div class="form-group tab">
             <h1>Location Info</h1>
-            <div class="form-group">
-                <label asp-for="FacilityId" class="control-label">Facility: </label>
-                <input type="text" id="FacilityId" asp-for="FacilityId" class="form-control" value="@Model.Facility.Name" disabled />
-                <span asp-validation-for="FacilityId" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label id="SpillLocationLabel" asp-for="SpillLocation" class="control-label">Facility Coordinates:</label>
-                <input type="text" id="SpillLocation" asp-for="SpillLocation" class="form-control" value="@Model.Facility.Location" disabled />
+                <input type="text" id="SpillLocation" asp-for="SpillLocation" class="form-control" />
                 <span asp-validation-for="SpillLocation" class="text-danger"></span>
             </div>
             <div>
@@ -319,7 +321,10 @@
 
         <div class="form-group tab">
             <h1>Chemical Info</h1>
-            <p>Chemical:<select asp-for="ChemicalId" class="form-control" asp-items="ViewBag.ChemicalId" id="ChemicalId"></select></p>
+            <div>
+                <label asp-for="FacilityChemicalId">Chemical:</label>
+                <select asp-for="FacilityChemicalId" class="form-control" asp-items="ViewBag.ChemicalId" id="ChemicalId"></select>
+            </div>
             <p>
                 Amount of Chemical Spilled:
                 <input asp-for="SpillVolume" class="form-control" type="number" placeholder="Volume of Chemical Spilled" id="SpillVolume">
@@ -339,19 +344,19 @@
             </div>
             <div>
                 <label asp-for="ChemicalConcentration">Chemical Concentration:</label>
-                <input class="form-control" placeholder="Chemical Concentration without the '%'" asp-for="ChemicalConcentration" id="ChemicalConcentration" disabled>
+                <input class="form-control" placeholder="Chemical Concentration without the '%'" asp-for="ChemicalConcentration" id="ChemicalConcentration" >
             </div>
             <div>
                 <label asp-for="ChemicalTemperature">Temperature of Chemical:</label>
-                <input class="form-control" placeholder="Chemical Temperature" asp-for="ChemicalTemperature" id="ChemicalTemperature" disabled>
-                <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="ChemicalTemperatureUnits" disabled>
+                <input class="form-control" placeholder="Chemical Temperature" asp-for="ChemicalTemperature" id="ChemicalTemperature" >
+                <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="ChemicalTemperatureUnits" >
                     <option value="&#8457">°F</option>
                     <option value="&#8451">°C</option>
                 </select>
             </div>
             <div>
                 <label asp-for="ChemicalStateId">Chemical State:</label>
-                <select class="form-control" asp-items="ViewBag.ChemicalStateId" asp-for="ChemicalStateId" id="ChemicalStateId" disabled></select>
+                <select class="form-control" asp-items="ViewBag.ChemicalStateId" asp-for="ChemicalStateId" id="ChemicalStateId" ></select>
             </div>
             <div>
                 <label>Is the chemical pressurized? @Html.CheckBox("ChemicalPressurized", false)</label>
@@ -362,30 +367,30 @@
             <h1>Weather Info</h1>
             <div>
                 <label for="weatherLoction">Location:</label>
-                <input type="text" class="form-control" id="weatherLoction" disabled />
+                <input type="text" class="form-control" id="weatherLoction"  />
             </div>
             <div>
                 <label asp-for="SkyConditions">Sky Conditions:</label>
-                <input type="text" class="form-control" asp-for="SkyConditions" id="SkyConditions" disabled />
+                <input type="text" class="form-control" asp-for="SkyConditions" id="SkyConditions"  />
             </div>
             <div>
                 <label asp-for="WeatherTemperature">Temperature:</label>
-                <input type="number" class="form-control" asp-for="WeatherTemperature" id="WeatherTemperature" disabled>
-                <select type="text" class="form-control" asp-for="WeatherTemperatureUnits" id="WeatherTemperatureUnits" disabled>
+                <input type="number" class="form-control" asp-for="WeatherTemperature" id="WeatherTemperature" >
+                <select type="text" class="form-control" asp-for="WeatherTemperatureUnits" id="WeatherTemperatureUnits" >
                     <option value="°F">°F</option>
                     <option value="°C">°C</option>
                 </select>
             </div>
             <div>
                 <label asp-for="WindSpeed">Wind:</label>
-                <input type="number" class="form-control" asp-for="WindSpeed" id="WindSpeed" disabled>
-                <select type="text" class="form-control" asp-for="WindSpeedUnits" id="WindSpeedUnits" disabled>
+                <input type="number" class="form-control" asp-for="WindSpeed" id="WindSpeed" >
+                <select type="text" class="form-control" asp-for="WindSpeedUnits" id="WindSpeedUnits" >
                     <option value="M/S">M/S</option>
                     <option value="MPH">MPH</option>
                     @*<option value="knots">knots</option>
                     <option value="ft/s">ft/s</option>*@
                 </select>
-                <select type="text" class="form-control" asp-for="WindDirection" id="WindDirection" disabled>
+                <select type="text" class="form-control" asp-for="WindDirection" id="WindDirection" >
                     <option value="N">N</option>
                     <option value="NNE">NNE</option>
                     <option value="NE">NE</option>
@@ -406,8 +411,8 @@
             </div>
             <div>
                 <label asp-for="WeatherHumidity">Humidity:</label>
-                <input class="form-control" asp-for="WeatherHumidity" id="WeatherHumidity" disabled>
-                <select type="text" class="form-control" asp-for="WeatherHumidityUnits" id="WeatherHumidityUnits" disabled>
+                <input class="form-control" asp-for="WeatherHumidity" id="WeatherHumidity" >
+                <select type="text" class="form-control" asp-for="WeatherHumidityUnits" id="WeatherHumidityUnits" >
                     <option value="%">%</option>
                     @*<option value="g/&#13221">g/&#13221</option>
                     <option value="g/kg">g/kg</option>*@
@@ -432,19 +437,19 @@
                 <p>
                     <input type="number" asp-for="SpillWidth" id="SpillWidth">
                     <select asp-for="SpillWidthUnits" id="">
-                        <option value="inch">inches</option>
-                        <option value="feet">feet</option>
-                        <option value="centimeters">centimeters</option>
-                        <option value="meters">meters</option>
+                        <option value="in">feet</option>
+                        <option value="ft">inches</option>
+                        @*<option value="centimeters">centimeters</option>
+                        <option value="meters">meters</option>*@
                     </select>
                 </p>
                 <p>
                     <input type="number" asp-for="SpillLength" id="SpillLength">
                     <select asp-for="SpillLengthUnits" id="SpillLengthUnits">
-                        <option value="inch">inches</option>
-                        <option value="feet">feet</option>
-                        <option value="centimeters">centimeters</option>
-                        <option value="meters">meters</option>
+                        <option value="ft">feet</option>
+                        <option value="in">inches</option>
+                        @*<option value="centimeters">centimeters</option>
+                        <option value="meters">meters</option>*@
                     </select>
                 </p>
                 @*<p>
@@ -477,18 +482,18 @@
             <div id="spilLresults" style="display:none;">
                 <div>
                     <label asp-for="AmountSpilled">Amount Spilled:</label>
-                    <input type="text" class="form-control" asp-for="AmountSpilled" id="AmountSpilled" disabled />
-                    <input type="text" class="form-control" asp-for="AmountSpilledUnits" id="AmountSpilledUnits" disabled />
+                    <input type="text" class="form-control" asp-for="AmountSpilled" id="AmountSpilled"  />
+                    <input type="text" class="form-control" asp-for="AmountSpilledUnits" id="AmountSpilledUnits"  />
                 </div>
                 <div>
                     <label asp-for="SpillEvaporationRate">Evaporation Rate:</label>
-                    <input type="text" class="form-control" asp-for="SpillEvaporationRate" id="SpillEvaporationRate" disabled />
-                    <input type="text" class="form-control" asp-for="SpillEvaporationRateUnits" id="SpillEvaporationRateUnits" disabled />
+                    <input type="text" class="form-control" asp-for="SpillEvaporationRate" id="SpillEvaporationRate"  />
+                    <input type="text" class="form-control" asp-for="SpillEvaporationRateUnits" id="SpillEvaporationRateUnits"  />
                 </div>
                 <div>
                     <label asp-for="AmountEvaporated">Amount Evaporated:</label>
-                    <input type="text" class="form-control" asp-for="AmountEvaporated" id="AmountEvaporated" disabled />
-                    <input type="text" class="form-control" asp-for="AmountEvaporatedUnits" id="AmountEvaporatedUnits" disabled />
+                    <input type="text" class="form-control" asp-for="AmountEvaporated" id="AmountEvaporated"  />
+                    <input type="text" class="form-control" asp-for="AmountEvaporatedUnits" id="AmountEvaporatedUnits"  />
                 </div>
             </div>
         </div>
@@ -503,6 +508,7 @@
             <div>
                 <label asp-for="Notes">Notes:</label>
                 <textarea type="text" asp-for="Notes" id="Notes"></textarea>
+                <span style="color: crimson;"><input value="false" type="checkbox" id="submit" onclick="submits()"> I have reviewed this document and I am ready to submit.</span>
             </div>
         </div>
 
