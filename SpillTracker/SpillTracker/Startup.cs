@@ -16,6 +16,10 @@ using SpillTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using SpillTracker.Models.Interfaces;
 using SpillTracker.Models.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SpillTracker.Services;
+
+
 
 namespace SpillTracker
 {
@@ -73,14 +77,21 @@ namespace SpillTracker
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            // required for email confirmation 
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
             services.AddRazorPages();
 
             //// Blocks access to everything unless specifically allowed on individual pages
-            //services.AddAuthorization(opts =>
-            //{
-            //    opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            services.AddAuthorization(opts =>
+            {
+                opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
-            //});
+            });
 
         }
 
