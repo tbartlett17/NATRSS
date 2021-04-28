@@ -68,15 +68,15 @@ namespace SpillTracker.Models
 
             modelBuilder.Entity<Form>(entity =>
             {
-                entity.HasOne(d => d.Chemical)
-                    .WithMany(p => p.Forms)
-                    .HasForeignKey(d => d.ChemicalId)
-                    .HasConstraintName("Form_FK_ChemicalID");
-
                 entity.HasOne(d => d.ChemicalState)
                     .WithMany(p => p.Forms)
                     .HasForeignKey(d => d.ChemicalStateId)
                     .HasConstraintName("Form_FK_ChemicalStateID");
+
+                entity.HasOne(d => d.FacilityChemical)
+                    .WithMany(p => p.Forms)
+                    .HasForeignKey(d => d.FacilityChemicalId)
+                    .HasConstraintName("Form_FK_FacilityChemicalID");
 
                 entity.HasOne(d => d.Facility)
                     .WithMany(p => p.Forms)
