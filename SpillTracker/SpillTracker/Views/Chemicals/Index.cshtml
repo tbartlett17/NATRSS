@@ -10,10 +10,43 @@
 <div class="row">
     <div class="col">
             <div class="searchBox" style="text-align: center;">    
-                <input type="text" style="width: 60%;" class="searchTextBox" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
+                <input type="text" style="width: 60%;" class="searchTextBox rounded-lg" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
                 <label id="NotExist" style="display:none"></label>    
             </div> 
     </div>
+</div>
+
+<br>
+
+<div class="row" style="text-align: center;">
+        <a style="width: 3.57%"; id="All" asp-method="post" asp-action="Index">All</a>
+        <a style="width: 3.57%;" asp-route-l="#" id="#" asp-method="post" asp-action="ByFirstLetter">#</a>
+        <a style="width: 3.57%;" asp-route-l="A" id="A" asp-method="post" asp-action="ByFirstLetter">A</a>
+        <a style="width: 3.57%;" asp-route-l="B" id="B" asp-method="post" asp-action="ByFirstLetter">B</a>
+        <a style="width: 3.57%;" asp-route-l="C" id="C" onclick="highlight(id)" asp-action="ByFirstLetter">C</a>
+        <a style="width: 3.57%;" asp-route-l="D" id="D" onclick="highlight(id)" asp-action="ByFirstLetter">D</a>
+        <a style="width: 3.57%;" asp-route-l="E" id="E" onclick="highlight(id)" asp-action="ByFirstLetter">E</a>
+        <a style="width: 3.57%;" asp-route-l="F" id="F" asp-action="ByFirstLetter">F</a>
+        <a style="width: 3.57%;" asp-route-l="G" id="G" asp-action="ByFirstLetter">G</a>
+        <a style="width: 3.57%;" asp-route-l="H" id="H" asp-action="ByFirstLetter">H</a>
+        <a style="width: 3.57%;" asp-route-l="I" id="I" asp-action="ByFirstLetter">I</a>
+        <a style="width: 3.57%;" asp-route-l="J" id="J" asp-action="ByFirstLetter">J</a>
+        <a style="width: 3.57%;" asp-route-l="K" id="K" asp-action="ByFirstLetter">K</a>
+        <a style="width: 3.57%;" asp-route-l="L" id="L" asp-action="ByFirstLetter">L</a>
+        <a style="width: 3.57%;" asp-route-l="M" id="M" asp-action="ByFirstLetter">M</a>
+        <a style="width: 3.57%;" asp-route-l="N" id="N" asp-action="ByFirstLetter">N</a>
+        <a style="width: 3.57%;" asp-route-l="O" id="O" asp-action="ByFirstLetter">O</a>
+        <a style="width: 3.57%;" asp-route-l="P" id="P" asp-action="ByFirstLetter">P</a>
+        <a style="width: 3.57%;" asp-route-l="Q" id="Q" asp-action="ByFirstLetter">Q</a>
+        <a style="width: 3.57%;" asp-route-l="R" id="R" asp-action="ByFirstLetter">R</a>
+        <a style="width: 3.57%;" asp-route-l="S" id="S" asp-action="ByFirstLetter">S</a>
+        <a style="width: 3.57%;" asp-route-l="T" id="T" asp-action="ByFirstLetter">T</a>
+        <a style="width: 3.57%;" asp-route-l="U" id="U" asp-action="ByFirstLetter">U</a>
+        <a style="width: 3.57%;" asp-route-l="V" id="V" asp-action="ByFirstLetter">V</a>
+        <a style="width: 3.57%;" asp-route-l="W" id="W" asp-action="ByFirstLetter">W</a>
+        <a style="width: 3.57%;" asp-route-l="X" id="X" asp-action="ByFirstLetter">X</a>
+        <a style="width: 3.57%;" asp-route-l="Y" id="Y" asp-action="ByFirstLetter">Y</a>
+        <a style="width: 3.57%;" asp-route-l="Z" id="Z" asp-action="ByFirstLetter">Z</a>
 </div>
 
 <br>
@@ -69,69 +102,75 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td >
-               <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a> 
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
             </td>
             <td style="text-align: center;">
                 @Html.DisplayFor(modelItem => item.CasNum)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.PubChemCid)
-            </td>*@
+            @Html.DisplayFor(modelItem => item.PubChemCid)
+        </td>*@
             <td style="text-align: left;">
-                @Html.DisplayFor(modelItem => item.ReportableQuantity) 
+                @Html.DisplayFor(modelItem => item.ReportableQuantity)
                 @Html.DisplayFor(modelItem => item.ReportableQuantityUnits)
             </td>
-            @if (item.Aliases == null) 
+            @if (item.Aliases == null)
             {
                 <td>None Known</td>
             }
-            
+
             else
-            { 
+            {
                 string[] arr = item.Aliases.Split("<br>");
                 List<string> als = arr.ToList();
                 als.Remove(als.Last());
                 <td>
-                <Select style="width: 25%; text-align:center">
-                @foreach(var aliase in als) 
-                {
-                    <option type="submit" asp-action="Details" asp-route-id="@item.Id">@aliase</option> 
-                }
-                </Select>
+                    <Select style="width: 25%; text-align:center">
+                        @foreach (var aliase in als)
+                        {
+                            <option type="submit" asp-action="Details" asp-route-l="@item.Id">@aliase</option>
+
+                        }
+                    </Select>
                 </td>
             }
+
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Density)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DensityUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MolecularWeight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MolecularWeightUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaporPressure)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaporPressureUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CerclaChem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EpcraChem)
+        </td>*@
+
+        @if (this.User.IsInRole("Admin"))
+        {
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>@* |
+                <a asp-action="Details" asp-route-l="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-l="@item.Id">Delete</a>*@
+            </td>
+        }
+
             
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Density)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DensityUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MolecularWeight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MolecularWeightUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaporPressure)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaporPressureUnits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CerclaChem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EpcraChem)
-            </td>*@
-                      
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
         </tr>
 }
     </tbody>
@@ -143,3 +182,13 @@
 
 
 @* search bar info found at https://www.c-sharpcorner.com/article/custom-search-using-client-side-code/*@
+
+<style>
+    a {
+        color: blue;
+    }
+    a.active {
+        color: red;
+    }
+
+</style>

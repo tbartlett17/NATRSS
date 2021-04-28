@@ -8,82 +8,96 @@
     <h4><b>@Html.DisplayFor(model => model.Name)</b></h4>
     <hr />
     <dl style="text-align: center;">
-        
-        <dt  >
-            @* @Html.DisplayNameFor(model => model.CasNum) *@ CAS Number
-        </dt>
-        <dd  >
-            @Html.DisplayFor(model => model.CasNum)
-        </dd>
-        <dt  >
-            @* @Html.DisplayNameFor(model => model.PubChemCid) *@ CID Number
-        </dt>
-        <dd  >
-             <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid" target="_blank">@Html.DisplayFor(model => model.PubChemCid)</a>
-        </dd>
-        <dt  >
-            @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
-        </dt>
-        <dd  >
-            @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
-        </dd>
-        <dt  >
-            @Html.DisplayNameFor(model => model.Density)
-        </dt>
-        <dd  >
-            @Html.DisplayFor(model => model.Density) @Html.DisplayFor(model => model.DensityUnits)
-        </dd>
-        <dt  >
-            @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
-        </dt>
-        <dd  >
-            @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
-        </dd>
-        <dt  >
-            @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
-        </dt>
-        <dd  >
-            @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
-        </dd>
+        <div class="row">
+            <div class="col-sm-6">
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.CasNum) *@ CAS Number
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CasNum)
+                </dd>
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.PubChemCid) *@ CID Number
+                </dt>
+                <dd>
+                    <a href="https://pubchem.ncbi.nlm.nih.gov/compound/@Model.PubChemCid" target="_blank">@Html.DisplayFor(model => model.PubChemCid)</a>
+                </dd>
+                @*PLACE CHEM CLASS here*@
+                <dt id="enlarge">
+                    Chemical Classification
+                </dt>
 
-        <dt>
-            Chemical Classification
-        </dt>
-
-        @if (Model.CerclaChem == true)
-        {
-            <dd  >
-                CERCLA Chemical
-            </dd>
-        }
-        @if (Model.EpcraChem == true)
-        {
-            <dd>
-                EPCRA Chemical
-            </dd>
-        }
-        <dt>
-            Synonyms
-        </dt>
-        @if (String.IsNullOrEmpty(Model.Aliases))
-        {
-            <dd>None known</dd>
-        }
-        else 
-        {
-            string[] arr = Model.Aliases.Split("<br>"); 
-            @foreach (var item in arr)
+                @if (Model.CerclaChem == true)
+                {
+                    <dd>
+                        CERCLA Chemical
+                    </dd>
+                }
+                @if (Model.EpcraChem == true)
+                {
+                    <dd>
+                        EPCRA Chemical
+                    </dd>
+                }
+                @*PLACE Synonyms here*@
+                <dt id="enlarge">
+                    Synonyms
+                </dt>
+                @if (String.IsNullOrEmpty(Model.Aliases))
+                {
+                    <dd>None known</dd>
+                }
+                else
+                {
+                    string[] arr = Model.Aliases.Split("<br>");
+                    @foreach (var item in arr)
                     {
                         <dd>
                             @item
                         </dd>
                     }
-        }
-        
-        
+                }
+            </div>
+            <div class="col-sm-6">
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.MolecularWeight) *@ Molecular Weight
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.MolecularWeight) @Html.DisplayFor(model => model.MolecularWeightUnits)
+                </dd>
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.VaporPressure) *@ Vapor Pressure
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.VaporPressure) @Html.DisplayFor(model => model.VaporPressureUnits)
+                </dd>
+
+                <dt id="enlarge">
+                    @* @Html.DisplayNameFor(model => model.ReportableQuantity) *@ Reportable Weight
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ReportableQuantity) @Html.DisplayFor(model => model.ReportableQuantityUnits)
+                </dd>
+                
+                @*PLACE Density here*@
+                <dt id="enlarge">
+                    @Html.DisplayNameFor(model => model.Density)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Density) @Html.DisplayFor(model => model.DensityUnits)
+                </dd>
+            </div>
+        </div>
+
+
+
 
     </dl>
 </div>
 <div style="text-align: center;">
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script src="/js/chemDetails.js" type="module"></script>
+}

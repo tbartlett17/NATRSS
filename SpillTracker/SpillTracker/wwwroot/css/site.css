@@ -12,6 +12,11 @@ a {
   color: #0366d6;
 }
 
+nav {
+  background-color: #50773e;
+  color: white
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -20,7 +25,7 @@ a {
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: #50773e;
   border-color: #1861ac;
 }
 

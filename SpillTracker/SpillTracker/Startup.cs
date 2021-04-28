@@ -14,6 +14,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpillTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using SpillTracker.Models.Interfaces;
+using SpillTracker.Models.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SpillTracker.Services;
+
+
 
 namespace SpillTracker
 {
@@ -33,9 +39,9 @@ namespace SpillTracker
             services.AddDbContext<ApplicationDbContext>(opts =>
             {
                 //local host connection
-                //opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
                 //azure connection
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerMSIdentityAzureDB"));
                 
             });
 
@@ -43,11 +49,17 @@ namespace SpillTracker
             services.AddDbContext<SpillTrackerDbContext>(opts =>
             {
                 //local host connection
-                //opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
+                opts.UseSqlServer(Configuration["ConnectionStrings:SpillTrackerConnection"]);
                 //azure connection
-                opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
+                //opts.UseSqlServer(Configuration.GetConnectionString("SpillTrackerAzureDB"));
                 
             });
+
+            // Add our custom interfaces and repos for fun Dependency Injection
+            services.AddScoped<ISpillTrackerUserRepository, SpillTrackerUserRepository>();
+            services.AddScoped<ISpillTrackerFormRepository, SpillTrackerFormRepository>();
+            services.AddScoped<ISpillTrackerChemicalRepository, SpillTrackerChemicalRepository>();
+
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -61,15 +73,25 @@ namespace SpillTracker
                 opts.User.RequireUniqueEmail = true; //cant have two users with same email
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            // required for email confirmation 
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
             services.AddRazorPages();
 
             //// Blocks access to everything unless specifically allowed on individual pages
-            //services.AddAuthorization(opts =>
-            //{
-            //    opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            services.AddAuthorization(opts =>
+            {
+                opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
-            //});
+            });
 
         }
 

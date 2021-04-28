@@ -14,6 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,6 +28,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SendGrid" Version="9.23.0" />
   </ItemGroup>
   <ItemGroup>
     <Watch Include="**/*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
@@ -34,17 +37,26 @@
     <Watch Include="**/*.css" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Controllers\Guide.cshtml" />
+    <Content Remove="wwwroot\js\chemDetails.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controllers\Guide.cshtml" />
     <None Include="Views\Admin\Index.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Watch Remove="Controllers\Guide.cshtml" />
+    <Watch Remove="wwwroot\js\chemDetails.js" />
     <Watch Remove="wwwroot\js\EditFacilityChems.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\Home\Guide.cshtml" />
 
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
+    <None Include="wwwroot\js\chemDetails.js" />
   </ItemGroup>
 
 </Project>
