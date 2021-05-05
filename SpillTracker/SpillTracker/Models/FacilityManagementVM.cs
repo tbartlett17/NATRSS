@@ -7,10 +7,15 @@ namespace SpillTracker.Models
 {
     public class FacilityManagementVM
     {
-        public Facility Facility { get; set; }
+        public IEnumerable<Facility> Facility { get; set; }
 
         public IEnumerable<FacilityChemical> FacilityChemicals { get; set; }
 
+        public Stuser user {get; set;}
 
+        public IEnumerable<Company> companies {get; set;}
+
+
+        public string codes {get; set;}
     }
 }

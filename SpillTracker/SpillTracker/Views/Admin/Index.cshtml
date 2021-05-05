@@ -1,4 +1,6 @@
-﻿
+﻿@model AdminVM
+
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -52,7 +54,33 @@
             <button id="CERCLAscrapeBtn" type="button" class="btn btn-primary btn-block">
                 Execute
             </button>
+        </div >
+
+        <div class="col-md-4 border rounded" style="padding-bottom: 1%">
+            <h4 style="text-align:center">Create New Company</h4>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="companies.Name" class="control-label"></label>
+                    <input asp-for="companies.Name" class="form-control" />
+                    <span asp-validation-for="companies.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="companies.NumFacilities" class="control-label"></label>
+                    <input asp-for="companies.NumFacilities" class="form-control" />
+                    <span asp-validation-for="companies.NumFacilities" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="companies.AccessCode" class="control-label"></label>
+                    <input asp-for="companies.AccessCode" class="form-control" />
+                    <span asp-validation-for="companies.AccessCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
+
         @*<div class="col-md-4 border rounded" style="padding-bottom: 1%">
             <div id="updateChemsOverlay">
                 <div class="w-100 d-flex justify-content-center align-items-center">

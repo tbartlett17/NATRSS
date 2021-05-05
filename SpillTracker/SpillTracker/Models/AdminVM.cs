@@ -11,5 +11,7 @@ namespace SpillTracker.Models
 
         public IEnumerable<StatusTime> times { get; set; }
 
+        public Company companies { get; set; }
+
     }
 }

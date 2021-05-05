@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SpillTracker.Models.Facility>
+﻿@model SpillTracker.Models.FacilityManagementVM
 
 @{
     ViewData["Title"] = "Index";
@@ -7,41 +7,69 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.Identity.IsAuthenticated)
+    {
+        if ((User.IsInRole("FacilityManager")) ||  User.IsInRole("Employee"))
+        {
+            if(Model.user.CompanyId == null)
+            {
+            <p>@Model.user.Id</p>
+            <div style="text-align: center;">
+                <label class="text-danger">It appears that you are not associated with a company, please enter a company access code: </label>
+                    <form asp-controller="Facilities" asp-action="SetCompany">
+                        <div class="input-group">
+                            <input asp-for="codes" type="text" maxlength="20">
+                        </div>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info">Connect</button>
+                        </div>
+                    </form>
+            </div>   
+            }
+            else
+            {
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+            }
+        }
+        
+    }
+
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressStreet)
+                Street
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressCity)
+                City
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressState)
+                State
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressZip)
+               Zip
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                Location
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Industry)
+                Industry
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Company)
+                Company
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Facility) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
