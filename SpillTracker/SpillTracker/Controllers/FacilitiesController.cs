@@ -86,7 +86,7 @@ namespace SpillTracker.Controllers
                 return RedirectToAction("Index");
             }
             else
-                return RedirectToAction("Index");
+                return RedirectToAction("Index"); 
 
                 //var code = Guid.NewGuid();
 

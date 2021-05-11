@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SpillTracker.Models;
 
+
 namespace SpillTracker.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CompaniesController : Controller
     {
         private readonly SpillTrackerDbContext _context;
@@ -57,6 +60,8 @@ namespace SpillTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                var code = Guid.NewGuid().ToString();
+                company.AccessCode = code.Substring(0, 8);
                 _context.Add(company);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
