@@ -16,9 +16,18 @@ $(document).ready(function () {
 });
 
 function displayVersions(data) {
-    console.log(data);
+    console.log(data);    
+    let list = document.createElement("ul");
+    for (let i = 0; i < data.length; i++) {
+        let tag = document.createElement("p");
+        tag.className = "commitSpacing";
+        tag.append(data[i]["date"] + " " + data[i]["commitId"] + " " + data[i]["commitMessage"]);
+        list.append(tag)
+        $("#versionH").append(list);
+    }
 }
 
+
 function errorFunction() {
-    console.log("Something happened, you suck.")
+    console.log("Something bad happened, try again.")
 }

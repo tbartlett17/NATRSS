@@ -7,7 +7,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SpillTracker.Models;
 
 namespace SpillTracker.Controllers
@@ -19,12 +21,15 @@ namespace SpillTracker.Controllers
 
         private readonly SpillTrackerDbContext db;
 
+        private readonly IConfiguration _config;
+
         Home mystatus = new Home();
 
-        public HomeController(ILogger<HomeController> logger, SpillTrackerDbContext context)
+        public HomeController(ILogger<HomeController> logger, SpillTrackerDbContext context, IConfiguration config)
         {
             _logger = logger;
             db = context;
+            _config = config;
         }
 
         public IActionResult Index()
@@ -36,30 +41,38 @@ namespace SpillTracker.Controllers
 
         public IActionResult Guide()
         {
+            string secret = _config["NatrGitkey"];
+            Debug.WriteLine("secret " + secret);
             return View();
         }
+
+
 
         [HttpGet]
         public JsonResult versionHistory()
         {
-            var tmp = "this is from version history";
-            var request = SendRequest("https://github.com/NickApa/NATRSS", "Nicks Token", "NickApa");
-            // create a class called commit then define the info I wanna take out then create a list of type commit
-            // then create a for loop to go through every commit in the request to then make new commit objects from those commits and add it to the list
-            // then return the list
-            //var 
-
-
-
-            return Json(tmp);
-
-            //return Json([whatever data you're trying to return], JsonRequestBehavior.AllowGet);
+            //var tmp = "this is from version history";
+            string request = SendRequest("https://api.github.com/repos/NickApa/NATRSS/commits", "NickApa");            
+            var data = JArray.Parse(request);
+            List<Commits> commitList = new List<Commits>();
+            foreach (var element in data)
+            {
+                Commits c = new Commits();
+                c.commitId = (string)element["sha"];
+                c.commitId = c.commitId.Substring(0, 7);
+                c.commitMessage = (string)element["commit"]["message"];
+                c.date = (string)element["commit"]["committer"]["date"];
+                c.date = c.date.Substring(0, 16);
+                commitList.Add(c);
+            }
+            return Json(commitList);
         }
 
-        private string SendRequest(string uri, string credentials, string username)
+        private string SendRequest(string uri, string username)
         {
+            string secret = _config["NatrGitkey"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Headers.Add("Authorization", "token " + credentials);
+            request.Headers.Add("Authorization", "token " + secret);
             request.UserAgent = username;       // Required, see: https://developer.github.com/v3/#user-agent-required
             request.Accept = "application/json";
 

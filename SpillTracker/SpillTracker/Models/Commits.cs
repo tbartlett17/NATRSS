@@ -8,7 +8,9 @@ namespace SpillTracker.Models
     public class Commits
     {
         public string commitId { get; set; } // grab the sha string
-        public int date { get; set; } // grab the date of the commit
+        public string date { get; set; } // grab the date of the commit
+
+        public string commitMessage { get; set; } // grab the message if one exists
 
         //public 
     }
