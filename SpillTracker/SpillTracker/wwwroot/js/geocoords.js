@@ -50,3 +50,37 @@ function successOnAjax(data) {
     document.getElementById("submitForm").click();
     //document.forms[0].submit();
 }
+
+$("#facBtn").click(function()
+{
+    /*Street Address City State Zip*/
+    /*let sa = document.getElementById("streetaddress")
+    let streetAddress = sa.textContent;
+    let c = document.getElementById("city")
+    let city = c.textContent;
+    let s = document.getElementById("state")
+    let state = s.textContent;
+    let z = document.getElementById("zip")
+    let zip = z.textContent;
+
+
+    let streetAddress = $("#streetaddress").val();
+    let yellowModal = $("#yellowModal")
+
+    $("#streetaddress").empty();
+    $("#city").empty();
+    $("#state").empty();
+    $("#zip").empty();
+    $("#yellowModal").empty();
+
+    if (streetAddress == '' || city == '' || state == '' || zip == '') {
+        document.getElementById("modal-content").style.backgroundColor = "yellow";
+        yellowModal.append("Please enter information into all of the input boxes!")
+    }
+    else {
+       
+    }
+
+*/
+}
+)
