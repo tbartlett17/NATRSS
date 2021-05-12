@@ -41,7 +41,7 @@ namespace SpillTracker.Controllers
 
         public IActionResult Guide()
         {
-          
+            return View();
         }
 
 
