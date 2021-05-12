@@ -54,7 +54,7 @@ function successOnAjax(data) {
 $("#facBtn").click(function()
 {
     /*Street Address City State Zip*/
-    let sa = document.getElementById("streetaddress")
+    /*let sa = document.getElementById("streetaddress")
     let streetAddress = sa.textContent;
     let c = document.getElementById("city")
     let city = c.textContent;
@@ -81,6 +81,6 @@ $("#facBtn").click(function()
        
     }
 
-
+*/
 }
 )
