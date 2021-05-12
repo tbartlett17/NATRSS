@@ -35,6 +35,47 @@ namespace SpillTracker.Controllers
             return View();
         }
 
+         // GET: Companies/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Companies/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,NumFacilities,AccessCode")] Company company)
+        {
+            
+            
+            if (ModelState.IsValid)
+            {
+                var code = Guid.NewGuid().ToString();
+                company.AccessCode = code.ToUpper().Substring(26, 10);
+                dbSpllTracker.Add(company);
+                await dbSpllTracker.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(company);
+        }
+
+        public IActionResult Exist(string name) 
+        {
+            Debug.WriteLine(name);
+            if(dbSpllTracker.Companies.Any(n => n.Name == name))
+            {
+                Debug.WriteLine("true");
+                return Json(true);
+            }
+            else 
+            {
+                Debug.WriteLine("false");
+                return Json(false);
+            }
+        }
+
 
         public IActionResult ScrapeEPCRAtable(string xpath)
         {

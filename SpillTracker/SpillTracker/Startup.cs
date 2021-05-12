@@ -59,7 +59,10 @@ namespace SpillTracker
             services.AddScoped<ISpillTrackerUserRepository, SpillTrackerUserRepository>();
             services.AddScoped<ISpillTrackerFormRepository, SpillTrackerFormRepository>();
             services.AddScoped<ISpillTrackerChemicalRepository, SpillTrackerChemicalRepository>();
-
+            services.AddScoped<ISpillTrackerFacilityRepository, SpillTrackerFacilityRepository>();
+            services.AddScoped<ISpillTrackerFacilityChemicalRepository, SpillTrackerFacilityChemicalRepository>();
+            services.AddScoped<ISpillTrackerStuserFacilityRepository, SpillTrackerStuserFacilityRepository>();
+            services.AddScoped<ISpillTrackerCompanyRepository, SpillTrackerCompanyRepository>();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()

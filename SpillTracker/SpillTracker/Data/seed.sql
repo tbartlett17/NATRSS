@@ -1,12 +1,12 @@
-INSERT INTO [Company] (Name,Num_Facilities) VALUES
-    ('Test Company 1',1),
-    ('Test Company 2',2);
+INSERT INTO [Company] (Name,AccessCode,Num_Facilities) VALUES
+    ('Test Company 1','abcdefghi1',1),
+    ('Test Company 2','abcdefghi12',2);
 
 
-INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,CompanyID) VALUES
-    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1),  
-    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics',2),
-    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals',1);
+INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,AccessCode,CompanyID) VALUES
+    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals','fac-abcdefghi-1',1),  
+    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics','fac-abcdefghi-2',2),
+    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals','fac-abcdefghi-3',1);
 
 
 INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyID) VALUES 

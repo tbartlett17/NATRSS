@@ -106,6 +106,7 @@ CREATE TABLE [Facility] (
   [Address_ZIP] nvarchar(15),
   [Location] nvarchar(100),
   [Industry] nvarchar(50),
+  [AccessCode] nvarchar(20),
   [CompanyID] int
 )
 GO
@@ -132,6 +133,7 @@ GO
 CREATE TABLE [Company] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(100),
+  [AccessCode] nvarchar(20),
   [Num_Facilities] int
 )
 GO
@@ -140,6 +142,13 @@ CREATE TABLE [StatusTime] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [SourceName] nvarchar(100),
   [Time] datetime
+)
+GO
+
+CREATE TABLE [StuserFacilities] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [StuserID] int,
+  [FacilityID] int
 )
 GO
 
@@ -171,4 +180,10 @@ ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_ChemicalID F
 GO
 
 ALTER TABLE [FacilityChemicals] ADD CONSTRAINT FacilityChemicals_FK_FacilityID FOREIGN KEY ([FacilityID])  REFERENCES [Facility] ([ID])
+GO
+
+ALTER TABLE [StuserFacilities] ADD CONSTRAINT StuserFacilities_FK_StuserId FOREIGN KEY ([StuserID]) REFERENCES [Stuser] ([ID])
+GO
+
+ALTER TABLE [StuserFacilities] ADD CONSTRAINT StuserFacilities_FK_FacilityId FOREIGN KEY ([FacilityID]) REFERENCES [Facility] ([ID])
 GO
