@@ -15,6 +15,7 @@ namespace SpillTracker.Models
         public Stuser()
         {
             Forms = new HashSet<Form>();
+            StuserFacilities = new HashSet<StuserFacility>();
         }
 
         [Key]
@@ -37,5 +38,7 @@ namespace SpillTracker.Models
         public virtual Company Company { get; set; }
         [InverseProperty(nameof(Form.Stuser))]
         public virtual ICollection<Form> Forms { get; set; }
+        [InverseProperty(nameof(StuserFacility.Stuser))]
+        public virtual ICollection<StuserFacility> StuserFacilities { get; set; }
     }
 }

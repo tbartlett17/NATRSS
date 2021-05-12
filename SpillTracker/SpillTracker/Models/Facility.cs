@@ -16,6 +16,7 @@ namespace SpillTracker.Models
         {
             FacilityChemicals = new HashSet<FacilityChemical>();
             Forms = new HashSet<Form>();
+            StuserFacilities = new HashSet<StuserFacility>();
         }
 
         [Key]
@@ -39,6 +40,8 @@ namespace SpillTracker.Models
         public string Location { get; set; }
         [StringLength(50)]
         public string Industry { get; set; }
+        [StringLength(20)]
+        public string AccessCode { get; set; }
         [Column("CompanyID")]
         public int? CompanyId { get; set; }
 
@@ -49,5 +52,7 @@ namespace SpillTracker.Models
         public virtual ICollection<FacilityChemical> FacilityChemicals { get; set; }
         [InverseProperty(nameof(Form.Facility))]
         public virtual ICollection<Form> Forms { get; set; }
+        [InverseProperty(nameof(StuserFacility.Facility))]
+        public virtual ICollection<StuserFacility> StuserFacilities { get; set; }
     }
 }

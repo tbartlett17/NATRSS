@@ -47,11 +47,23 @@ namespace SpillTracker.Controllers
             }
             if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) // shows the company employees their facilities
             {
-               
+
                 //Debug.WriteLine("\n\n STuser aspnet identity id: " + currentUser.AspnetIdentityId);
 
                 // select this user's company's facilities
-                spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
+                //spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
+                //newFac.Facility = spillTrackerDbContext.ToList();
+                //newFac.user = currentUser;
+
+                // select all facilities the current user has access to
+                var usersFacilities = _context.StuserFacilities.Where(uf => uf.StuserId == currentUser.Id);
+                List<int?> idList = new List<int?>();
+                foreach(var item in usersFacilities)
+                {
+                    idList.Add(item.FacilityId);
+                }
+
+                spillTrackerDbContext = _context.Facilities.Include(f => f.Company).Where(f => idList.Contains(f.Id));
                 newFac.Facility = spillTrackerDbContext.ToList();
                 newFac.user = currentUser;
             }
@@ -92,6 +104,40 @@ namespace SpillTracker.Controllers
 
         }
 
+        public IActionResult JoinFacility(FacilityManagementVM facilityManagementVM)
+        {
+            var code = facilityManagementVM.codes;
+            _logger.LogInformation(code);
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+            code = code.ToUpper();
+            
+            Facility findFacility = new Facility();
+            findFacility = _context.Facilities.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
+            
+
+            if(findFacility != null && currentUser.CompanyId == findFacility.CompanyId)
+            {
+                StuserFacility newUserFac = new StuserFacility
+                {
+                    FacilityId = findFacility.Id,
+                    StuserId = currentUser.Id                    
+                };
+                Debug.WriteLine(newUserFac);
+                _context.Add(newUserFac);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         // GET: Facilities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -112,20 +158,30 @@ namespace SpillTracker.Controllers
                 return NotFound();
             }
 
-            facilityManagementVM.Facility =  _context.Facilities
-                .Include(f => f.Company)
-                .Where(m => m.Id == id);
-            if (facilityManagementVM == null)
-            {
-                return NotFound();
-            }
+            facilityManagementVM.Facility = _context.Facilities
+               .Include(f => f.Company)
+               .Where(m => m.Id == id);
 
             facilityManagementVM.FacilityChemicals = _context.FacilityChemicals
                 .Include(fc => fc.Chemical)
                 .Include(fc => fc.ChemicalState)
                 .Where(f => f.FacilityId == id);
 
-            if (currentUser.CompanyId == facilityManagementVM.Facility.FirstOrDefault().CompanyId || User.IsInRole("Admin"))
+            facilityManagementVM.user = currentUser;
+
+            facilityManagementVM.FacilityEmployees = _context.StuserFacilities
+                .Include(uf => uf.Facility)
+                .Include(uf => uf.Stuser)
+                .Where(u => u.FacilityId == facilityManagementVM.Facility.FirstOrDefault().Id);
+
+            var usersFacilities = _context.StuserFacilities.Where(uf => uf.StuserId == currentUser.Id);
+
+            if (facilityManagementVM == null)
+            {
+                return NotFound();
+            }
+
+            if (currentUser.CompanyId == facilityManagementVM.Facility.FirstOrDefault().CompanyId && usersFacilities.Any(uf => uf.FacilityId == id) || User.IsInRole("Admin"))
             {
                 return View(facilityManagementVM);
             }

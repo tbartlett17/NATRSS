@@ -11,11 +11,10 @@ namespace SpillTracker.Models
 
         public IEnumerable<FacilityChemical> FacilityChemicals { get; set; }
 
-        public Stuser user {get; set;}
+        public Stuser User {get; set;}
 
-        public IEnumerable<Company> companies {get; set;}
+        public IEnumerable<StuserMoreData> FacilityEmployees { get; set; }
 
-
-        public string codes {get; set;}
+        public string Codes {get; set;}
     }
 }
