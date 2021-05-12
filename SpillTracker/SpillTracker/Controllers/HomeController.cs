@@ -41,9 +41,7 @@ namespace SpillTracker.Controllers
 
         public IActionResult Guide()
         {
-            string secret = _config["NatrGitkey"];
-            Debug.WriteLine("secret " + secret);
-            return View();
+          
         }
 
 
