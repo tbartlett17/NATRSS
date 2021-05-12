@@ -1,6 +1,6 @@
-INSERT INTO [Company] (Name,Num_Facilities) VALUES
-    ('Test Company 1',1),
-    ('Test Company 2',2);
+INSERT INTO [Company] (Name,AccessCode,Num_Facilities) VALUES
+    ('Test Company 1','abcdefghi1',1),
+    ('Test Company 2','abcdefghi12',2);
 
 
 INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,CompanyID) VALUES

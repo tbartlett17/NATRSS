@@ -10,64 +10,64 @@
 <div>
     <div class="row" style="margin-bottom: 0px; padding-bottom:0">
         <h4 class="col-sm-auto">Facility</h4>
-        <a class="col-sm-auto" asp-action="Edit" asp-route-id="@Model.Facility.Id">Edit</a>
+        <a class="col-sm-auto" asp-action="Edit" asp-route-id="@Model.Facility.FirstOrDefault().Id">Edit</a>
     </div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Name)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Name)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressStreet)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().AddressStreet)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressStreet)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressStreet)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressCity)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().AddressCity)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressCity)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressCity)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressState)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().AddressState)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressState)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressState)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressZip)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().AddressZip)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressZip)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressZip)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Location)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Location)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Location)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Location)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Industry)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Industry)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Industry)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Industry)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Company)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Company)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Company.Id)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Company.Id)
         </dd>
     </dl>
 </div>
 <div>
     <div class="row" style="margin-bottom: 0px; padding-bottom:0">
         <h4 class="col-sm-auto">Chemicals</h4>
-        <a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.Id">Edit</a>
+        <a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.FirstOrDefault().Id">Edit</a>
     </div>
     <hr />
     <table class="table">

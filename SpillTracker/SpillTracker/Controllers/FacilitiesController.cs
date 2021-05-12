@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SpillTracker.Models;
 
@@ -18,22 +19,19 @@ namespace SpillTracker.Controllers
     {
         private readonly SpillTrackerDbContext _context;
 
-        public FacilitiesController(SpillTrackerDbContext context)
+        private readonly ILogger<FacilitiesController> _logger;
+
+        public FacilitiesController(SpillTrackerDbContext context, ILogger<FacilitiesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Facilities
         public async Task<IActionResult> Index()
         {
+            FacilityManagementVM newFac = new FacilityManagementVM();
             var spillTrackerDbContext = _context.Facilities.Include(f => f.Company).Take(0); // default show no facilities
-
-            if (User.IsInRole("Admin")) // shows the admin all facilities
-            {
-                spillTrackerDbContext = _context.Facilities.Include(f => f.Company); // shows the admin all facilities
-            }
-            if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) // shows the company employees their facilities
-            {
                 // get the current users identity ID
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -41,14 +39,57 @@ namespace SpillTracker.Controllers
 
                 // look up the current user in the spill tracker DB
                 Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+            if (User.IsInRole("Admin")) // shows the admin all facilities
+            {
+                spillTrackerDbContext = _context.Facilities.Include(f => f.Company); // shows the admin all facilities
+                newFac.Facility = spillTrackerDbContext.ToList();
+                newFac.user = currentUser;
+            }
+            if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) // shows the company employees their facilities
+            {
+               
                 //Debug.WriteLine("\n\n STuser aspnet identity id: " + currentUser.AspnetIdentityId);
 
                 // select this user's company's facilities
                 spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
+                newFac.Facility = spillTrackerDbContext.ToList();
+                newFac.user = currentUser;
             }
 
             //var spillTrackerDbContext = _context.Facilities.Include(f => f.Company);
-            return View(await spillTrackerDbContext.ToListAsync());
+            return View(newFac);
+        }
+
+
+        public IActionResult SetCompany(FacilityManagementVM newFac)
+        {
+            var code = newFac.codes;
+            _logger.LogInformation(code);
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+            code = code.ToUpper();
+            
+            Company findCompany = new Company();
+            findCompany = _context.Companies.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
+            
+
+            if(currentUser.CompanyId == null && findCompany != null)
+            {
+                currentUser.CompanyId = findCompany.Id;
+                // newFac.user.CompanyId = findCompany.Id;
+                _context.Stusers.Update(currentUser);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Index"); 
+
+                //var code = Guid.NewGuid();
+
         }
 
         // GET: Facilities/Details/5
@@ -71,9 +112,9 @@ namespace SpillTracker.Controllers
                 return NotFound();
             }
 
-            facilityManagementVM.Facility = await _context.Facilities
+            facilityManagementVM.Facility =  _context.Facilities
                 .Include(f => f.Company)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(m => m.Id == id);
             if (facilityManagementVM == null)
             {
                 return NotFound();
@@ -84,7 +125,7 @@ namespace SpillTracker.Controllers
                 .Include(fc => fc.ChemicalState)
                 .Where(f => f.FacilityId == id);
 
-            if (currentUser.CompanyId == facilityManagementVM.Facility.CompanyId || User.IsInRole("Admin"))
+            if (currentUser.CompanyId == facilityManagementVM.Facility.FirstOrDefault().CompanyId || User.IsInRole("Admin"))
             {
                 return View(facilityManagementVM);
             }

@@ -132,6 +132,7 @@ GO
 CREATE TABLE [Company] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(100),
+  [AccessCode] nvarchar(20),
   [Num_Facilities] int
 )
 GO
