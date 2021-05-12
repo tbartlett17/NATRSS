@@ -5,12 +5,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SpillTracker.Models;
+using SpillTracker.Models.Interfaces;
 
 namespace SpillTracker.Controllers
 {
@@ -18,13 +20,27 @@ namespace SpillTracker.Controllers
     public class FacilitiesController : Controller
     {
         private readonly SpillTrackerDbContext _context;
-
         private readonly ILogger<FacilitiesController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FacilitiesController(SpillTrackerDbContext context, ILogger<FacilitiesController> logger)
+        private readonly ISpillTrackerUserRepository _stUserRepo;
+        private readonly ISpillTrackerFacilityRepository _stFacRepo;
+        private readonly ISpillTrackerFacilityChemicalRepository _stFacChemRepo;
+        private readonly ISpillTrackerStuserFacilityRepository _stUserFacRepo;
+        private readonly ISpillTrackerCompanyRepository _stCompRepo;
+
+        public FacilitiesController(SpillTrackerDbContext context, ILogger<FacilitiesController> logger, UserManager<IdentityUser> userManager, 
+            ISpillTrackerUserRepository stUserRepo, ISpillTrackerFacilityRepository stFacRepo, ISpillTrackerFacilityChemicalRepository stFacChemRepo,
+            ISpillTrackerStuserFacilityRepository stUserFacRepo, ISpillTrackerCompanyRepository stCompRepo)
         {
             _context = context;
             _logger = logger;
+            _userManager = userManager;
+            _stUserRepo = stUserRepo;
+            _stFacRepo = stFacRepo;
+            _stFacChemRepo = stFacChemRepo;
+            _stUserFacRepo = stUserFacRepo;
+            _stCompRepo = stCompRepo;
         }
 
         // GET: Facilities
@@ -38,22 +54,34 @@ namespace SpillTracker.Controllers
                 string userId = claim.Value;
 
                 // look up the current user in the spill tracker DB
-                Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+                Stuser currentUser = _context.Stusers.Include(u => u.Company).Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
             if (User.IsInRole("Admin")) // shows the admin all facilities
             {
                 spillTrackerDbContext = _context.Facilities.Include(f => f.Company); // shows the admin all facilities
                 newFac.Facility = spillTrackerDbContext.ToList();
-                newFac.user = currentUser;
+                newFac.User = currentUser;
             }
             if (User.IsInRole("FacilityManager") || User.IsInRole("Employee")) // shows the company employees their facilities
             {
-               
+
                 //Debug.WriteLine("\n\n STuser aspnet identity id: " + currentUser.AspnetIdentityId);
 
                 // select this user's company's facilities
-                spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
+                //spillTrackerDbContext = _context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId).Include(f => f.Company);
+                //newFac.Facility = spillTrackerDbContext.ToList();
+                //newFac.user = currentUser;
+
+                // select all facilities the current user has access to
+                var usersFacilities = _context.StuserFacilities.Where(uf => uf.StuserId == currentUser.Id);
+                List<int?> idList = new List<int?>();
+                foreach(var item in usersFacilities)
+                {
+                    idList.Add(item.FacilityId);
+                }
+
+                spillTrackerDbContext = _context.Facilities.Include(f => f.Company).Where(f => idList.Contains(f.Id));
                 newFac.Facility = spillTrackerDbContext.ToList();
-                newFac.user = currentUser;
+                newFac.User = currentUser;
             }
 
             //var spillTrackerDbContext = _context.Facilities.Include(f => f.Company);
@@ -63,7 +91,7 @@ namespace SpillTracker.Controllers
 
         public IActionResult SetCompany(FacilityManagementVM newFac)
         {
-            var code = newFac.codes;
+            var code = newFac.Codes;
             _logger.LogInformation(code);
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -87,9 +115,40 @@ namespace SpillTracker.Controllers
             }
             else
                 return RedirectToAction("Index"); 
+        }
 
-                //var code = Guid.NewGuid();
+        public IActionResult JoinFacility(FacilityManagementVM facilityManagementVM)
+        {
+            var code = facilityManagementVM.Codes;
+            _logger.LogInformation(code);
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
 
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+            code = code.ToUpper();
+            
+            Facility findFacility = new Facility();
+            findFacility = _context.Facilities.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
+            
+
+            if(findFacility != null && currentUser.CompanyId == findFacility.CompanyId)
+            {
+                StuserFacility newUserFac = new StuserFacility
+                {
+                    FacilityId = findFacility.Id,
+                    StuserId = currentUser.Id                    
+                };
+                //Debug.WriteLine(newUserFac);
+                _context.Add(newUserFac);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Facilities/Details/5
@@ -112,20 +171,48 @@ namespace SpillTracker.Controllers
                 return NotFound();
             }
 
-            facilityManagementVM.Facility =  _context.Facilities
-                .Include(f => f.Company)
-                .Where(m => m.Id == id);
-            if (facilityManagementVM == null)
-            {
-                return NotFound();
-            }
+            facilityManagementVM.Facility = _context.Facilities
+               .Include(f => f.Company)
+               .Where(m => m.Id == id);
 
             facilityManagementVM.FacilityChemicals = _context.FacilityChemicals
                 .Include(fc => fc.Chemical)
                 .Include(fc => fc.ChemicalState)
                 .Where(f => f.FacilityId == id);
 
-            if (currentUser.CompanyId == facilityManagementVM.Facility.FirstOrDefault().CompanyId || User.IsInRole("Admin"))
+            facilityManagementVM.User = currentUser;
+
+            var stuserFacilities = _context.StuserFacilities
+                .Include(uf => uf.Facility)
+                .Include(uf => uf.Stuser)
+                .Where(u => u.FacilityId == facilityManagementVM.Facility.FirstOrDefault().Id);
+
+            List<StuserMoreData> facEmployees = new List<StuserMoreData>();
+
+            foreach (var item in stuserFacilities)
+            {
+                string indentityUserId = item.Stuser.AspnetIdentityId;
+                IdentityUser identityUser = await _userManager.FindByIdAsync(indentityUserId);
+
+                StuserMoreData stuserMoreData = new StuserMoreData
+                {
+                    Stuser = item.Stuser,
+                    Email = identityUser.Email,
+                    PhoneNumber = identityUser.PhoneNumber,
+                    //Role = identityUser.
+                };
+                facEmployees.Add(stuserMoreData);
+            }
+            facilityManagementVM.FacilityEmployees = facEmployees;
+
+            var usersFacilities = _context.StuserFacilities.Where(uf => uf.StuserId == currentUser.Id);
+
+            if (facilityManagementVM == null)
+            {
+                return NotFound();
+            }
+
+            if (currentUser.CompanyId == facilityManagementVM.Facility.FirstOrDefault().CompanyId && usersFacilities.Any(uf => uf.FacilityId == id) || User.IsInRole("Admin"))
             {
                 return View(facilityManagementVM);
             }
@@ -216,12 +303,31 @@ namespace SpillTracker.Controllers
         [Authorize(Roles = "Admin, FacilityManager")]
         public async Task<IActionResult> Create([Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId")] Facility facility)
         {
+            // get the current users identity ID
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+
+            // look up the current user in the spill tracker DB
+            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
                 //string location = getCoords(AddressStreet, AddressCity, AddressState, AddressZip);
                 //facility.Location = location;
+                var code = Guid.NewGuid().ToString();
+                facility.AccessCode = code.ToUpper().Substring(26, 10);
                 _context.Add(facility);
                 await _context.SaveChangesAsync();
+
+                StuserFacility newUserFacility = new StuserFacility
+                {
+                    FacilityId = _context.Facilities.Where(f => f.CompanyId == facility.CompanyId && f.AccessCode == facility.AccessCode).FirstOrDefault().Id,
+                    StuserId = currentUser.Id
+                };
+                _context.Add(newUserFacility);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id", facility.CompanyId);
@@ -421,6 +527,18 @@ namespace SpillTracker.Controllers
             }
             return Json("coords: ");
         }
+
+        // POST: Companies/Delete/5
+        [HttpPost, ActionName("RemoveEmployeeFromFacility")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveEmployeeFromFacility (int facilityId, int stuserId)
+        {
+            Debug.WriteLine($"facilityId: {facilityId}, stuserId: {stuserId}");
+
+            var stuserFacility = await _context.StuserFacilities.Where(uf => uf.StuserId == stuserId && uf.FacilityId == facilityId).FirstOrDefaultAsync();
+            _context.StuserFacilities.Remove(stuserFacility);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = facilityId });
+        }
     }
 }
-

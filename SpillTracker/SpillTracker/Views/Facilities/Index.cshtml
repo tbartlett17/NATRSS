@@ -5,16 +5,123 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
 @if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
     {
-        if ((User.IsInRole("FacilityManager")) ||  User.IsInRole("Employee"))
+        <h1>All Facilities</h1>
+    }
+
+    if (Model.User.CompanyId == null)
+    {
+        if ((User.IsInRole("FacilityManager")) || User.IsInRole("Employee"))
         {
-            if(Model.user.CompanyId == null)
+            <h1>Join a Company!</h1>
+            <!-- Button trigger Join Company Chooser -->
+            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#JoinCompany">
+                Join Company
+            </button>*@
+            <a asp-action="" data-toggle="modal" data-target="#JoinCompany">Click here to connect to a company</a>
+            <!-- Modal -->
+            <div class="modal fade" id="JoinCompany" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Enter a Company Access Code:</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label class="text-danger">It appears that you are not associated with a company, please enter a company access code: </label>
+                            <form asp-controller="Facilities" asp-action="SetCompany">
+                                <div class="input-group">
+                                    <input asp-for="Codes" type="text" maxlength="20">
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-info">Connect</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else if (Model.User.CompanyId != null && User.IsInRole("Employee"))
+    {
+        <h1>@Model.User.Company.Name</h1>
+        <!-- Button trigger Chem Chooser -->
+        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#JoinFacility">
+            Join Facility
+        </button>-->
+        <a asp-action="" data-toggle="modal" data-target="#JoinFacility">Click to Join a Facility</a>
+        <!-- Modal -->
+        <div class="modal fade" id="JoinFacility" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Enter a Facility Access Code:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="Facilities" asp-action="JoinFacility">
+                            <div class="input-group">
+                                <input asp-for="Codes" type="text" maxlength="20">
+                            </div>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info">Connect</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.User.CompanyId != null && User.IsInRole("FacilityManager"))
+    {
+        <h1>@Model.User.Company.Name</h1>
+        <!-- Button trigger Chem Chooser -->
+        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#JoinFacility">
+            Join Facility
+        </button>-->
+        <p><a asp-action="" data-toggle="modal" data-target="#JoinFacility">Join a Facility</a> or <a asp-action="Create">Create a New Facility</a></p>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="JoinFacility" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Enter a Facility Access Code:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="Facilities" asp-action="JoinFacility">
+                            <div class="input-group">
+                                <input asp-for="Codes" type="text" maxlength="20">
+                            </div>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info">Connect</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @*if ((User.IsInRole("FacilityManager")) || User.IsInRole("Employee"))
+        {
+            if (Model.user.CompanyId == null)
             {
-            <div style="text-align: center;">
-                <label class="text-danger">It appears that you are not associated with a company, please enter a company access code: </label>
+                <p>@Model.user.Id</p>
+                <div style="text-align: center;">
+                    <label class="text-danger">It appears that you are not associated with a company, please enter a company access code: </label>
                     <form asp-controller="Facilities" asp-action="SetCompany">
                         <div class="input-group" style="text-align: center;">
                             <input asp-for="codes" type="text" maxlength="20">
@@ -23,17 +130,17 @@
                             <button type="submit" class="btn btn-info">Connect</button>
                         </div>
                     </form>
-            </div>   
+                </div>
             }
-            else
+            else if (Model.user.CompanyId != null)
             {
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
             }
-        }
-        
-    }
+        }*@
+
+}
 
 
 
@@ -41,7 +148,7 @@
     <thead>
         <tr>
             <th>
-                Name
+                @Html.DisplayNameFor(modelItem => Model.Facility.FirstOrDefault().Name)
             </th>
             <th>
                 Street
@@ -53,53 +160,48 @@
                 State
             </th>
             <th>
-               Zip
+                Zip
             </th>
             <th>
-                Location
+                @Html.DisplayNameFor(modelItem => Model.Facility.FirstOrDefault().Location)
             </th>
             <th>
-                Industry
-            </th>
-            <th>
-                Company
+                @Html.DisplayNameFor(modelItem => Model.Facility.FirstOrDefault().Industry)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Facility) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressStreet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressZip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Industry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.Id)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>@* |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Facility)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressStreet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressZip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Industry)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>@* |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
