@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Facilities\EditFacChems.cshtml" />
+    <None Include="Views\Home\Disclaimer.cshtml" />
     <None Include="Views\Home\Guide.cshtml" />
 
     <None Include="wwwroot\js\adminpanel.js" />

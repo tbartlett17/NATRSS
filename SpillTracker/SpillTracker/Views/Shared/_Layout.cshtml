@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SpillTracker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
     @*<link rel="stylesheet" href ="~/css/SpinnerOverlay.css" />*@
 </head>
@@ -92,25 +93,143 @@
             <div id="versionH" class="dropdown-menu" style="width: 90vw; height: 20rem; overflow-y: auto;">
 
             </div>
-            <!--<!--<div class="row">
-            <div class="col-4">
-                &copy; 2021 - SpillTracker - NATR SS
-            </div>
-            <div class="col-4">
 
-            </div>
-            <div class="col-4">
-                <div class="btn-group dropleft">
-                    <button style="margin: auto;" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Version History
-                    </button>
-                    <div id="versionH" class="dropdown-menu">-->
-            @*style="width: 90vw; height: 20rem; overflow-y: auto;">*@
 
-            <!--</div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h6>WEBSITE DISCLAIMER</h6>
+                            <p>
+                                The information provided by NATR Software Solutions (“we,” “us” or “our”) on https://spilltracker.azurewebsites.net/ (the “Site”)
+                                and our mobile application is for general informational purposes only. All information on the Site and our mobile applicationis provided
+                                in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity,
+                                reliability, availability or completeness of any information on the Site or our mobile application UNDER NO CIRCUMSTANCE SHALL WE HAVE ANY
+                                LIABILITY TO YOU FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF THE SITE OR OUR MOBILE APPLICATION OR RELIANCE ON ANY
+                                INFORMATION PROVIDED ON THE SITEAND OUR MOBILE APPLICATION. YOUR USE OF THE SITE AND OUR MOBILE APPLICATION AND YOUR RELIANCE ON ANY INFORMATION
+                                ON THE SITE AND OUR MOBILE APPLICATIONIS SOLELY AT YOUR OWN RISK.
+                            </p>
+
+
+                            <h6>EXTERNAL LINKS DISCLAIMER</h6>
+                            <p>
+                                The Site and our mobile application may contain (or you may be sent through the Site or our mobile application) links to other websites or content
+                                belonging to or originating from third parties or links to websites and features in banners or other advertising. Such external links are not investigated,
+                                monitored, or checked for accuracy, adequacy, validity, reliability, availability or completeness by us. WE DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME
+                                RESPONSIBILITY FOR THE ACCURACY OR RELIABILITY OF ANY INFORMATION OFFERED BY THIRD-PARTY WEBSITES LINKED THROUGH THE SITE OR ANY WEBSITE OR FEATURE LINKED
+                                IN ANY BANNER OR OTHER ADVERTISING. WE WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS
+                                OF PRODUCTS OR SERVICES.
+                            </p>
+
+                            <h6>PROFESSIONAL DISCLAIMER</h6>
+                            <p>
+                                The Site cannot and does not contain chemical advice. The chemical information is provided for general informational and educational purposes only and is not
+                                a substitute for professional advice. Accordingly, before taking any actions based upon such information, we encourage you to consult with the appropriate professsionals.
+                                We do not provide any kind of chemical advice. THE USE OR RELIANCE OF ANY INFORMATION CONTAINED ON THIS SITE OR OUR MOBILE APPLICATION IS SOLELY AT YOUR OWN RISK.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            @*place the disclaimer modal here*@
+            @*<button id="facBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Disclaimer
+                </button>*@
+            <!-- Modal -->
+            <!-- Button trigger modal -->
+            <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>-->
+            <!-- Modal -->
+            <!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>WEBSITE DISCLAIMER</h4>
+                            <p style="">
+                                The information provided by NATR Software Solutions (“we,” “us” or “our”) on https://spilltracker.azurewebsites.net/ (the “Site”)
+                                and our mobile application is for general informational purposes only. All information on the Site and our mobile applicationis provided
+                                in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity,
+                                reliability, availability or completeness of any information on the Site or our mobile application UNDER NO CIRCUMSTANCE SHALL WE HAVE ANY
+                                LIABILITY TO YOU FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF THE SITE OR OUR MOBILE APPLICATION OR RELIANCE ON ANY
+                                INFORMATION PROVIDED ON THE SITEAND OUR MOBILE APPLICATION. YOUR USE OF THE SITE AND OUR MOBILE APPLICATION AND YOUR RELIANCE ON ANY INFORMATION
+                                ON THE SITE AND OUR MOBILE APPLICATIONIS SOLELY AT YOUR OWN RISK.
+                            </p>
+
+
+                            <h4>EXTERNAL LINKS DISCLAIMER</h4>
+                            <p>
+                                The Site and our mobile application may contain (or you may be sent through the Site or our mobile application) links to other websites or content
+                                belonging to or originating from third parties or links to websites and features in banners or other advertising. Such external links are not investigated,
+                                monitored, or checked for accuracy, adequacy, validity, reliability, availability or completeness by us. WE DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME
+                                RESPONSIBILITY FOR THE ACCURACY OR RELIABILITY OF ANY INFORMATION OFFERED BY THIRD-PARTY WEBSITES LINKED THROUGH THE SITE OR ANY WEBSITE OR FEATURE LINKED
+                                IN ANY BANNER OR OTHER ADVERTISING. WE WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS
+                                OF PRODUCTS OR SERVICES.
+                            </p>
+
+                            <h4>PROFESSIONAL DISCLAIMER</h4>
+                            <p>
+                                The Site cannot and does not contain chemical advice. The chemical information is provided for general informational and educational purposes only and is not
+                                a substitute for professional advice. Accordingly, before taking any actions based upon such information, we encourage you to consult with the appropriate professsionals.
+                                We do not provide any kind of chemical advice. THE USE OR RELIANCE OF ANY INFORMATION CONTAINED ON THIS SITE OR OUR MOBILE APPLICATION IS SOLELY AT YOUR OWN RISK.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
                     </div>
                 </div>
             </div>-->
+            @*<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Full Disclaimer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>*@
+            @*<div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>*@
+            <div class="">
+                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Disclaimer">Disclaimer</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
