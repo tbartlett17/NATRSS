@@ -26,6 +26,10 @@ namespace SpillTracker.Models
         [Column("Num_Facilities")]
         public int? NumFacilities { get; set; }
 
+        [StringLength(20)]
+        public string AccessCode { get; set; }
+        [Column("AccessCode")]
+
         [InverseProperty(nameof(Facility.Company))]
         public virtual ICollection<Facility> Facilities { get; set; }
         [InverseProperty(nameof(Stuser.Company))]

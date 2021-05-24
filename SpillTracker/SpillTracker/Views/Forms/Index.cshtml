@@ -6,13 +6,12 @@
 }
 
 <h1>Index</h1>
-
 <!-- Button trigger Chem Chooser -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newForm">
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newForm">
     New Form
 </button>
 <!-- Modal -->
-<div class="modal fade" id="newForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!--<div class="modal fade" id="newForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,15 +24,18 @@
                 <select type="text" asp-items="ViewBag.FacilityList" id="facilitySelector">
                 </select>
             </div>
-            <div class="modal-footer">
-                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
-                @*<a id="btnAddProcedure" class="btn btn-outline-primary" asp-controller="Forms" asp-action="Create" style="border-radius:30px;">Create</a>*@
-                <input type="button" class="btn btn-primary" value="create" onclick="createNewForm()"/>
+            <div class="modal-footer">-->
+@*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+@*
+        <input type="button" class="btn btn-primary" value="create" onclick="createNewForm()"/>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+*@
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -59,40 +61,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpillReportedDate) @Html.DisplayFor(modelItem => item.SpillReportedTime)
-            </td>
-            <td>
-                @item.Stuser.FirstName @item.Stuser.LastName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Chemical.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AmountSpilled) @item.AmountSpilledUnits
-            </td>
-            @if (item.SpillReportable == true)
-            {
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    Reportable
+                    @Html.DisplayFor(modelItem => item.SpillReportedDate) @Html.DisplayFor(modelItem => item.SpillReportedTime)
                 </td>
-            }
-            else 
-            {
                 <td>
-                    Not Reportable
+                    @item.Stuser.FirstName @item.Stuser.LastName
                 </td>
-            }
-            <td>
-                @Html.DisplayFor(modelItem => item.Facility.Name)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacilityChemical.Chemical.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountSpilled) @item.AmountSpilledUnits
+                </td>
+                @if (item.SpillReportable == true)
+                {
+                    <td>
+                        Reportable
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Not Reportable
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Facility.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

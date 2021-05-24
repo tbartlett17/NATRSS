@@ -126,7 +126,7 @@ namespace SpillTracker.Areas.Identity.Pages.Account
                             roleName = "Employee";
                             break;                       
                         case "2":
-                            roleName = "Facility Manager";
+                            roleName = "FacilityManager";
                             break;
                     }
 

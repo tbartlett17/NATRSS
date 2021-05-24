@@ -28,6 +28,7 @@ namespace SpillTracker.Models
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<StatusTime> StatusTimes { get; set; }
         public virtual DbSet<Stuser> Stusers { get; set; }
+        public virtual DbSet<StuserFacility> StuserFacilities { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -68,15 +69,15 @@ namespace SpillTracker.Models
 
             modelBuilder.Entity<Form>(entity =>
             {
-                entity.HasOne(d => d.Chemical)
-                    .WithMany(p => p.Forms)
-                    .HasForeignKey(d => d.ChemicalId)
-                    .HasConstraintName("Form_FK_ChemicalID");
-
                 entity.HasOne(d => d.ChemicalState)
                     .WithMany(p => p.Forms)
                     .HasForeignKey(d => d.ChemicalStateId)
                     .HasConstraintName("Form_FK_ChemicalStateID");
+
+                entity.HasOne(d => d.FacilityChemical)
+                    .WithMany(p => p.Forms)
+                    .HasForeignKey(d => d.FacilityChemicalId)
+                    .HasConstraintName("Form_FK_FacilityChemicalID");
 
                 entity.HasOne(d => d.Facility)
                     .WithMany(p => p.Forms)
@@ -100,6 +101,19 @@ namespace SpillTracker.Models
                     .WithMany(p => p.Stusers)
                     .HasForeignKey(d => d.CompanyId)
                     .HasConstraintName("STUser_FK_CompanyID");
+            });
+
+            modelBuilder.Entity<StuserFacility>(entity =>
+            {
+                entity.HasOne(d => d.Facility)
+                    .WithMany(p => p.StuserFacilities)
+                    .HasForeignKey(d => d.FacilityId)
+                    .HasConstraintName("StuserFacilities_FK_FacilityId");
+
+                entity.HasOne(d => d.Stuser)
+                    .WithMany(p => p.StuserFacilities)
+                    .HasForeignKey(d => d.StuserId)
+                    .HasConstraintName("StuserFacilities_FK_StuserId");
             });
 
             OnModelCreatingPartial(modelBuilder);

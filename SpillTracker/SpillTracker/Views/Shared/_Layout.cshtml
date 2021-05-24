@@ -13,7 +13,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #50773e; color: white">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="width: 5%;">
-                    <img src="~/images/NATRSSLogo.png" width="125%" height="125%" alt="">
+                    <img src="~/images/SmallNATRSSLogo.png" width="125%" height="125%" alt="">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -23,14 +23,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" style="text-align: left;">
                     <partial name="_LoginPartial" />
 
-                   
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*<li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
-        </li>*@
+                                <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
                         </li>
@@ -85,13 +85,39 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - SpillTracker - NATR SS
+
+            <button style="margin: auto;" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Version History
+            </button>
+            <div id="versionH" class="dropdown-menu" style="width: 90vw; height: 20rem; overflow-y: auto;">
+
+            </div>
+            <!--<!--<div class="row">
+            <div class="col-4">
+                &copy; 2021 - SpillTracker - NATR SS
+            </div>
+            <div class="col-4">
+
+            </div>
+            <div class="col-4">
+                <div class="btn-group dropleft">
+                    <button style="margin: auto;" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Version History
+                    </button>
+                    <div id="versionH" class="dropdown-menu">-->
+            @*style="width: 90vw; height: 20rem; overflow-y: auto;">*@
+
+            <!--</div>
+                    </div>
+                </div>
+            </div>-->
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/calculate.js" asp-append-version="true" type="module"></script> 
-    
+    <script src="~/js/calculate.js" asp-append-version="true" type="module"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

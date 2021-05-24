@@ -53,8 +53,8 @@ namespace SpillTracker.Utilities
             }
             catch (Exception ex)
             {
-                // DO SOMETHING
-                return weatherReport;
+                Debug.Write(ex);
+                return null;
             }
         }
 
@@ -122,7 +122,8 @@ namespace SpillTracker.Utilities
             catch (Exception ex)
             {
                 // DO SOMETHING
-                return weatherReport;
+                Debug.Write(ex);
+                return null;
             }
         }
 
