@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-SpillTracker-E95FC5C0-4C2A-4E11-94A6-60A548173DF4</UserSecretsId>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon>spill.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +42,7 @@
   <ItemGroup>
     <Content Remove="Controllers\Guide.cshtml" />
     <Content Remove="wwwroot\js\chemDetails.js" />
+    <Content Remove="wwwroot\lib\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Controllers\Guide.cshtml" />
@@ -62,6 +66,7 @@
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
     <None Include="wwwroot\js\chemDetails.js" />
+    <None Include="wwwroot\lib\favicon.ico" />
   </ItemGroup>
 
 </Project>

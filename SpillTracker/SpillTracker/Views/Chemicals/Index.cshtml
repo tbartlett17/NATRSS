@@ -8,9 +8,9 @@
 <br>
 
 <div class="row">
-    <div class="col">
-            <div class="searchBox" style="text-align: center;">    
-                <input type="text" style="width: 60%;" class="searchTextBox rounded-lg" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
+    <div class="col justify-content-center" style="text-align: center;">
+            <div class="searchBox input-group rounded-pill border border-dark shadow-lg" style="text-align: center;">    
+                <input type="text" style="text-align: center;" class="searchTextBox form-control border-0 rounded-pill" id="searchTextBoxid" onkeyup="search()"   placeholder="Search for Chemical name or CAS number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Chemical name or CAS number'"/>    
                 <label id="NotExist" style="display:none"></label>    
             </div> 
     </div>
@@ -20,12 +20,12 @@
 
 <div class="row" style="text-align: center;">
         <a style="width: 3.57%"; id="All" asp-method="post" asp-action="Index">All</a>
-        <a style="width: 3.57%;" asp-route-l="#" id="#" asp-method="post" asp-action="ByFirstLetter">#</a>
-        <a style="width: 3.57%;" asp-route-l="A" id="A" asp-method="post" asp-action="ByFirstLetter">A</a>
-        <a style="width: 3.57%;" asp-route-l="B" id="B" asp-method="post" asp-action="ByFirstLetter">B</a>
-        <a style="width: 3.57%;" asp-route-l="C" id="C" onclick="highlight(id)" asp-action="ByFirstLetter">C</a>
-        <a style="width: 3.57%;" asp-route-l="D" id="D" onclick="highlight(id)" asp-action="ByFirstLetter">D</a>
-        <a style="width: 3.57%;" asp-route-l="E" id="E" onclick="highlight(id)" asp-action="ByFirstLetter">E</a>
+        <a style="width: 3.57%;" asp-route-l="#" id="#" asp-action="ByFirstLetter">#</a>
+        <a style="width: 3.57%;" asp-route-l="A" id="A" asp-action="ByFirstLetter">A</a>
+        <a style="width: 3.57%;" asp-route-l="B" id="B" asp-action="ByFirstLetter">B</a>
+        <a style="width: 3.57%;" asp-route-l="C" id="C" asp-action="ByFirstLetter">C</a>
+        <a style="width: 3.57%;" asp-route-l="D" id="D" asp-action="ByFirstLetter">D</a>
+        <a style="width: 3.57%;" asp-route-l="E" id="E" asp-action="ByFirstLetter">E</a>
         <a style="width: 3.57%;" asp-route-l="F" id="F" asp-action="ByFirstLetter">F</a>
         <a style="width: 3.57%;" asp-route-l="G" id="G" asp-action="ByFirstLetter">G</a>
         <a style="width: 3.57%;" asp-route-l="H" id="H" asp-action="ByFirstLetter">H</a>
@@ -183,12 +183,3 @@
 
 @* search bar info found at https://www.c-sharpcorner.com/article/custom-search-using-client-side-code/*@
 
-<style>
-    a {
-        color: blue;
-    }
-    a.active {
-        color: red;
-    }
-
-</style>
