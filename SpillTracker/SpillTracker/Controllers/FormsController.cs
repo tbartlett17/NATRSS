@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using SpillTracker.Models;
 using SpillTracker.Utilities;
 using SpillTracker.Models.Interfaces;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SpillTracker.Controllers
 {
@@ -391,6 +393,33 @@ namespace SpillTracker.Controllers
         private bool FormExists(int id)
         {
             return _context.Forms.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public IActionResult SimpleEmailForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SimpleEmailForm(string subject, string body, string email)
+        {
+            Debug.WriteLine(subject + "\n" + body + "\n" + email);
+            SendTheEmail();
+            return View();
+        }
+
+        private void SendTheEmail()
+        {
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("atufaga17@mail.wou.edu", "Example User");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress("atufaga17@mail.wou.edu", "Example User");
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = client.SendEmailAsync(msg);
         }
     }
 }

@@ -48,6 +48,7 @@
     <None Include="Views\Companies\Details.cshtml" />
     <None Include="Views\Companies\Edit.cshtml" />
     <None Include="Views\Companies\Index.cshtml" />
+    <None Include="Views\Forms\SimpleEmailForm.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

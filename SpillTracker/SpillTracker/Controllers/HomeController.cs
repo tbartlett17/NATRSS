@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using SpillTracker.Models;
+using SpillTracker.Services;
 
 namespace SpillTracker.Controllers
 {
@@ -44,6 +46,19 @@ namespace SpillTracker.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Contact() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string message) 
+        {
+            return View();
+        }
+
 
 
         [HttpGet]
