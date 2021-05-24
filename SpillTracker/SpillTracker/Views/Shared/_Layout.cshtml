@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SpillTracker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
     @*<link rel="stylesheet" href ="~/css/SpinnerOverlay.css" />*@
 </head>
@@ -84,33 +85,23 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - SpillTracker - NATR SS
-
-            <button style="margin: auto;" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Version History
-            </button>
-            <div id="versionH" class="dropdown-menu" style="width: 90vw; height: 20rem; overflow-y: auto;">
-
-            </div>
-            <!--<!--<div class="row">
-            <div class="col-4">
-                &copy; 2021 - SpillTracker - NATR SS
-            </div>
-            <div class="col-4">
-
-            </div>
-            <div class="col-4">
-                <div class="btn-group dropleft">
-                    <button style="margin: auto;" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <div class="row">
+                <div class="col-4"style="text-align:center;">
+                    &copy; 2021 - SpillTracker - NATR SS
+                </div>
+                <div class="col-4" style="text-align:center;">
+                    <a asp-area="" asp-controller="Home" asp-action="Disclaimer">Disclaimer</a>
+                </div>
+                <div class="col-4"style="text-align:center;">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Version History
                     </button>
-                    <div id="versionH" class="dropdown-menu">-->
-            @*style="width: 90vw; height: 20rem; overflow-y: auto;">*@
+                    <div id="versionH" class="dropdown-menu" style="width: 90vw; height: 20rem; overflow-y: auto;">
 
-            <!--</div>
                     </div>
                 </div>
-            </div>-->
+            </div>
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

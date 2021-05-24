@@ -71,7 +71,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   /*line-height: 60px;*/ /* Vertically center the text there */
 }
 
@@ -79,4 +79,8 @@ body {
     margin: 0;
     padding: 0 10px;
     line-height: 1rem;
+}
+
+.modal-body{
+    position: relative;
 }

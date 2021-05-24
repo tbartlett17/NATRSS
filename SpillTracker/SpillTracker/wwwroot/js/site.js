@@ -27,6 +27,10 @@ function displayVersions(data) {
     }
 }
 
+/*function disclaimer() {
+    //make this a modal displaying this information
+}*/
+
 
 function errorFunction() {
     console.log("Something bad happened, try again.")
