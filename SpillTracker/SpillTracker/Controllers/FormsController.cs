@@ -72,8 +72,11 @@ namespace SpillTracker.Controllers
                 //Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
 
 
+                if (stUser.CompanyId != null)
+                {
+                    formsList = _stfRepo.GetAllFormsByCompanyId((int)stUser.CompanyId);
+                }
 
-                formsList = _stfRepo.GetAllFormsByCompanyId((int)stUser.CompanyId);
 
                 Debug.WriteLine($"\nfac chem id: {formsList.FirstOrDefault().FacilityChemical.Id}\n");
                 //spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
