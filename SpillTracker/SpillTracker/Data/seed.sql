@@ -53,4 +53,3 @@ INSERT INTO [ContactInfo] (AgencyName,PhoneNumber,State) VALUES
 
 INSERT INTO [StatusTime] (SourceName, Time) VALUES ('EPCRA Scraper','2021-2-28 05:00:00')
 INSERT INTO [StatusTime] (SourceName, Time) VALUES ('CERCLA Scraper','2021-2-28 05:00:00')
-INSERT INTO [StatusTime] (SourceName, Time) VALUES ('PubChem API','2021-2-28 05:00:00')
