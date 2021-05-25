@@ -256,6 +256,93 @@ namespace SpillTracker.Controllers
 
         public void ProcessChemical(Chemical parsedChem)
         {
+            if (parsedChem.Name.Contains("&prime;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&prime;", "\u2032");
+            }
+
+            if (parsedChem.Name.Contains("&#961;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&#961;", "\u2CA3");
+            }
+
+            if (parsedChem.Name.Contains("&#945;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&#945;", "\u03B1");
+            }
+
+            if (parsedChem.Name.Contains("&#946;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&#946;", "\u03B2");
+            }
+
+            if (parsedChem.Name.Contains("&dagger;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&dagger;", "");
+            }
+
+            if (parsedChem.Name.Contains("&amp;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&amp;", "&");
+            }
+
+            if (parsedChem.Name.Contains("&gt;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&gt;", ">");
+            }
+
+            if (parsedChem.Name.Contains("&lt;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&lt;", "<");
+            }
+
+            if (parsedChem.Name.Contains("&nbsp;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&nbsp;", "");
+            }
+
+            if (parsedChem.Name.Contains("&mdash;"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("&mdash;", "\u2014");
+            }
+
+            if (parsedChem.Name.Contains("<sup>a</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>a</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("<sup>b</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>b</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("<sup>c</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>c</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("<sup>d</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>d</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("<sup>e</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>e</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("<sup>f</sup>"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("<sup>f</sup>", "");
+            }
+
+            if (parsedChem.Name.Contains("(Na(N < span style = \"font - size:70 %; vertical - align:sub\" > 3 </ span >))"))
+            {
+                parsedChem.Name = parsedChem.Name.Replace("(Na(N < span style = \"font - size:70 %; vertical - align:sub\" > 3 </ span >))", "");
+            }
+
+            
+
             if (parsedChem.CasNum.Contains("&nbsp;&nbsp;&nbsp;")) // delete these whitespace html values
             {
                 parsedChem.CasNum = null;
@@ -269,18 +356,18 @@ namespace SpillTracker.Controllers
                 //Debug.WriteLine(parsedChem.CasNum);
             }
 
-            if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity == parsedChem.ReportableQuantity))
+            if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name.ToUpper() == parsedChem.Name.ToUpper() && c.ReportableQuantity == parsedChem.ReportableQuantity))
             {
                 Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database, skipping entry...");
             }
-            else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name == parsedChem.Name && c.ReportableQuantity != parsedChem.ReportableQuantity))
+            else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.Name.ToUpper() == parsedChem.Name.ToUpper() && c.ReportableQuantity != parsedChem.ReportableQuantity))
             {
                 Debug.WriteLine("{{{ NAME:" + parsedChem.Name + ", CAS:" + parsedChem.CasNum + "}}} exists in the database but reportable quantity of " + parsedChem.ReportableQuantity
                     + " lbs doesn't match the existing reportable quantity of " + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity
                     + " lbs. Updating RQ in database...");
                 dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().ReportableQuantity = parsedChem.ReportableQuantity;
             }
-            else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.ReportableQuantity == parsedChem.ReportableQuantity && c.Name != parsedChem.Name))
+            else if (dbSpllTracker.Chemicals.Any(c => c.CasNum == parsedChem.CasNum && c.ReportableQuantity == parsedChem.ReportableQuantity && c.Name.ToUpper() != parsedChem.Name.ToUpper()))
             {
                 Debug.WriteLine("{{{ CAS:" + parsedChem.CasNum + ", RQ:" + parsedChem.ReportableQuantity + "}}} exists in the database but its name, " + parsedChem.Name + ", did not match the existing name,"
                     + dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name + ". Adding " + parsedChem.Name
@@ -288,7 +375,16 @@ namespace SpillTracker.Controllers
 
                 if (String.IsNullOrEmpty(dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases))
                 {
-                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                    if (parsedChem.Name.Length < dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name.Length)
+                    {
+                        string temp = dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name;
+                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name = parsedChem.Name;
+                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += temp + "<br>";
+                    }
+                    else
+                    {
+                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                    }
                 }
                 else
                 {
@@ -306,7 +402,26 @@ namespace SpillTracker.Controllers
                             dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().CerclaChem = true;
                         }
 
-                        dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                        foreach (string alias in aliasArr)
+                        {
+                            if (alias.ToUpper() == parsedChem.Name.ToUpper())
+                            {
+                                // Do nothing, chemical is a duplicate alias
+                            }
+                            else
+                            {
+                                if (parsedChem.Name.Length < dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name.Length)
+                                {
+                                    string temp = dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name;
+                                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Name = parsedChem.Name;
+                                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += temp + "<br>";
+                                }
+                                else
+                                {
+                                    dbSpllTracker.Chemicals.Where(c => c.CasNum == parsedChem.CasNum).FirstOrDefault().Aliases += parsedChem.Name + "<br>";
+                                }
+                            }
+                        }
                     }
                 }
             }

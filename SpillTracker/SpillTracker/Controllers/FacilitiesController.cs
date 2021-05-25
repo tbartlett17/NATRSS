@@ -433,7 +433,7 @@ namespace SpillTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, FacilityManager")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId")] Facility facility)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddressStreet,AddressCity,AddressState,AddressZip,Location,Industry,CompanyId,AccessCode")] Facility facility)
         {
             if (id != facility.Id)
             {
