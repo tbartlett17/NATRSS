@@ -15,18 +15,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Facility Name</label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" id="facility" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+                <p id="errorName"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressStreet" class="control-label">Street Address</label>
                 <input asp-for="AddressStreet" id="streetAddress" class="form-control" />
                 <span asp-validation-for="AddressStreet" class="text-danger"></span>
+                <p id="errorStreet"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressCity" class="control-label">City</label>
                 <input asp-for="AddressCity" id="city" class="form-control" />
                 <span asp-validation-for="AddressCity" class="text-danger"></span>
+                <p id="errorCity"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressState" class="control-label">State</label>
@@ -37,6 +40,7 @@
                 <label asp-for="AddressZip" class="control-label">Zip Code</label>
                 <input asp-for="AddressZip" id="zip" class="form-control" />
                 <span asp-validation-for="AddressZip" class="text-danger"></span>
+                <p id="errorZip"></p>
             </div>
             <div class="form-group" hidden>
                     <label asp-for="Location" class="control-label"></label>
@@ -45,8 +49,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Industry" class="control-label"></label>
-                <input asp-for="Industry" class="form-control" />
+                <input asp-for="Industry" id="industry" class="form-control" />
                 <span asp-validation-for="Industry" class="text-danger"></span>
+                <p id="errorIndustry"></p>
             </div>
             <div class="form-group" hidden>
                 <label asp-for="CompanyId" class="control-label"></label>
@@ -103,3 +108,10 @@
 @section Scripts {
     <script src="~/js/geocoords.js"></script>
 }
+
+<style>
+    p 
+    {
+        color: red;
+    }
+</style>

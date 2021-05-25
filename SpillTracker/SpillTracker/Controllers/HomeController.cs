@@ -88,6 +88,12 @@ namespace SpillTracker.Controllers
             return jsonString;
         }
 
+        public IActionResult Disclaimer() 
+        {
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

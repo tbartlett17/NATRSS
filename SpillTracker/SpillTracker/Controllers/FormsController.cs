@@ -78,7 +78,7 @@ namespace SpillTracker.Controllers
                 }
 
 
-                Debug.WriteLine($"\nfac chem id: {formsList.FirstOrDefault().FacilityChemical.Id}\n");
+               
                 //spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
                 //            .Include(f => f.ChemicalState)
                 //            .Include(f => f.Facility).ThenInclude(f => f.Company)

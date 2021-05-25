@@ -7,6 +7,9 @@ function getCoords() {
         `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
     );
 
+    let fac = $("#facility").val();
+    let ind = $("#industry").val();
+
     var address = {
         street: $("#streetAddress").val(),
         city: $("#city").val(),
@@ -14,18 +17,71 @@ function getCoords() {
         postalCode: $("#zip").val()
     };
 
-    var jsonAddress = JSON.stringify(address);
+    let eName = document.getElementById("errorName");
+    let eStreet = document.getElementById("errorStreet");
+    let eCity = document.getElementById("errorCity");
+    let eZip = document.getElementById("errorZip");
+    let eIndustry = document.getElementById("errorIndustry");
 
-    console.log(jsonAddress);
+    $("#errorName").empty();
+    $("#errorStreet").empty();
+    $("#errorCity").empty();
+    $("#errorZip").empty();
+    $("#errorIndustry").empty();
 
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: { streetAddress: jsonAddress },
-        url: "/GeoCoordinates/GetCoords",
-        success: successOnAjax,
-        error: errorOnAjax
-    });
+    if(fac.length > 20) 
+    {
+        eName.append("Facility name too long");
+    }
+    else if(fac.length < 1)
+    {
+        eName.append("Facility name is missing");
+    }
+    else if(address.street.length > 35)
+    {
+        eStreet.append("Street name is too long");
+    }
+    else if(address.street.length < 1)
+    {
+        eStreet.append("Must enter a street address");
+    }
+    else if(address.city.length > 17)
+    {
+        eCity.append("City name is too long");
+    }
+    else if(address.city.length < 1)
+    {
+        eCity.append("Must enter a city");
+    }
+    else if(address.postalCode.length > 5)
+    {
+        eZip.append("Zip code length is too long");
+    }
+    else if(address.postalCode.length < 1) 
+    {
+        eZip.append("Zip code must be entered");
+    }
+    else if(ind.length > 30)
+    {
+        eIndustry.append("Industry length is too long");
+    }
+    else
+    {
+        var jsonAddress = JSON.stringify(address);
+
+        console.log(jsonAddress);
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: { streetAddress: jsonAddress },
+            url: "/GeoCoordinates/GetCoords",
+            success: successOnAjax,
+            error: errorOnAjax
+        });
+    }
+
+    
 }
 
 

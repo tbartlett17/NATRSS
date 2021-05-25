@@ -11,51 +11,93 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="facilityForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Facility Name</label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" id="facility" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+                <p id="errorName"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressStreet" class="control-label">Street Address</label>
-                <input asp-for="AddressStreet" class="form-control" />
+                <input asp-for="AddressStreet" id="streetAddress" class="form-control" />
                 <span asp-validation-for="AddressStreet" class="text-danger"></span>
+                <p id="errorStreet"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressCity" class="control-label">City</label>
-                <input asp-for="AddressCity" class="form-control" />
+                <input asp-for="AddressCity" id="city" class="form-control" />
                 <span asp-validation-for="AddressCity" class="text-danger"></span>
+                <p id="errorCity"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressState" class="control-label">State</label>
-                <input asp-for="AddressState" class="form-control" />
+                <select asp-for="AddressState" id="state" class="form-control" asp-items="ViewBag.States"></select>
                 <span asp-validation-for="AddressState" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddressZip" class="control-label">Zip Code</label>
-                <input asp-for="AddressZip" class="form-control" />
+                <input asp-for="AddressZip" id="zip" class="form-control" />
                 <span asp-validation-for="AddressZip" class="text-danger"></span>
+                <p id="errorZip"></p>
             </div>
-            @*<div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>*@
+            <div class="form-group" hidden>
+                    <label asp-for="Location" class="control-label"></label>
+                    <input asp-for="Location" class="form-control" id="location" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Industry" class="control-label"></label>
-                <input asp-for="Industry" class="form-control" />
+                <input asp-for="Industry" id="industry" class="form-control" />
                 <span asp-validation-for="Industry" class="text-danger"></span>
+                <p id="errorIndustry"></p>
             </div>
-            @*<div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="CompanyId" class="control-label"></label>
-                <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
-                <span asp-validation-for="CompanyId" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input asp-for="CompanyId" class="form-control" value="@ViewBag.CompanyId" />
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AccessCode" class="control-label"></label>
+                <input asp-for="AccessCode" class="form-control"/>
+            </div>
+           <div class="form-group">
+                <input type="submit" id="submitForm" value="Save" class="btn btn-primary" hidden />
+                @*<button type="button" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Create</button>*@
+
+                <!-- Button trigger modal -->
+                <button id="facBtn"type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Confirm
+                </button>
+
+                
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Verifying these are the exact coordinates you want?</h5>
+                                <h5 class="modal-title" id="yellowModal"></h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Verifying the location provided is correct? </p>
+                                <p>(Street Address, State, City, Zip)</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" asp-action="Edit" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Edit</button>
+                                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>
@@ -65,3 +107,13 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    <script src="~/js/geocoords.js"></script>
+}
+
+<style>
+    p 
+    {
+        color: red;
+    }
+</style>
