@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SpillTracker.Models
 {
-    public class Commits
+    public class Commit
     {
         public string commitId { get; set; } // grab the sha string
         public string date { get; set; } // grab the date of the commit
