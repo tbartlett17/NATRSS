@@ -5,24 +5,17 @@
 <h2 style="text-align:center">Contact Us</h2>
 <br>
 <div class="jumbotron">
-    <form>
+    <form method="post">
         @*Name of sender*@
         <div class="form-group">
-            <label for="senderName">Name</label>
-            <input type="text" class="form-control" id="senderName">
-        </div>
-
-        @*Email to send*@
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="Subject">Subject</label>
+            <input type="text" name="subject" class="form-control" />
         </div>
 
         @*Message of sender*@
         <div class="form-group">
-            <label for="senderMessage">Let us know how else we can help your experience?</label>
-            <textarea class="form-control" rows="5" id="senderMessage" placeholder="Say something nice"></textarea>          
+            <label for="Body">Let us know how else we can help your experience?</label>
+            <textarea class="form-control" name="body" rows="5" placeholder="Say something nice"></textarea>
         </div>
         <div style="text-align:center">
             <button class="btn btn-success" type="submit">Submit</button>
