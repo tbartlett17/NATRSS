@@ -126,3 +126,7 @@ body {
     padding: 0 10px;
     line-height: 1rem;
 }
+
+.modal-body{
+    position: relative;
+}

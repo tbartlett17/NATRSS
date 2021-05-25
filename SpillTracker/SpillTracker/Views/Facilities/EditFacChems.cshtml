@@ -74,7 +74,7 @@
     </button>
     <!-- Modal -->
     <div class="modal fade" id="addChem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 90%;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Select a Chemical</h5>
@@ -127,7 +127,7 @@
                                         List<string> als = arr.ToList();
                                         als.Remove(als.Last());
                                         <td >
-                                            <Select style="width: 25%; text-align:center">
+                                            <Select style="width: 20%; text-align:center">
                                                 @foreach (var aliase in als)
                                                 {
                                                     <option>@aliase</option>
@@ -175,11 +175,13 @@
                             <label asp-for="Concentration" class="control-label"></label>
                             <input id="formConcentration" asp-for="Concentration" class="form-control" />
                             <span asp-validation-for="Concentration" class="text-danger"></span>
+                            <p id="errorCon" style="color: red;"></p>
                         </div>
                         <div class="form-group">
                             <label asp-for="ChemicalTemperature" class="control-label"></label>
                             <input id="formTemperature" asp-for="ChemicalTemperature" class="form-control" />
                             <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
+                            <p id="errorTemp" style="color: red;"></p>
                         </div>
                         <div class="form-group">
                             <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
