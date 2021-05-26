@@ -12,6 +12,8 @@ namespace SpillTracker.Models
 
         public string commitMessage { get; set; } // grab the message if one exists
 
+        public string commitLink { get; set; }
+
         //public 
     }
 }

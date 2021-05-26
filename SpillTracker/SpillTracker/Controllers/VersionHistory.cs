@@ -15,7 +15,7 @@ namespace SpillTracker.Controllers
     {
         private readonly IConfiguration _config;
 
-        public VersionHistory(IConfiguration config) 
+        public VersionHistory(IConfiguration config)
         {
             _config = config;
         }
@@ -29,10 +29,18 @@ namespace SpillTracker.Controllers
                 Commit c = new Commit();
                 c.commitId = (string)element["sha"];
                 c.commitId = c.commitId.Substring(0, 7);
-                c.commitMessage = (string)element["commit"]["message"];
+                c.commitLink = (string)element["html_url"];
+                c.commitMessage = (string)element["commit"]["message"];                
                 c.date = (string)element["commit"]["committer"]["date"];
                 c.date = c.date.Substring(0, 16);
-                listOfCommitsVM.commits.Add(c);
+                if (c.commitMessage.Contains("Merge"))
+                {
+
+                }
+                else
+                {
+                    listOfCommitsVM.commits.Add(c);
+                }
             }
             /*return Json(commitList);*/
             return View(listOfCommitsVM);
