@@ -92,11 +92,23 @@ html {
 button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
+  background-color: #39582a;
+}
+
+.btn-primary:active:focus
+{
+  background-color: #39582a !important;
+  border-color: #39582a !important;
 }
 
 .btn-primary:hover {
-  background-color: #39582a;
-  border-color: #39582a;
+  background-color: #39582a !important;
+  border-color: #39582a !important;
+}
+
+.btn-primary:focus {
+  background-color: #39582a !important;
+  border-color: #39582a !important;
 }
 
 /* Sticky footer styles
