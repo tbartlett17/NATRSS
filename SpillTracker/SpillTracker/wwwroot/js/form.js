@@ -149,7 +149,7 @@ function nextPrev(n) {
         loadChemicalData(chemId);
     }
     if (currentTab == 6) {
-        //calculate
+        //updateResultsPage();
     }
     if (currentTab == (x.length - 1)) {
         //calculate
@@ -187,7 +187,7 @@ function jumpToTab(n) {
         loadChemicalData(chemId);
     }
     if (currentTab == 6) {
-        //calculate
+        //updateResultsPage();
     }
 
     showTab(currentTab);
@@ -224,17 +224,19 @@ function errorOnAjaxChemData() {
 var selectedChemical;
 
 function successOnAjaxChemData(data) {
-    console.log(data);
+    //console.log(data);
     //alert("success getting chem data");
 
-    $("#selectedChem").val(data.chemical.name);
+    $("#selectedChem").val(data.chemical.name); 
+    $("#selectedChemResultsPg").val(data.chemical.name);
+    $("#selectedChemRq").val(data.chemical.reportableQuantity);
     $("#ChemicalConcentration").val(data.concentration);
     $("#ChemicalTemperature").val(data.chemicalTemperature);
 
     selectedChemical = data;
     //console.log(selectedChem);
 
-    //set chem state
+    //set chem state 
     var chemStateId = data.chemicalState.id;
     var chemStateSelector = document.getElementById('ChemicalStateId');
     var opts = chemStateSelector.options;
@@ -244,8 +246,17 @@ function successOnAjaxChemData(data) {
             break;
         }
     }
+    var chemStateIdDisplayed = data.chemicalState.id;
+    var chemStateSelectorDisplayed = document.getElementById('ChemicalStateIdDisplayed');
+    var opts = chemStateSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        if (opt.value == chemStateIdDisplayed) {
+            chemStateSelectorDisplayed.selectedIndex = j;
+            break;
+        }
+    }
 
-    //set temp units
+    //set temp units ChemicalTemperatureUnitsDisplayed
     var tempUnits = data.chemicalTemperatureUnits;
     var chemTempUnitsSelector = document.getElementById('ChemicalTemperatureUnits');
     var opts = chemTempUnitsSelector.options;
@@ -256,10 +267,33 @@ function successOnAjaxChemData(data) {
             break;
         }
     }
+    var chemTempUnitsSelectorDisplayed = document.getElementById('ChemicalTemperatureUnitsDisplayed');
+    var opts = chemTempUnitsSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        //console.log("opt text: " + opt.text + ", temp units: " + tempUnits);
+        if (opt.text == tempUnits) {
+            chemTempUnitsSelectorDisplayed.selectedIndex = j;
+            break;
+        }
+    }
+
+    //set general chemical data
+    //<input type="checkbox" id="cerclaChem"/>
+    epcraChemChkbox = document.getElementById("epcraChemChkbox");
+    cerclaChemChkbox = document.getElementById("cerclaChemChkbox");
+    epcraChemChkbox.checked = false;
+    cerclaChemChkbox.checked = false;
+
+    if (data.chemical.epcraChem == true) {
+        epcraChemChkbox.checked = true;
+    }
+    if (data.chemical.cerclaChem == true) {
+        cerclaChemChkbox.checked = true;
+    }
 }
 
 function loadFacilityData(id) {
-    console.log("fac id: " + id); 
+    //console.log("fac id: " + id); 
 
     $.ajax({
         type: "POST",
@@ -279,10 +313,26 @@ function errorOnAjaxFacilityData() {
 var selectedChemical;
 
 function successOnAjaxFacilityData(data) {
-    console.log(data);
+    //console.log(data);
     //alert("success getting chem data");
     $("#SpillLocation").val(data.location);
 
+    // delete the contents of the drop down
+    var select = document.getElementById("ChemicalId");
+    var length = select.options.length;
+    for (i = length - 1; i >= 0; i--) {
+        select.options[i] = null;
+    }
+
+    //add the facility's chemicals to the drop down
+    data.facilityChemicals.forEach(function appendFacilityChems(item) {
+        //console.log(item.chemical.id + ": " + item.chemical.name);
+        var select = document.getElementById("ChemicalId"),
+            opt = document.createElement("option");
+        opt.value = item.chemical.id;
+        opt.textContent = item.chemical.name;
+        select.appendChild(opt);
+    });
 }
 
 function getWeatherReport(coords, date) {
@@ -326,6 +376,15 @@ function successOnAjaxWeather(data) {
             break;
         }
     }
+    var tempUnitsDisplayed = data.temperatureUnits;
+    var weatherTempUnitsSelectorDisplayed = document.getElementById('WeatherTemperatureUnitsDisplayed');
+    var opts = weatherTempUnitsSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        if (opt.value == tempUnitsDisplayed) {
+            weatherTempUnitsSelectorDisplayed.selectedIndex = j;
+            break;
+        }
+    }
 
     //set wind speed units
     var windSpeedUnits = data.windSpeedUnits;
@@ -334,6 +393,15 @@ function successOnAjaxWeather(data) {
     for (var opt, j = 0; opt = opts[j]; j++) {
         if (opt.value == windSpeedUnits) {
             weatherWindSpeedUnitsSelector.selectedIndex = j;
+            break;
+        }
+    }
+    var windSpeedUnitsDisplayed = data.windSpeedUnits;
+    var weatherWindSpeedUnitsSelectorDisplayed = document.getElementById('WindSpeedUnitsDisplayed');
+    var opts = weatherWindSpeedUnitsSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        if (opt.value == windSpeedUnitsDisplayed) {
+            weatherWindSpeedUnitsSelectorDisplayed.selectedIndex = j;
             break;
         }
     }
@@ -348,14 +416,32 @@ function successOnAjaxWeather(data) {
             break;
         }
     }
+    var windDirectionDisplayed = data.windDirection;
+    var weatherWindDirectionSelectorDisplayed = document.getElementById('WindDirection');
+    var opts = weatherWindDirectionSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        if (opt.value == windDirectionDisplayed) {
+            weatherWindDirectionSelectorDisplayed.selectedIndex = j;
+            break;
+        }
+    }
 
     //set humidity units
     var humidityUnits = data.humidityUnits;
-    var weatherHumidityUnitsSelector = document.getElementById('WeatherTemperatureUnits');
+    var weatherHumidityUnitsSelector = document.getElementById('WeatherHumidityUnits');
     var opts = weatherHumidityUnitsSelector.options;
     for (var opt, j = 0; opt = opts[j]; j++) {
         if (opt.value == humidityUnits) {
             weatherHumidityUnitsSelector.selectedIndex = j;
+            break;
+        }
+    }
+    var humidityUnitsDisplayed = data.humidityUnits;
+    var weatherHumidityUnitsSelectorDisplayed = document.getElementById('WeatherHumidityUnitsDisplayed');
+    var opts = weatherHumidityUnitsSelectorDisplayed.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+        if (opt.value == humidityUnitsDisplayed) {
+            weatherHumidityUnitsSelectorDisplayed.selectedIndex = j;
             break;
         }
     }
@@ -430,9 +516,44 @@ function calculateSpill() {
     $("#SpillEvaporationRateUnits").val("lbs/min");
     $("#AmountEvaporated").val(amountEvaporated);
     $("#AmountEvaporatedUnits").val("lbs");
+    //$("#totalReleased").val(amountSpilled + amountEvaporated);
 
     var resultsDiv = document.getElementById("spilLresults");
     resultsDiv.style.display = "block";
+
+
+    
+
+    var showSpillReportablePrompt = document.getElementById("resultsSpillReportableTrue");
+    var showSpillNotReportablePrompt = document.getElementById("resultsSpillReportableFalse");
+    var showContactNotReportablePrompt = document.getElementById("contactNotReportable");
+    var showContactReportablePrompt = document.getElementById("contactReportable");
+    var showContactNotReportableCerclaChemPrompt = document.getElementById("contactReportableCerclaChem");
+    var cerclaChemChkbox = document.getElementById("cerclaChemChkbox");
+
+    if (amountSpilled > $("#selectedChemRq").val() || amountEvaporated > $("#selectedChemRq").val()) {
+        showSpillReportablePrompt.style.display = "block";
+        showSpillNotReportablePrompt.style.display = "none";
+        $("#SpillReportable").val("true"); 
+        if (cerclaChemChkbox.checked == true) {
+            showContactNotReportablePrompt.style.display = "none";
+            showContactReportablePrompt.style.display = "none";
+            showContactNotReportableCerclaChemPrompt.style.display = "block";
+        }
+        else {
+            showContactNotReportablePrompt.style.display = "none";
+            showContactReportablePrompt.style.display = "block";
+            showContactNotReportableCerclaChemPrompt.style.display = "none";
+        }
+    }
+    else {
+        showSpillReportablePrompt.style.display = "none";
+        showSpillNotReportablePrompt.style.display = "block";
+        $("#SpillReportable").val("false");  
+        showContactNotReportablePrompt.style.display = "block";
+        showContactReportablePrompt.style.display = "none";
+        showContactNotReportableCerclaChemPrompt.style.display = "none";
+    }
 }
 
 function roundTo(n, digits) {
@@ -452,4 +573,22 @@ function roundTo(n, digits) {
         n = (n * -1).toFixed(digits);
     }
     return n;
+}
+
+function updateResultsPage() {
+    var spillReportable = true;
+    var showSpillReportablePrompt = document.getElementById("resultsSpillReportableTrue");
+    var showSpillNotReportablePrompt = document.getElementById("resultsSpillReportableFalse");
+
+    if (spillReportable == true) {
+        showSpillReportablePrompt.style.display = "block";
+        showSpillNotReportablePrompt.style.display = "none";
+        $("#SpillReportable").val("true");
+    }
+    else {
+        showSpillReportablePrompt.style.display = "none";
+        showSpillNotReportablePrompt.style.display = "block";
+        $("#SpillReportable").val("false");
+    }
+
 }
