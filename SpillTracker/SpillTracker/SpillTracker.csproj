@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<UserSecretsId>aspnet-SpillTracker-E95FC5C0-4C2A-4E11-94A6-60A548173DF4</UserSecretsId>
-		<OutputType>WinExe</OutputType>
-		<ApplicationIcon>spill.ico</ApplicationIcon>
-		<NoWin32Manifest>true</NoWin32Manifest>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-SpillTracker-E95FC5C0-4C2A-4E11-94A6-60A548173DF4</UserSecretsId>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon>spill.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
 
-<<<<<<< HEAD
   <ItemGroup>
     <PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -66,69 +65,11 @@
     <None Include="Views\Home\Disclaimer.cshtml" />
     <None Include="Views\Home\Guide.cshtml" />
     <None Include="Views\VersionHistory\Index.cshtml" />
-=======
-	<ItemGroup>
-		<PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.32" />
-		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.14" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.14" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.14" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.14" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.14" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="NUnit" Version="3.13.0" />
-		<PackageReference Include="SendGrid" Version="9.23.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Watch Include="**/*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
-		<Watch Include="**/*.cshtml" />
-		<Watch Include="**/*.css" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Remove="Controllers\Guide.cshtml" />
-		<Content Remove="wwwroot\js\chemDetails.js" />
-		<Content Remove="wwwroot\lib\favicon.ico" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="Controllers\Guide.cshtml" />
-		<None Include="Views\Admin\Index.cshtml" />
-		<None Include="Views\Companies\Create.cshtml" />
-		<None Include="Views\Companies\Delete.cshtml" />
-		<None Include="Views\Companies\Details.cshtml" />
-		<None Include="Views\Companies\Edit.cshtml" />
-		<None Include="Views\Companies\Index.cshtml" />
-		<None Include="Views\GeoCoordinates\Index.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<Watch Remove="Controllers\Guide.cshtml" />
-		<Watch Remove="wwwroot\js\chemDetails.js" />
-		<Watch Remove="wwwroot\js\EditFacilityChems.js" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="Views\Facilities\EditFacChems.cshtml" />
-		<None Include="Views\Home\Disclaimer.cshtml" />
-		<None Include="Views\Home\Guide.cshtml" />
->>>>>>> f_contact_us
 
-		<None Include="wwwroot\js\adminpanel.js" />
-		<None Include="wwwroot\js\adminpanel2.js" />
-		<None Include="wwwroot\js\chemDetails.js" />
-		<None Include="wwwroot\lib\favicon.ico" />
-	</ItemGroup>
+    <None Include="wwwroot\js\adminpanel.js" />
+    <None Include="wwwroot\js\adminpanel2.js" />
+    <None Include="wwwroot\js\chemDetails.js" />
+    <None Include="wwwroot\lib\favicon.ico" />
+  </ItemGroup>
 
 </Project>
