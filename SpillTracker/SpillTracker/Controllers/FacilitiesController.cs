@@ -92,62 +92,76 @@ namespace SpillTracker.Controllers
         public IActionResult SetCompany(FacilityManagementVM newFac)
         {
             var code = newFac.Codes;
-            _logger.LogInformation(code);
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            string userId = claim.Value;
-
-            // look up the current user in the spill tracker DB
-            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
-            code = code.ToUpper();
-            
-            Company findCompany = new Company();
-            findCompany = _context.Companies.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
-            
-
-            if(currentUser.CompanyId == null && findCompany != null)
+            if (code == null)
             {
-                currentUser.CompanyId = findCompany.Id;
-                // newFac.user.CompanyId = findCompany.Id;
-                _context.Stusers.Update(currentUser);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return NotFound();
             }
             else
-                return RedirectToAction("Index"); 
+            {    
+                _logger.LogInformation(code);
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                string userId = claim.Value;
+
+                // look up the current user in the spill tracker DB
+                Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+                code = code.ToUpper();
+                
+                Company findCompany = new Company();
+                findCompany = _context.Companies.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
+                
+
+                if(currentUser.CompanyId == null && findCompany != null)
+                {
+                    currentUser.CompanyId = findCompany.Id;
+                    // newFac.user.CompanyId = findCompany.Id;
+                    _context.Stusers.Update(currentUser);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                    return RedirectToAction("Index");
+            } 
         }
 
         public IActionResult JoinFacility(FacilityManagementVM facilityManagementVM)
         {
             var code = facilityManagementVM.Codes;
-            _logger.LogInformation(code);
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            string userId = claim.Value;
-
-            // look up the current user in the spill tracker DB
-            Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
-            code = code.ToUpper();
-            
-            Facility findFacility = new Facility();
-            findFacility = _context.Facilities.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
-            
-
-            if(findFacility != null && currentUser.CompanyId == findFacility.CompanyId)
+            if (code == null)
             {
-                StuserFacility newUserFac = new StuserFacility
-                {
-                    FacilityId = findFacility.Id,
-                    StuserId = currentUser.Id                    
-                };
-                //Debug.WriteLine(newUserFac);
-                _context.Add(newUserFac);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return NotFound();
             }
             else
-            {
-                return RedirectToAction("Index");
+            {           
+                _logger.LogInformation(code);
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                string userId = claim.Value;
+
+                // look up the current user in the spill tracker DB
+                Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
+                code = code.ToUpper();
+                
+                Facility findFacility = new Facility();
+                findFacility = _context.Facilities.Where(x => x.AccessCode.ToUpper().Equals(code)).FirstOrDefault();
+                
+
+                if(findFacility != null && currentUser.CompanyId == findFacility.CompanyId)
+                {
+                    StuserFacility newUserFac = new StuserFacility
+                    {
+                        FacilityId = findFacility.Id,
+                        StuserId = currentUser.Id                    
+                    };
+                    //Debug.WriteLine(newUserFac);
+                    _context.Add(newUserFac);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
         }
 

@@ -151,9 +151,10 @@ $("#calcButton").click(function()
         {
             timeTillReport = (timeTillReport / 24).toFixed(2);
             ttrs.append(timeTillReport + " days");
+            
         }
     
-        
+        timeTillReport = ((reportableWeight/releasePerHour) - timeReleased).toFixed(2);
         if(totalRelease >= reportableWeight)
         {
             document.getElementById("modal-content").style.backgroundColor = "tomato";
