@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+<h2 style="text-align:center">Contact Us</h2>
+<br>
+<div class="jumbotron">
+    <form method="post">
+        @*Name of sender*@
+        <div class="form-group">
+            <label for="Subject">Subject</label>
+            <input type="text" name="subject" class="form-control" />
+        </div>
+
+        @*Message of sender*@
+        <div class="form-group">
+            <label for="Body">Let us know how else we can help your experience?</label>
+            <textarea class="form-control" name="body" rows="5" placeholder="Say something nice"></textarea>
+        </div>
+        <div style="text-align:center">
+            <button class="btn btn-success" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
