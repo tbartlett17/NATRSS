@@ -77,48 +77,7 @@ namespace SpillTracker.Controllers
             var response = client.SendEmailAsync(msg);
         }
 
-        [HttpGet]
-        public JsonResult versionHistory()
-        {
-            //var tmp = "this is from version history";
-            string request = SendRequest("https://api.github.com/repos/NickApa/NATRSS/commits", "NickApa");            
-            var data = JArray.Parse(request);
-            List<Commits> commitList = new List<Commits>();
-            foreach (var element in data)
-            {
-                Commits c = new Commits();
-                c.commitId = (string)element["sha"];
-                c.commitId = c.commitId.Substring(0, 7);
-                c.commitMessage = (string)element["commit"]["message"];
-                c.date = (string)element["commit"]["committer"]["date"];
-                c.date = c.date.Substring(0, 16);
-                commitList.Add(c);
-            }
-            return Json(commitList);
-        }
-
-        private string SendRequest(string uri, string username)
-        {
-            string secret = _config["NatrGitkey"];
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Headers.Add("Authorization", "token " + secret);
-            request.UserAgent = username;       // Required, see: https://developer.github.com/v3/#user-agent-required
-            request.Accept = "application/json";
-
-
-            string jsonString = null;
-            // TODO: You should handle exceptions here
-            using (WebResponse response = request.GetResponse())
-            {
-                Stream stream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(stream);
-                jsonString = reader.ReadToEnd();
-                reader.Close();
-                stream.Close();
-            }
-            return jsonString;
-        }
-
+       
         public IActionResult Disclaimer() 
         {
 

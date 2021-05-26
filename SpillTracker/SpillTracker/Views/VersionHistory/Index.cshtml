@@ -1,0 +1,38 @@
+﻿@model SpillTracker.Models.ListOfCommitsVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Version History</h1>
+
+<table class="table">
+    <thead>
+        <tr  style=" text-align:center">
+            <th scope="col-3">Version ID#</th>
+            <th scope="col-7">Message Details</th>
+            <th scope="col-2"> Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.commits)
+        {
+            <tr style=" text-align:center">
+                <td>
+                    <a href="@item.commitLink">@item.commitId</a>
+                </td>
+                <td>
+                    @item.commitMessage
+                </td>
+                <td>
+                    @item.date
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*
+    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+

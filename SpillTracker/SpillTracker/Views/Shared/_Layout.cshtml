@@ -85,7 +85,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container">            
             <div class="row">
                 <div class="col-4"style="text-align:center;">
                     &copy; 2021 - SpillTracker - NATR SS
@@ -94,15 +94,9 @@
                     <a asp-area="" asp-controller="Home" asp-action="Disclaimer">Disclaimer</a>
                 </div>
                 <div class="col-4"style="text-align:center;">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Version History
-                    </button>
-                    <div id="versionH" class="dropdown-menu" style="width: 90vw; height: 20rem; overflow-y: auto;">
-
-                    </div>
+                    <a asp-controller="VersionHistory" asp-action="Index">Version History</a>
                 </div>
             </div>
-
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
