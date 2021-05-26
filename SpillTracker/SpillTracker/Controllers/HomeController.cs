@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using SpillTracker.Models;
+using SpillTracker.Services;
 
 namespace SpillTracker.Controllers
 {
@@ -45,6 +49,35 @@ namespace SpillTracker.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin,Employee,FacilityManager")]
+        [HttpGet]
+        public IActionResult Contact() 
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Contact(string subject, string body) 
+        {
+            Debug.WriteLine(subject + "\n" + body);
+            SendTheEmail(subject, body);
+            return View();
+        }
+
+        private void SendTheEmail(string subject, string body)
+        {
+            var apiKey = _config["SendGridKey"]; //SendGridKey
+            var client = new SendGridClient(apiKey);
+            /*Debug.WriteLine("apiKey " + apiKey);*/
+            var from = new EmailAddress("rljohns579@gmail.com", "User#1");
+            var htmlContent = "";
+            var to = new EmailAddress("natrss@protonmail.com", "Team NATR");                        
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
+            var response = client.SendEmailAsync(msg);
+        }
+
+       
         public IActionResult Disclaimer() 
         {
 
