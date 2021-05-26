@@ -91,16 +91,57 @@ function saveChemical()
     };
     //console.log("fac id: " + chemData.chemId);
 
-    var jsonChemData = JSON.stringify(chemData);
+    eCon = document.getElementById("errorCon");
+    eTemp = document.getElementById("errorTemp");
 
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: { chemData: jsonChemData },
-        url: "/Facilities/SaveChemical",
-        success: updateTable,
-        error: errorOnAjax
-    });
+    $("#errorCon").empty();
+    $("#errorTemp").empty();
+
+    if(chemData.concentration > 100) 
+    {
+        eCon.append("Contentration Cannot be more than 100");
+    }
+    else if(chemData.concentration < 1)
+    {
+        eCon.append("Concentration must be higher than 0");
+    }
+    else if(chemData.concentration.length < 1)
+    {
+        eCon.append("Concentration value is required");
+    }
+    else if(chemData.chemicalTemperature > 150)
+    {
+        eTemp.append("Chemical Temperature cannot exceed 150");
+    }
+    else if(chemData.chemicalTemperature < -50)
+    {
+        eTemp.append("Chemical Temperature cannot exceed -50");
+    }
+    else if(chemData.chemicalTemperature.length < 1)
+    {
+        eTemp.append("Chemical Temperature is required");
+    }
+    else
+    {
+        var jsonChemData = JSON.stringify(chemData);
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: { chemData: jsonChemData },
+            url: "/Facilities/SaveChemical",
+            success: updateTable,
+            error: errorOnAjax
+        });  
+    }
+    
+     // disable button
+     $("#saveChemBtn").prop("disabled", false);
+     // add spinner to button
+     $("#saveChemBtn").html(
+         "Add Chem"
+     );
+
 
     
 }

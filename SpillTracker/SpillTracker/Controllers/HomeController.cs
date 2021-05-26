@@ -45,6 +45,12 @@ namespace SpillTracker.Controllers
             return View();
         }
 
+        public IActionResult Disclaimer() 
+        {
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
