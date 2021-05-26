@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using SpillTracker.Models;
 using SpillTracker.Utilities;
 using SpillTracker.Models.Interfaces;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SpillTracker.Controllers
 {
@@ -394,6 +396,6 @@ namespace SpillTracker.Controllers
         private bool FormExists(int id)
         {
             return _context.Forms.Any(e => e.Id == id);
-        }
+        }        
     }
 }
