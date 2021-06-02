@@ -6,6 +6,12 @@
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>spill.ico</ApplicationIcon>
     <NoWin32Manifest>true</NoWin32Manifest>
+    <PackageIcon>SmallNATRSSLogo.png</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +31,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -47,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Controllers\Guide.cshtml" />
+    <None Include="spill.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="Views\Admin\Index.cshtml" />
     <None Include="Views\Companies\Create.cshtml" />
     <None Include="Views\Companies\Delete.cshtml" />
@@ -54,6 +64,10 @@
     <None Include="Views\Companies\Edit.cshtml" />
     <None Include="Views\Companies\Index.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
+    <None Include="wwwroot\images\SmallNATRSSLogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Watch Remove="Controllers\Guide.cshtml" />
@@ -69,7 +83,17 @@
     <None Include="wwwroot\js\adminpanel.js" />
     <None Include="wwwroot\js\adminpanel2.js" />
     <None Include="wwwroot\js\chemDetails.js" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\.gitignore" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\index.svg" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\jquery.min.js" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\LICENSE" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\qrcode.js" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\qrcode.min.js" />
+    <None Include="wwwroot\lib\davidshimjs-qrcodejs-04f46c6\README.md" />
     <None Include="wwwroot\lib\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Shared\Error Pages\" />
   </ItemGroup>
 
 </Project>
