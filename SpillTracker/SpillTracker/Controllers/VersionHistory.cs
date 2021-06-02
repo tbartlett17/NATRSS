@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
@@ -11,6 +12,7 @@ using SpillTracker.Models;
 
 namespace SpillTracker.Controllers
 {
+    [AllowAnonymous]
     public class VersionHistory : Controller
     {
         private readonly IConfiguration _config;
