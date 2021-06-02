@@ -67,6 +67,14 @@ th {
   border-color: #39582a;
 }
 
+.nav-pills > li > a.active {
+  background-color: #39582a !important;
+}
+
+.nav-pills > li > a:hover {
+  background-color: #39582a !important;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
