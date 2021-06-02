@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SpillTracker.Utilities;
+using Microsoft.Extensions.Configuration;
 
 namespace SpillTracker.Areas.Identity.Pages.Account
 {
@@ -29,6 +31,7 @@ namespace SpillTracker.Areas.Identity.Pages.Account
         private readonly SpillTrackerDbContext _stDbContext;
         // add 
         private readonly ApplicationDbContext AspNetContext;
+        private readonly IConfiguration _config;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -36,7 +39,8 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            SpillTrackerDbContext spillTrackerDbContext)
+            SpillTrackerDbContext spillTrackerDbContext,
+            IConfiguration config)
             
         {
             _userManager = userManager;
@@ -46,6 +50,7 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             _stDbContext = spillTrackerDbContext;
             // add 
             _roleManager = roleManager;
+            _config = config;
         }
 
         [BindProperty]
@@ -85,6 +90,9 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             public string RoleOption { get; set; }
+
+            [Required]
+            public string Token { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -97,6 +105,18 @@ namespace SpillTracker.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+
+            // check captcha here
+            string secret = _config["reCaptchaSecretKey"];
+            GoogleReCAPTCHAResponse captchaResult = GoogleReCAPTCHAService.VerifyToken(Input.Token, secret);
+
+            if (captchaResult.Success == false || captchaResult.Score <= 0.5)
+            {
+                ModelState.AddModelError(string.Empty, "We've detected that you might be a robot. Please Try again later.");
+                return Page();
+            }
+
             if (ModelState.IsValid)
             {
                  

@@ -12,7 +12,7 @@
     </div>
     <div style="text-align:center">
         <h2>@ViewData["Title"]</h2>
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="accountRegisterForm">
             <h4>Create a new account:</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -43,22 +43,29 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div>
+                <input asp-for="Input.Token" id="tokenInput" hidden readonly />
+            </div>
 
+            @*add roles dropdown*@
+            <div class="input-group mb-3">
+                <select required class="custom-select" id="inputGroupSelect01" asp-for="Input.RoleOption">
+                    @*<option hidden>Role...</option>*@
+                    <option value="" disabled selected>Select your Role</option>
+                    <option value="1">Employee</option>
+                    <option value="2">Facility Manager</option>
 
-            @*add
-        @*roles dropdown*@
-        <div class="input-group mb-3">
-            <select required class="custom-select" id="inputGroupSelect01" asp-for="Input.RoleOption">
-                @*<option hidden>Role...</option>*@
-                <option value="" disabled selected>Select your Role</option>
-                <option value="1">Employee</option>
-                <option value="2">Facility Manager</option>
+                </select>
+                <span asp-validation-for="Input.RoleOption"></span>
+            </div>
 
-            </select>
-            <span asp-validation-for="Input.RoleOption"></span>
-        </div>
-
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit"
+                    class="btn btn-primary g-recaptcha"
+                    data-sitekey="6LetBf0aAAAAAMdYVVnL__u9EQSsM4FbjR55bk4c"
+                    data-callback='onSubmit'
+                    data-action='submit'>
+                Register
+            </button>
         </form>
     </div>
     <div class="col-md-4">
@@ -99,3 +106,13 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<script>
+    function onSubmit(token) {
+        //console.log(token);
+        $("#tokenInput").val(token);
+        document.getElementById("accountRegisterForm").submit();
+    }
+</script>
