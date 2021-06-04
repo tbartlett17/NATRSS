@@ -64,6 +64,7 @@
     <None Include="Views\Companies\Edit.cshtml" />
     <None Include="Views\Companies\Index.cshtml" />
     <None Include="Views\GeoCoordinates\Index.cshtml" />
+    <None Include="Views\Home\Credit.cshtml" />
     <None Include="wwwroot\images\SmallNATRSSLogo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
