@@ -80,50 +80,50 @@ namespace SpillTrackerBDDTests.Features
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table1.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Hello123#"});
-            table1.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Hello123#"});
-            table1.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Hello123#"});
-            table1.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "KrzysztofP",
                         "krzysztof@example.com",
                         "Krzysztof",
                         "Ponce",
                         "Hello123#"});
 #line 5
- testRunner.Given("the following users exist", ((string)(null)), table1, "Given ");
+ testRunner.Given("the following users exist", ((string)(null)), table2, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Company Name",
                         "AccessCode"});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "comp1",
                         "123AA456"});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "comp2",
                         "123BB456"});
 #line 11
- testRunner.And("the following Companies exist", ((string)(null)), table2, "And ");
+ testRunner.And("the following Companies exist", ((string)(null)), table3, "And ");
 #line hidden
         }
         

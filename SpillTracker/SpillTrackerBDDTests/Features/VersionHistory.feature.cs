@@ -20,25 +20,22 @@ namespace SpillTrackerBDDTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.8.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Joining a Facility")]
-    [NUnit.Framework.CategoryAttribute("JoiningFacility")]
-    public partial class JoiningAFacilityFeature
+    [NUnit.Framework.DescriptionAttribute("VersionHistory")]
+    public partial class VersionHistoryFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "JoiningFacility"};
+        private string[] _featureTags = ((string[])(null));
         
-#line 1 "JoiningFacility.feature"
+#line 1 "VersionHistory.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Joining a Facility", null, ProgrammingLanguage.CSharp, new string[] {
-                        "JoiningFacility"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "VersionHistory", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -76,70 +73,16 @@ namespace SpillTrackerBDDTests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 4
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "UserName",
-                        "Email",
-                        "FirstName",
-                        "LastName",
-                        "Password",
-                        "Company"});
-            table4.AddRow(new string[] {
-                        "TaliaK",
-                        "knott@example.com",
-                        "Talia",
-                        "Knott",
-                        "Hello123#",
-                        "test1"});
-            table4.AddRow(new string[] {
-                        "ZaydenC",
-                        "clark@example.com",
-                        "Zayden",
-                        "Clark",
-                        "Hello123#",
-                        "test1"});
-            table4.AddRow(new string[] {
-                        "DavilaH",
-                        "hareem@example.com",
-                        "Hareem",
-                        "Davila",
-                        "Hello123#",
-                        "test2"});
-            table4.AddRow(new string[] {
-                        "KrzysztofP",
-                        "krzysztof@example.com",
-                        "Krzysztof",
-                        "Ponce",
-                        "Hello123#",
-                        "test3"});
-#line 5
- testRunner.Given("the following users exist", ((string)(null)), table4, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Facility Name",
-                        "AccessCode"});
-            table5.AddRow(new string[] {
-                        "Fac1",
-                        "123456aa"});
-            table5.AddRow(new string[] {
-                        "Fac2",
-                        "321456bb"});
-#line 11
- testRunner.And("the following facilities exist", ((string)(null)), table5, "And ");
-#line hidden
-        }
-        
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Join Facility as an employee")]
-        public virtual void JoinFacilityAsAnEmployee()
+        [NUnit.Framework.DescriptionAttribute("A user getting to the version history site")]
+        [NUnit.Framework.CategoryAttribute("VersionHistory")]
+        public virtual void AUserGettingToTheVersionHistorySite()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "VersionHistory"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Join Facility as an employee", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 17
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user getting to the version history site", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -159,30 +102,30 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
+#line 5
+ testRunner.Given("the user is on our site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 20
- testRunner.When("the user goes to the facility tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 6
+ testRunner.And("they go to the footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 21
- testRunner.And("enters a facility access code correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 7
+ testRunner.When("they click onto \'version history\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
- testRunner.Then("they should be able to view that facility", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 8
+ testRunner.Then("they should see our version history page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Join Company as a facility manager")]
-        public virtual void JoinCompanyAsAFacilityManager()
+        [NUnit.Framework.DescriptionAttribute("A user getting to the commit id on github")]
+        public virtual void AUserGettingToTheCommitIdOnGithub()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Join Company as a facility manager", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 24
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user getting to the commit id on github", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -202,23 +145,54 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
+#line 11
+ testRunner.Given("the user is on the version history page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 25
- testRunner.Given("the user is an facility manager", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+ testRunner.When("they click on a version # tag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
- testRunner.And("they are connected with a company", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+ testRunner.Then("they should be taken to github", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 27
- testRunner.When("the user goes to the facility tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("A user should not see unecessary commit message containing Merge")]
+        public virtual void AUserShouldNotSeeUnecessaryCommitMessageContainingMerge()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user should not see unecessary commit message containing Merge", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 15
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-#line 28
- testRunner.And("enters a facility access code correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 16
+ testRunner.Given("the user is on the version history page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 29
- testRunner.Then("they should be able to view that facility", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+ testRunner.When("they see the \'Message Details\' text", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 18
+ testRunner.Then("they should not be able to see a message containing \'Merge\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
