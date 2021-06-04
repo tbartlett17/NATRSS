@@ -58,11 +58,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ChemicalState.Type)
                     </td>
-                    @*<td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
-                        </button>
-                    </td>*@
+                    @* <td>
+                        <a asp-action="" data-toggle="modal" data-target="#editChemDeets">edit</a>
+                    </td> *@
                    
                 </tr>
             }
@@ -172,19 +170,19 @@
                     <form asp-action="CreateFacilityChem">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="Concentration" class="control-label"></label>
+                            <label asp-for="Concentration" class="control-label">Concentration (0-100): </label>
                             <input id="formConcentration" asp-for="Concentration" class="form-control" />
                             <span asp-validation-for="Concentration" class="text-danger"></span>
                             <p id="errorCon" style="color: red;"></p>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalTemperature" class="control-label"></label>
+                            <label asp-for="ChemicalTemperature" class="control-label">Storage Temperature:</label>
                             <input id="formTemperature" asp-for="ChemicalTemperature" class="form-control" />
                             <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
                             <p id="errorTemp" style="color: red;"></p>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
+                            <label asp-for="ChemicalTemperatureUnits" class="control-label">Temperature Units:</label>
                             @*<input id="formTempUnits" asp-for="ChemicalTemperatureUnits" class="form-control" />*@
                             <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="formTempUnits">
                                 <option value="°F">°F</option>
@@ -193,7 +191,7 @@
                             <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalStateId" class="control-label"></label>
+                            <label asp-for="ChemicalStateId" class="control-label">Chemical State:</label>
                             <select id="formChemState" asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
                         </div>
 
@@ -205,6 +203,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.FacilityId">Back to Facility</a>
     </div>
 </body>
 </html>

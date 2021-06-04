@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SpillTracker.Utilities;
+using Microsoft.Extensions.Configuration;
+using SpillTracker.Models;
 
 namespace SpillTracker.Areas.Identity.Pages.Account
 {
@@ -16,11 +19,13 @@ namespace SpillTracker.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginWith2faModel> _logger;
+        private readonly IConfiguration _config;
 
-        public LoginWith2faModel(SignInManager<IdentityUser> signInManager, ILogger<LoginWith2faModel> logger)
+        public LoginWith2faModel(SignInManager<IdentityUser> signInManager, ILogger<LoginWith2faModel> logger, IConfiguration config)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _config = config;
         }
 
         [BindProperty]
@@ -40,6 +45,8 @@ namespace SpillTracker.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember this machine")]
             public bool RememberMachine { get; set; }
+            [Required]
+            public string Token { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
@@ -60,6 +67,17 @@ namespace SpillTracker.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
         {
+            // check captcha here
+            string secret = _config["reCaptchaSecretKey"];
+            GoogleReCAPTCHAResponse captchaResult = GoogleReCAPTCHAService.VerifyToken(Input.Token, secret);
+
+            if (captchaResult.Success == false || captchaResult.Score <= 0.5)
+            {
+                ModelState.AddModelError(string.Empty, "We've detected that you might be a robot. Please Try again later.");
+                return Page();
+            }
+
+
             if (!ModelState.IsValid)
             {
                 return Page();
