@@ -44,21 +44,21 @@ namespace SpillTracker.Controllers
             return View(mystatus);
         }
 
-        public IActionResult Guide() 
+        public IActionResult Guide()
         {
             return View();
         }
 
         [Authorize(Roles = "Admin,Employee,FacilityManager")]
         [HttpGet]
-        public IActionResult Contact() 
+        public IActionResult Contact()
         {
             return View();
         }
 
 
         [HttpPost]
-        public IActionResult Contact(string subject, string body) 
+        public IActionResult Contact(string subject, string body)
         {
             Debug.WriteLine(subject + "\n" + body);
             SendTheEmail(subject, body);
@@ -72,15 +72,20 @@ namespace SpillTracker.Controllers
             /*Debug.WriteLine("apiKey " + apiKey);*/
             var from = new EmailAddress("rljohns579@gmail.com", "User#1");
             var htmlContent = "";
-            var to = new EmailAddress("natrss@protonmail.com", "Team NATR");                        
+            var to = new EmailAddress("natrss@protonmail.com", "Team NATR");
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
             var response = client.SendEmailAsync(msg);
         }
 
-       
-        public IActionResult Disclaimer() 
+
+        public IActionResult Disclaimer()
         {
 
+            return View();
+        }
+
+        public IActionResult Credit()
+        {
             return View();
         }
 
