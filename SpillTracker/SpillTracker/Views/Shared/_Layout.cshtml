@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SpillTracker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="icon" href="~/lib/favicon.ico" />
     @*<link rel="stylesheet" href ="~/css/SpinnerOverlay.css" />*@
 </head>
 <body>
@@ -23,14 +25,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" style="text-align: left;">
                     <partial name="_LoginPartial" />
 
-                   
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*<li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
-        </li>*@
+                                <a class="nav-link text-light" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals</a>
                         </li>
@@ -83,15 +85,25 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - SpillTracker - NATR SS
+        <div class="container">            
+            <div class="row">
+                <div class="col-4" style="text-align:center; color: black">
+                    &copy; 2021 - SpillTracker - NATR SS - <a asp-area="" asp-controller="Home" asp-action="Disclaimer">Disclaimer</a> - <a asp-controller="VersionHistory" asp-action="Index">Version History</a> - <a asp-controller="Home" asp-action="Credit">Credit Page</a>
+                </div>
+                @*<div class="col-4" style="text-align:center;">
+                    
+                </div>
+                <div class="col-4"style="text-align:center;">
+                    
+                </div>*@
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/calculate.js" asp-append-version="true" type="module"></script> 
-    
+    <script src="~/js/calculate.js" asp-append-version="true" type="module"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

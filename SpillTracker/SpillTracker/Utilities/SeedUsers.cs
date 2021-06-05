@@ -44,9 +44,32 @@ namespace SpillTracker.Utilities
                             context.Add(fu);
                             await context.SaveChangesAsync();
                         }
-                        // Now make sure admin role exists and give it to this user
-                        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                        await EnsureRoleForUser(roleManager, userManager, identityID, u.Role);
+
+                        if (u.StuserFacilities != null)
+                        {
+                            foreach (int i in u.StuserFacilities)
+                            {
+                                var stuserId = context.Stusers.Where(u => u.AspnetIdentityId == fu.AspnetIdentityId).FirstOrDefault().Id;
+                                StuserFacility stuserFacility = new StuserFacility { FacilityId = i, StuserId = stuserId };
+                                if (!context.StuserFacilities.Any(x => x.FacilityId == i && x.StuserId == stuserId))
+                                {
+                                    // user is not a memeber of facility i
+                                    context.Add(stuserFacility);
+                                    await context.SaveChangesAsync();
+                                }
+                            }
+                        }
+                        
+                        if (u.Role != null)
+                        {
+                            // Now make sure chosen role exists and give it to this user
+                            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                            await EnsureRoleForUser(roleManager, userManager, identityID, u.Role);
+                        }
+
+                        //// Now make sure chosen role exists and give it to this user
+                        //var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                        //await EnsureRoleForUser(roleManager, userManager, identityID, u.Role);
                     }
                 }
             }

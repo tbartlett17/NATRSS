@@ -15,18 +15,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Facility Name</label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" id="facility" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+                <p id="errorName"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressStreet" class="control-label">Street Address</label>
                 <input asp-for="AddressStreet" id="streetAddress" class="form-control" />
                 <span asp-validation-for="AddressStreet" class="text-danger"></span>
+                <p id="errorStreet"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressCity" class="control-label">City</label>
                 <input asp-for="AddressCity" id="city" class="form-control" />
                 <span asp-validation-for="AddressCity" class="text-danger"></span>
+                <p id="errorCity"></p>
             </div>
             <div class="form-group">
                 <label asp-for="AddressState" class="control-label">State</label>
@@ -37,6 +40,7 @@
                 <label asp-for="AddressZip" class="control-label">Zip Code</label>
                 <input asp-for="AddressZip" id="zip" class="form-control" />
                 <span asp-validation-for="AddressZip" class="text-danger"></span>
+                <p id="errorZip"></p>
             </div>
             <div class="form-group" hidden>
                     <label asp-for="Location" class="control-label"></label>
@@ -45,20 +49,57 @@
             </div>
             <div class="form-group">
                 <label asp-for="Industry" class="control-label"></label>
-                <input asp-for="Industry" class="form-control" />
+                <input asp-for="Industry" id="industry" class="form-control" />
                 <span asp-validation-for="Industry" class="text-danger"></span>
+                <p id="errorIndustry"></p>
             </div>
             <div class="form-group" hidden>
                 <label asp-for="CompanyId" class="control-label"></label>
                 <input asp-for="CompanyId" class="form-control" value="@ViewBag.CompanyId" />
             </div>
             <div class="form-group">
-                <input type="submit" id ="submitForm" value="Save" class="btn btn-primary" hidden/>
-                <button type="button" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Create</button>
+                <input type="submit" id="submitForm" value="Save" class="btn btn-primary" hidden />
+                @*<button type="button" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Create</button>*@
+
+                <!-- Button trigger modal -->
+                <button id="facBtn"type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Confirm
+                </button>
+
+                
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Verifying these are the exact coordinates you want?</h5>
+                                <h5 class="modal-title" id="yellowModal"></h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Verifying the location provided is correct? </p>
+                                <p>(Street Address, State, City, Zip)</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="submitBtn" class="btn btn-primary" onclick="getCoords()">Create</button>
+                                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>
 </div>
+
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>
@@ -67,3 +108,10 @@
 @section Scripts {
     <script src="~/js/geocoords.js"></script>
 }
+
+<style>
+    p 
+    {
+        color: red;
+    }
+</style>

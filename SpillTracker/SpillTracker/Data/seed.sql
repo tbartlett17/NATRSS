@@ -1,12 +1,12 @@
-INSERT INTO [Company] (Name,Num_Facilities) VALUES
-    ('Test Company 1',1),
-    ('Test Company 2',2);
+INSERT INTO [Company] (Name,AccessCode,Num_Facilities) VALUES
+    ('Test Company 1','abcdefghi1',1),
+    ('Test Company 2','abcdefghi12',2);
 
 
-INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,CompanyID) VALUES
-    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals',1),  
-    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics',2),
-    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals',1);
+INSERT INTO [Facility] (Name,Address_Street,Address_City,Address_State,Address_ZIP,Location,Industry,AccessCode,CompanyID) VALUES
+    ('Test Facilty 1','123 Main St','Monmouth','OR','97361','44.848588, -123.236404','Metals','fac-abcdefghi-1',1),  
+    ('Test Facilty 2','55 SW 2nd St','Monmouth','OR','97361','44.861185, -123.251233','Fabrics','fac-abcdefghi-2',2),
+    ('Test Facilty 3','123 Main St','Monmouth','OR','97361','44.654095, -122.001693','Metals','fac-abcdefghi-3',1);
 
 
 INSERT INTO [STUser](ASPNetIdentityID,FirstName,LastName,EmployeeNumber,CompanyID) VALUES 
@@ -27,12 +27,12 @@ INSERT INTO [ChemicalState] (Type) VALUES
 
 
 INSERT INTO [FacilityChemicals](Concentration,Chemical_Temperature,Chemical_Temperature_Units,ChemicalStateID,ChemicalID,FacilityID) VALUES
-    (0.50,60,'°F',2,1,1),
-    (0.75,60,'°F',2,2,1),
-    (0.20,60,'°F',2,3,2),
-    (0.32,60,'°F',2,4,2),
-    (0.25,60,'°F',2,1,3),
-    (0.70,60,'°F',2,4,3);
+    (50,70,'°F',2,1,1),
+    (75,70,'°F',2,2,1),
+    (20,70,'°F',2,3,2),
+    (32,70,'°F',2,4,2),
+    (25,70,'°F',2,1,3),
+    (70,70,'°F',2,4,3);
 
 
 INSERT INTO [Surface] (Type) VALUES
@@ -53,4 +53,3 @@ INSERT INTO [ContactInfo] (AgencyName,PhoneNumber,State) VALUES
 
 INSERT INTO [StatusTime] (SourceName, Time) VALUES ('EPCRA Scraper','2021-2-28 05:00:00')
 INSERT INTO [StatusTime] (SourceName, Time) VALUES ('CERCLA Scraper','2021-2-28 05:00:00')
-INSERT INTO [StatusTime] (SourceName, Time) VALUES ('PubChem API','2021-2-28 05:00:00')

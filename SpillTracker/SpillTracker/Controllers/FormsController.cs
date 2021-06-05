@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using SpillTracker.Models;
 using SpillTracker.Utilities;
 using SpillTracker.Models.Interfaces;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SpillTracker.Controllers
 {
@@ -72,10 +74,13 @@ namespace SpillTracker.Controllers
                 //Stuser currentUser = _context.Stusers.Where(stu => stu.AspnetIdentityId == userId).FirstOrDefault();
 
 
+                if (stUser.CompanyId != null)
+                {
+                    formsList = _stfRepo.GetAllFormsByCompanyId((int)stUser.CompanyId);
+                }
 
-                formsList = _stfRepo.GetAllFormsByCompanyId((int)stUser.CompanyId);
 
-                Debug.WriteLine($"\nfac chem id: {formsList.FirstOrDefault().FacilityChemical.Id}\n");
+               
                 //spillTrackerDbContext = _context.Forms.Include(f => f.Chemical)
                 //            .Include(f => f.ChemicalState)
                 //            .Include(f => f.Facility).ThenInclude(f => f.Company)
@@ -149,6 +154,7 @@ namespace SpillTracker.Controllers
             form.SpillContained = false;
             form.SpillOngoing = false;
             form.SpillReachWaterSource = false;
+            form.SpillReportable = false;
             form.WaterSource = "";
             //form.Facility = _context.Facilities.Where(f => f.Id == id).FirstOrDefault();
 
@@ -158,7 +164,22 @@ namespace SpillTracker.Controllers
                 .OrderBy(fc => fc.Chemical.Name)
                 ,"Id", "Chemical.Name");
             ViewData["ChemicalStateId"] = new SelectList(_context.ChemicalStates.OrderBy(x => x.Type), "Id", "Type");
-            ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId), "Id", "Name");
+
+
+            // all facilites at the company
+            //ViewData["FacilityId"] = new SelectList(_context.Facilities.Where(f => f.CompanyId == currentUser.CompanyId), "Id", "Name"); 
+
+            // select all facilities the current user has access to
+            IQueryable<StuserFacility> stusersFacilities = _context.StuserFacilities.Where(uf => uf.StuserId == currentUser.Id);
+            List<int?> idList = new List<int?>();
+            foreach (var item in stusersFacilities)
+            {
+                idList.Add(item.FacilityId);
+            }
+            IQueryable<Facility> usersFacilitesList = _context.Facilities.Include(f => f.Company).Where(f => idList.Contains(f.Id));
+            ViewData["FacilityId"] = new SelectList(usersFacilitesList, "Id", "Name");
+
+
             ViewData["SpillSurfaceId"] = new SelectList(_context.Surfaces.OrderBy(x => x.Type), "Id", "Type");
             ViewData["StuserId"] = new SelectList(_context.Stusers.OrderBy(x => x.FirstName), "Id", "FirstName");
             return View(form);
@@ -341,6 +362,8 @@ namespace SpillTracker.Controllers
                 fac = _context.Facilities
                     .Include(fc => fc.FacilityChemicals)
                     .ThenInclude(fc => fc.ChemicalState)
+                    .Include(fc => fc.FacilityChemicals)
+                    .ThenInclude(fc => fc.Chemical)
                     .Where(fc => fc.Id == id).FirstOrDefault();
             }
             catch (Exception ex)
@@ -391,6 +414,6 @@ namespace SpillTracker.Controllers
         private bool FormExists(int id)
         {
             return _context.Forms.Any(e => e.Id == id);
-        }
+        }        
     }
 }

@@ -58,11 +58,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ChemicalState.Type)
                     </td>
-                    @*<td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
-                        </button>
-                    </td>*@
+                    @* <td>
+                        <a asp-action="" data-toggle="modal" data-target="#editChemDeets">edit</a>
+                    </td> *@
                    
                 </tr>
             }
@@ -74,7 +72,7 @@
     </button>
     <!-- Modal -->
     <div class="modal fade" id="addChem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 90%;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Select a Chemical</h5>
@@ -94,13 +92,13 @@
                     <table class="table table-striped" id="mainTableid">
                         <thead>
                             <tr>
-                                <th style="width: 50%;">
+                                <th style="width: 50%; color: black;">
                                     @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().Name)
                                 </th>
-                                <th style="width: 20%; text-align: center">
+                                <th style="width: 20%;color: black; text-align: center">
                                     @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().CasNum)
                                 </th>
-                                <th>
+                                <th style="color: black;">
                                     @Html.DisplayNameFor(model => model.Chemicals.FirstOrDefault().Aliases)
                                 </th>
                             </tr>
@@ -109,10 +107,10 @@
                             @foreach (var item in Model.Chemicals)
                             {
                                 <tr id="@item.Name">
-                                    <td>
+                                    <td style="color: black;">
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center; color: black;">
                                         @Html.DisplayFor(modelItem => item.CasNum)
                                     </td>
 
@@ -126,8 +124,8 @@
                                         string[] arr = item.Aliases.Split("<br>");
                                         List<string> als = arr.ToList();
                                         als.Remove(als.Last());
-                                        <td>
-                                            <Select style="width: 25%; text-align:center">
+                                        <td >
+                                            <Select style="width: 20%; text-align:center">
                                                 @foreach (var aliase in als)
                                                 {
                                                     <option>@aliase</option>
@@ -172,17 +170,19 @@
                     <form asp-action="CreateFacilityChem">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="Concentration" class="control-label"></label>
+                            <label asp-for="Concentration" class="control-label">Concentration (0-100): </label>
                             <input id="formConcentration" asp-for="Concentration" class="form-control" />
                             <span asp-validation-for="Concentration" class="text-danger"></span>
+                            <p id="errorCon" style="color: red;"></p>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalTemperature" class="control-label"></label>
+                            <label asp-for="ChemicalTemperature" class="control-label">Storage Temperature:</label>
                             <input id="formTemperature" asp-for="ChemicalTemperature" class="form-control" />
                             <span asp-validation-for="ChemicalTemperature" class="text-danger"></span>
+                            <p id="errorTemp" style="color: red;"></p>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalTemperatureUnits" class="control-label"></label>
+                            <label asp-for="ChemicalTemperatureUnits" class="control-label">Temperature Units:</label>
                             @*<input id="formTempUnits" asp-for="ChemicalTemperatureUnits" class="form-control" />*@
                             <select type="text" class="form-control" asp-for="ChemicalTemperatureUnits" id="formTempUnits">
                                 <option value="°F">°F</option>
@@ -191,7 +191,7 @@
                             <span asp-validation-for="ChemicalTemperatureUnits" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ChemicalStateId" class="control-label"></label>
+                            <label asp-for="ChemicalStateId" class="control-label">Chemical State:</label>
                             <select id="formChemState" asp-for="ChemicalStateId" class="form-control" asp-items="ViewBag.ChemicalStateId"></select>
                         </div>
 
@@ -203,6 +203,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.FacilityId">Back to Facility</a>
     </div>
 </body>
 </html>

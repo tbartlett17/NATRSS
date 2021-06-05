@@ -11,5 +11,14 @@ namespace SpillTracker.Models
 
         public IEnumerable<StatusTime> times { get; set; }
 
+        public Company company { get; set; }
+
+        public IEnumerable<Company> companies {get; set;}
+
+        public string name {get; set;}
+
+        public string access {get; set;}
+
+        public int numFac {get; set;}
     }
 }

@@ -5,125 +5,208 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@Model.Facility.FirstOrDefault().Name Details</h1>
 
 <div>
     <div class="row" style="margin-bottom: 0px; padding-bottom:0">
         <h4 class="col-sm-auto">Facility</h4>
-        <a class="col-sm-auto" asp-action="Edit" asp-route-id="@Model.Facility.Id">Edit</a>
+        @if (User.IsInRole("FacilityManager") || User.IsInRole("CompanyManager") || User.IsInRole("Admin"))
+        {
+            <a class="col-sm-auto" asp-action="Edit" asp-route-id="@Model.Facility.FirstOrDefault().Id">Edit</a>
+        }
+
     </div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Name)
+            Address
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Name)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressStreet) @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressCity), @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressState), @Html.DisplayFor(model => model.Facility.FirstOrDefault().AddressZip)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressStreet)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Location)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressStreet)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Location)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressCity)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Industry)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressCity)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Industry)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressState)
+            @Html.DisplayNameFor(model => model.Facility.FirstOrDefault().Company)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressState)
+            @Html.DisplayFor(model => model.Facility.FirstOrDefault().Company.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.AddressZip)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.AddressZip)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Location)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Industry)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Industry)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Facility.Company)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Facility.Company.Id)
-        </dd>
+        @if (User.IsInRole("FacilityManager") || User.IsInRole("CompanyManager") || User.IsInRole("Admin"))
+        {
+            <dt class="col-sm-2">
+                Company Access Code
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Facility.FirstOrDefault().Company.AccessCode)
+            </dd>
+            <dt class="col-sm-2">
+                Facility Access Code
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Facility.FirstOrDefault().AccessCode)
+            </dd>
+        }
     </dl>
 </div>
 <div>
     <div class="row" style="margin-bottom: 0px; padding-bottom:0">
         <h4 class="col-sm-auto">Chemicals</h4>
-        <a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.Id">Edit</a>
+        @if (User.IsInRole("FacilityManager") || User.IsInRole("CompanyManager") || User.IsInRole("Admin"))
+        {
+            <a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.FirstOrDefault().Id">Edit</a>
+        }
+
     </div>
     <hr />
     <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Chemical)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Concentration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperature)
-            </th>
-            @*<th>
-            @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperatureUnits)
-        </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalState)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Facility)
-            </th>*@
-            @*<th></th>*@
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.FacilityChemicals) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Chemical.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Concentration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChemicalTemperature) @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.ChemicalState.Type)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Facility.Id)
-            </td>*@
-            @*<td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-        </td>*@
-        </tr>
-}
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Chemical)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Concentration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperature)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalTemperatureUnits)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().ChemicalState)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.FacilityChemicals.FirstOrDefault().Facility)
+                    </th>*@
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FacilityChemicals)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Chemical.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concentration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChemicalTemperature) @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ChemicalTemperatureUnits)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChemicalState.Type)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Facility.Id)
+                        </td>*@
+                    @*<td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <div class="row" style="margin-bottom: 0px; padding-bottom:0">
+        <h4 class="col-sm-auto">Employees</h4>
+        @*<a class="col-sm-auto" asp-action="EditFacChems" asp-route-id="@Model.Facility.FirstOrDefault().Id">Edit</a>*@
+    </div>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Role
+                </th>
+
+                @if (User.IsInRole("FacilityManager") || User.IsInRole("CompanyManager") || User.IsInRole("Admin"))
+                {
+                    <th>
+                        Actions
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FacilityEmployees)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stuser.FirstName) @Html.DisplayFor(modelItem => item.Stuser.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Role)*@
+                    </td>
+                    @if (User.IsInRole("FacilityManager") || User.IsInRole("CompanyManager") || User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-action="" data-toggle="modal" data-target="#manageUser_@item.Stuser.Id">edit</a>
+                        </td>
+                    }
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    @foreach (var item in Model.FacilityEmployees)
+    {
+        <div class="modal fade" id="manageUser_@item.Stuser.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Manage User:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body">
+                            <p><strong>Name:</strong> @Html.DisplayFor(modelItem => item.Stuser.FirstName) @Html.DisplayFor(modelItem => item.Stuser.LastName)</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form asp-action="RemoveEmployeeFromFacility">
+                                <input type="hidden" asp-for="User.StuserFacilities.FirstOrDefault().FacilityId" value="@Model.Facility.FirstOrDefault().Id" />
+                                <input type="hidden" asp-for="User.StuserFacilities.FirstOrDefault().StuserId" value="@item.Stuser.Id" />
+                                <input type="submit" value="Remove Employee From Facility" class="btn btn-danger" />
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 

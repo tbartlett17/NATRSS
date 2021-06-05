@@ -4,18 +4,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-
 <div class="text-center">
-    <img src="~/images/spilltrackerReadmeLogo.png" alt="Spill Tracker Logo" style="width: 90%; height: 40%"/>
+    <img src="~/images/spilltrackerReadmeLogo.png" alt="Spill Tracker Logo" style="width: 90%; height: 40%" />
 </div>
 
 <br>
 <br>
 
 <div class="text-center">
-    <p class="lead" class="text-sm-left">For environmental workers who need to report spills or look up information about chemicals if a report is needed. 
-       The Chemical Spill Tracker is an information system that will allow users to calculate whether or not a spill at the 
-       company or location will need to be reported to the proper authorities and if so, who to contact.</p>
+    <p class="lead text-sm-left">
+        For environmental workers who need to report spills or look up information about chemicals if a report is needed.
+        The Chemical Spill Tracker is an information system that will allow users to calculate whether or not a spill at the
+        company or location will need to be reported to the proper authorities and if so, who to contact.
+    </p>
 </div>
 
 <br>
@@ -23,20 +24,42 @@
 <br>
 <div class="row">
     <div class="col border rounded">
-        <p class="lead">Link to scraped EPCRA chemical information <a href="https://www.ecfr.gov/cgi-bin/text-idx?node=pt40.30.355&rgn=div5#ap40.30.355_161.a" target="_blank">here.</a></p>
-        <p class="lead">Link to scraped CERCLA chemical information <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=cf9016ebebd8898fcd57f71e1b66a7af&mc=true&node=se40.30.302_14&rgn=div8" target="_blank">here.</a></p>
-        <p class="lead">Link to PubChem API information <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank">here.</a></p>
+        <h4>Resources Utilized:</h4>
+        <p class="lead">Link to EPCRA regulated chemicals list <a href="https://www.ecfr.gov/cgi-bin/text-idx?node=pt40.30.355&rgn=div5#ap40.30.355_161.a" target="_blank">here</a>.</p>
+        <p class="lead">Link to CERCLA regulated chemicals list <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=cf9016ebebd8898fcd57f71e1b66a7af&mc=true&node=se40.30.302_14&rgn=div8" target="_blank">here</a>.</p>
+        <p class="lead">Link to PubChem API information <a href="https://pubchemdocs.ncbi.nlm.nih.gov/programmatic-access" target="_blank">here</a>.</p>
+        <p class="lead">Link to MapQuest API information <a href="https://developer.mapquest.com/documentation/" target="_blank">here</a>.</p>
+        <p class="lead">Link to OpenWeatherMaps API information <a href="https://openweathermap.org/api/one-call-api" target="_blank">here</a>.</p>
+        <p class="lead">Link to GitHub API information <a href="https://docs.github.com/en/rest" target="_blank">here</a>.</p>
+        <p class="lead">Link to SendGrid API information <a href="https://sendgrid.com/docs/api-reference/" target="_blank">here</a>.</p>
     </div>
     <div class="col-sm-1">
 
     </div>
     <div class="col border rounded" style="border: 5% solid black;">
-        <p class="lead">There are currently <b>@Model.chemicals.Count()</b> chemicals stored in our database!</p>
+        <h4>Our Database....</h4>
+        <p class="lead">Currently has <b>@Model.chemicals.Count()</b> chemicals tracked from the EPCRA and CERCLA regulated chemicals lists.</p>
         <br>
-        <p class="lead">The EPCRA list of Extremely Hazardous Substances was last scraped on <b>@Model.times.Where(s => s.SourceName == "EPCRA Scraper").Last().Time</b></p>
+        @if (Model.times.Where(s => s.SourceName == "EPCRA Scraper").Last().Time.Value.ToString() == "2/28/2021 5:00:00 AM")
+        {
+            <p class="lead">The EPCRA list of Extremely Hazardous Substances has not yet been checked.</p>
+        }
+        else
+        {
+            <p class="lead">The EPCRA list of Extremely Hazardous Substances was last checked on <b>@Model.times.Where(s => s.SourceName == "EPCRA Scraper").Last().Time.Value.ToString("MMMM dd, yyyy hh:mm tt UTCz")</b>.</p>
+        }
         <br>
-        <p class="lead">The CERCLA list of Extremely Hazardous Substances was last scraped on <b> @Model.times.Where(s => s.SourceName == "CERCLA Scraper").Last().Time</b></p>
-        <br>
-        <p class="lead">The Pub Chem API was last succesfully ran on <b>@Model.times.Where(s => s.SourceName == "PubChem API").Last().Time</b> </p>
+        @if (Model.times.Where(s => s.SourceName == "CERCLA Scraper").Last().Time.Value.ToString() == "2/28/2021 5:00:00 AM")
+        {
+            <p class="lead">The CERCLA list of Extremely Hazardous Substances has not yet been checked.</p>
+        }
+        else
+        {
+            <p class="lead">The CERCLA list of Extremely Hazardous Substances was last checked on <b> @Model.times.Where(s => s.SourceName == "CERCLA Scraper").Last().Time.Value.ToString("MMMM dd, yyyy hh:mm tt UTCz")</b>.</p>
+        }
     </div>
 </div>
+
+@section Scripts {
+    <script src="/js/site.js"></script>
+}

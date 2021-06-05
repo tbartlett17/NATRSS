@@ -16,24 +16,41 @@
     </div>
     <br>
     <br>
+
     <div style="text-align: center;">
+
+      <div class="row" style="text-align: center;">
+        <div class="col-sm" style="text-align: right;">
+          <label style="margin-bottom: 2%; margin-top: 1%"  for="">Amount Released in lbs: </label> 
+        </div>
+        <div class="col-sm" style="text-align: left;">
+          <input style="margin-bottom: 1%; margin-top: 1%"  type="number" min="0" id="amountReleased" required>
+          <p id="errorAM"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm" style="text-align: right;">
+          <label style="margin-bottom: 2%; margin-top: 1%" for="">Time of Release in hours: </label>
+        </div>
+        <div class="col-sm" style="text-align: left;">
+          <input style="margin-bottom: 1%; margin-top: 1%" type="number" min="0" id="timeReleased" required>
+          <p id="errorTR"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm" style="text-align: right;">
+           <label style="margin-bottom: 1%; margin-top: 2%"  for="">Total percent of Mixture: </label>
+        </div>
+        <div class="col-sm" style="text-align: left;">
+           <input style="margin-bottom: 1%; margin-top: 1%"  type="number" min="0"  id="percentReleased" required>
+           <p id="errorPM"></p>
+        </div>
+      </div>
+ 
+        <div >
+          <button type="submit" id="calcButton"  class="btn btn-primary" data-toggle="modal"  data-target="#exampleModalCenter">Calculate</button>
+        </div>
         
-        <div>
-            <label for="">Amount Released in lbs: </label> 
-            <input type="number" min="0" required id="amountReleased" required>
-        </div>
-        <br>
-        <div>
-            <label for="">Time of Release in hours: </label>
-            <input type="number" min="0" required id="timeReleased" required>
-        </div> 
-        <br>
-        <div>
-            <label for="">Total percent of Mixture: </label>
-            <input type="number" min="0" max="100" required id="percentReleased" required>
-        </div>
-        <br>
-        <button type="submit" id="calcButton"  class="btn btn-info" data-toggle="modal" onclick="calculate()" data-target="#exampleModalCenter">Calculate</button>
 
     </div>
 </div>
@@ -63,9 +80,35 @@
 <br>
 <br>
 
-<div style="text-align: center;" id="stats">
-    <p id="totalReleased"></p>
-    <p id="releasePerHour"></p>
+<div style="text-align: center; display: none" id="stats">
+    <table class="table table-striped" style="margin-left: auto; margin-right: auto; width: 50%;">
+      <tr>
+        <th>Total Release</th>
+        <td id="totalReleased"></td>
+      </tr>
+      <tr>
+        <th>Amount Released x Percent of Mixture</th>
+        <td id="mathTR"></td>
+      </tr>
+      <tr>
+        <th>Amount Released per hour</th>
+        <td id="releasePerHour"></td>
+      </tr>
+      <tr>
+        <th>Total Release / Time of Release</th>
+        <td id="mathAR"></td>
+      </tr>
+      <tr>
+        <th>Time Till Report</th>
+        <td id="timeTillReports"></td>
+      </tr>
+      <tr>
+        <th>(Reportable Quantity / Amount Released per hour) - Time of Release</th>
+        <td id="mathTTR"></td>
+      </tr>
+      
+    </table>
+
 
 </div>
 

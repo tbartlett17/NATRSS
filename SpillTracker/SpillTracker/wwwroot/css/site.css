@@ -9,30 +9,76 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: #536abe;
+  font-weight: bold;
+}
+
+
+:root {
+  --main-bg-color: #50773e;
+}
+
+a:active {
+  color: #257e99;
+}
+
+div > a {
+  color:#536abe;
+}
+
+.modal-body {
+  color: black;
+}
+
+.modal-content > table > td {
+  color: black;
+}
+
+.modal-body > table > th {
+  color: black;
 }
 
 nav {
   background-color: #50773e;
-  color: white
+  color: black;
+}
+
+td {
+  color: black;
+}
+
+td > a {
+  color: #536abe;
+}
+
+th {
+  color: black;
 }
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  background-color: #50773e;
+  border-color: #3d5a30;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.nav-pills .nav-link, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #50773e;
-  border-color: #1861ac;
+  border-color: #39582a;
+}
+
+.nav-pills > li > a.active {
+  background-color: #39582a !important;
+}
+
+.nav-pills > li > a:hover {
+  background-color: #39582a !important;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 18px;
 }
 @media (min-width: 768px) {
   html {
@@ -54,6 +100,23 @@ html {
 button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
+  background-color: #39582a;
+}
+
+.btn-primary:active:focus
+{
+  background-color: #39582a !important;
+  border-color: #39582a !important;
+}
+
+.btn-primary:hover {
+  background-color: #39582a !important;
+  border-color: #39582a !important;
+}
+
+.btn-primary:focus {
+  background-color: #39582a !important;
+  border-color: #39582a !important;
 }
 
 /* Sticky footer styles
@@ -66,11 +129,24 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: #cedfc5;
+  color: Black;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  color: black;
+  /*line-height: 60px;*/ /* Vertically center the text there */
+}
+
+.commitSpacing {
+    margin: 0;
+    padding: 0 10px;
+    line-height: 1rem;
+}
+
+.modal-body{
+    position: relative;
 }

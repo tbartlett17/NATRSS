@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using SpillTracker.Models;
+using SpillTracker.Utilities;
 
 namespace SpillTracker.Areas.Identity.Pages.Account
 {
@@ -20,14 +23,18 @@ namespace SpillTracker.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IConfiguration _config;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _config = config;
+            
         }
 
         [BindProperty]
@@ -49,6 +56,9 @@ namespace SpillTracker.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
+
+            [Required]
+            public string Token { get; set; }
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
@@ -74,6 +84,17 @@ namespace SpillTracker.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+
+            // check captcha here
+            string secret = _config["reCaptchaSecretKey"];
+            GoogleReCAPTCHAResponse captchaResult = GoogleReCAPTCHAService.VerifyToken(Input.Token, secret);
+
+            if (captchaResult.Success == false || captchaResult.Score <= 0.5)
+            {
+                ModelState.AddModelError(string.Empty ,"We've detected that you might be a robot. Please Try again later.");
+                return Page();
+            }
+
 
             if (ModelState.IsValid)
             {
