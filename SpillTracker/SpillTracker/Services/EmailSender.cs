@@ -42,7 +42,7 @@ namespace SpillTracker.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("rljohns579@gmail.com", Options.SendGridUser),
+                From = new EmailAddress("apanick.59@gmail.com", "Team NATR"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

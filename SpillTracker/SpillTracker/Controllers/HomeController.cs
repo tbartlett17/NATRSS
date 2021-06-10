@@ -70,7 +70,7 @@ namespace SpillTracker.Controllers
             var apiKey = _config["SendGridKey"]; //SendGridKey
             var client = new SendGridClient(apiKey);
             /*Debug.WriteLine("apiKey " + apiKey);*/
-            var from = new EmailAddress("rljohns579@gmail.com", "User#1");
+            var from = new EmailAddress("apanick.59@gmail.com", "Team NATR");
             var htmlContent = "";
             var to = new EmailAddress("natrss@protonmail.com", "Team NATR");
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
